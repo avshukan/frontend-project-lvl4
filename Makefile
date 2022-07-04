@@ -1,3 +1,6 @@
+install:
+	npm install & npm --prefix ./app install ./app
+
 run-frontend:
 	npm -C app start
 
