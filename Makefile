@@ -1,11 +1,11 @@
 install:
 	npm install & npm --prefix ./app install ./app
 
-run-frontend:
+start-frontend:
 	npm -C app start
 
-run-backend:
+start-backend:
 	npx start-server
 
 start:
-	make run-backend & make run-frontend
+	make start-backend & make start-frontend
