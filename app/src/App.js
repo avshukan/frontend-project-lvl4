@@ -1,7 +1,23 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+
+  const [text, setText] = useState('Hello, World!');
+
+  const getToken = async () => {
+    const response = await axios.post('/api/v1/login', { username: 'admin', password: 'admin' });
+    const { data } = response;
+    const { token } = data;
+    setText(token);
+  };
+
+  useEffect(() => {
+    getToken();
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -17,6 +33,7 @@ function App() {
         >
           Learn React
         </a>
+        <p>{text}</p>
       </header>
     </div>
   );
