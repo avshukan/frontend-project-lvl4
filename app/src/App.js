@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  // useRouteMatch,
+  // useParams
+} from "react-router-dom";
 import axios from 'axios';
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
+const App = () => {
 
   const [text, setText] = useState('Hello, World!');
 
@@ -19,23 +26,28 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <p>{text}</p>
-      </header>
-    </div>
+    <>
+      <Router>
+        <div className="App">
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+              </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+            <li>
+              <Link to="/topics">Topics</Link>
+            </li>
+          </ul>
+        </div>
+        <Routes>
+          <Route path="/about" element={<div>About text</div>} />
+          <Route path="/topics" element={<div>Topics text</div>} />
+          <Route path="/" element={<div>{text}</div>} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 

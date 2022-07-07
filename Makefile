@@ -1,6 +1,12 @@
 install:
 	npm install & npm --prefix ./app install ./app
 
+lint:
+	npx eslint .
+
+lint-fix:
+	npx eslint . --fix
+
 start-frontend:
 	make -C app start
 
