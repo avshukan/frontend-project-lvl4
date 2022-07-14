@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import axios from 'axios';
 import './App.css';
+import LoginPage from './components/LoginPage';
 
 const App = () => {
 
@@ -32,7 +33,7 @@ const App = () => {
           <ul>
             <li>
               <Link to="/">Home</Link>
-              </li>
+            </li>
             <li>
               <Link to="/about">About</Link>
             </li>
@@ -44,6 +45,7 @@ const App = () => {
         <Routes>
           <Route path="/about" element={<div>About text</div>} />
           <Route path="/topics" element={<div>Topics text</div>} />
+          <Route path='/login' element={<LoginPage />} />
           <Route path="/" element={<div>{text}</div>} />
         </Routes>
       </Router>
