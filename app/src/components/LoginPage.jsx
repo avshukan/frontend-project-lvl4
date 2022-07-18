@@ -5,6 +5,12 @@ import { Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../context/useAuth';
 import routes from '../routes/routes';
+import * as yup from 'yup';
+
+const schema = yup.object().shape({
+    username: yup.string().required(),
+    password: yup.string().required(),
+});
 
 const LoginPage = () => {
     const [feedbackError, setFeedbackError] = useState(null);
@@ -23,7 +29,10 @@ const LoginPage = () => {
             password: '',
         },
         onSubmit: async (values) => {
+            console.log('values', values)
             setFeedbackError(false);
+            schema.validate(values)
+            .then(async () => {
             const route = routes.loginPath();
             await axios.post(route, {
                 username: values.username,
@@ -39,6 +48,11 @@ const LoginPage = () => {
                     setFeedbackError(true);
                     ref.current.select();
                 });
+            })
+            .catch((error) => {
+                console.error('error', error);
+                setFeedbackError(true);
+            });
         },
     });
 
