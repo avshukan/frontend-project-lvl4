@@ -10,6 +10,8 @@ import {
 import axios from 'axios';
 import './App.css';
 import LoginPage from './components/LoginPage';
+import MainPage from './components/MainPage';
+import Error404Page from './components/Error404Page';
 
 const App = () => {
 
@@ -46,7 +48,8 @@ const App = () => {
           <Route path="/about" element={<div>About text</div>} />
           <Route path="/topics" element={<div>Topics text</div>} />
           <Route path='/login' element={<LoginPage />} />
-          <Route path="/" element={<div>{text}</div>} />
+          <Route path="/" element={<MainPage />} />
+          <Route path='*' element={<Error404Page />} />
         </Routes>
       </Router>
     </>
