@@ -29,30 +29,26 @@ const LoginPage = () => {
             password: '',
         },
         onSubmit: async (values) => {
-            console.log('values', values)
             setFeedbackError(false);
-            schema.validate(values)
-            .then(async () => {
             const route = routes.loginPath();
-            await axios.post(route, {
-                username: values.username,
-                password: values.password,
-            })
+            await schema
+                .validate(values)
+                .then(() => {
+                    return axios.post(route, {
+                        username: values.username,
+                        password: values.password,
+                    })
+                })
                 .then(({ data }) => {
                     const { token } = data;
-                    localStorage.setItem('userId', JSON.stringify({ token }));
-                    auth.logIn();
+                    auth.logIn(token);
                     navigate(location.state.from);
                 })
-                .catch(() => {
+                .catch((error) => {
+                    console.error('error', error);
                     setFeedbackError(true);
                     ref.current.select();
                 });
-            })
-            .catch((error) => {
-                console.error('error', error);
-                setFeedbackError(true);
-            });
         },
     });
 

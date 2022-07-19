@@ -1,12 +1,18 @@
 import { useState } from "react";
 import AuthContext from "./AuthContext";
 
+const KEY = 'token';
+
 const AuthProvider = ({ children }) => {
     const [loggedIn, setLoggedIn] = useState(false);
 
-    const logIn = () => setLoggedIn(true);
+    const logIn = (token) => {
+        localStorage.setItem(KEY, JSON.stringify({ token }));
+        setLoggedIn(true);
+    };
+
     const logOut = () => {
-        localStorage.removeItem('userId');
+        localStorage.removeItem(KEY);
         setLoggedIn(false);
     };
 
@@ -18,7 +24,3 @@ const AuthProvider = ({ children }) => {
 };
 
 export default AuthProvider;
-
-
-
-
