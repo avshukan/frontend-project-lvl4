@@ -5,6 +5,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../context/useAuth';
 import routes from '../routes/routes';
+import queryString from '../routes/queryString';
 import * as yup from 'yup';
 
 const schema = yup.object().shape({
@@ -42,7 +43,7 @@ const LoginPage = () => {
                 .then(({ data }) => {
                     const { token } = data;
                     auth.logIn(token);
-                    navigate(location.state.from);
+                    navigate(queryString.chatPath());
                 })
                 .catch((error) => {
                     console.error('error', error);

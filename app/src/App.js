@@ -16,13 +16,15 @@ import PrivateRoute from './components/PrivateRoute';
 import LoginPage from './components/LoginPage';
 import MainPage from './components/MainPage';
 import Error404Page from './components/Error404Page';
+import queryString from './routes/queryString';
+import routes from './routes/routes';
 
 const App = () => {
 
   const [text, setText] = useState('Hello, World!');
 
   const getToken = async () => {
-    const response = await axios.post('/api/v1/login', { username: 'admin', password: 'admin' });
+    const response = await axios.post(routes.loginPath(), { username: 'admin', password: 'admin' });
     const { data } = response;
     const { token } = data;
     setText(token);
@@ -38,7 +40,7 @@ const App = () => {
         <div className="App">
           <ul>
             <li>
-              <Link to="/">Home</Link>
+              <Link to={queryString.chatPath()}>Home</Link>
             </li>
             <li>
               <Link to="/about">About</Link>
@@ -51,17 +53,17 @@ const App = () => {
           </ul>
         </div>
         <Routes>
-          <Route path='/login' element={<LoginPage />} />
+          <Route path={queryString.loginPath()} element={<LoginPage />} />
           <Route path="/about" element={
             <PrivateRoute><div>About text</div></PrivateRoute>
           } />
           <Route path="/topics" element={
             <PrivateRoute><div>Topics text</div></PrivateRoute>
           } />
-          <Route path="/" element={
+          <Route path={queryString.chatPath()} element={
             <PrivateRoute><MainPage /></PrivateRoute>
           } />
-          <Route path='*' element={
+          <Route path={queryString.errorPath()} element={
             <PrivateRoute><Error404Page /></PrivateRoute>
           } />
         </Routes>
