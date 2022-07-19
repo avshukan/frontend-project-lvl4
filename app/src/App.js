@@ -9,6 +9,10 @@ import {
 } from "react-router-dom";
 import axios from 'axios';
 import './App.css';
+import AuthProvider from './context/AuthProvider';
+import LoginButton from './components/LoginButton';
+import LogoutButton from './components/LogoutButton';
+import PrivateRoute from './components/PrivateRoute';
 import LoginPage from './components/LoginPage';
 import MainPage from './components/MainPage';
 import Error404Page from './components/Error404Page';
@@ -29,7 +33,7 @@ const App = () => {
   }, []);
 
   return (
-    <>
+    <AuthProvider>
       <Router>
         <div className="App">
           <ul>
@@ -42,17 +46,27 @@ const App = () => {
             <li>
               <Link to="/topics">Topics</Link>
             </li>
+            <LoginButton />
+            <LogoutButton />
           </ul>
         </div>
         <Routes>
-          <Route path="/about" element={<div>About text</div>} />
-          <Route path="/topics" element={<div>Topics text</div>} />
           <Route path='/login' element={<LoginPage />} />
-          <Route path="/" element={<MainPage />} />
-          <Route path='*' element={<Error404Page />} />
+          <Route path="/about" element={
+            <PrivateRoute><div>About text</div></PrivateRoute>
+          } />
+          <Route path="/topics" element={
+            <PrivateRoute><div>Topics text</div></PrivateRoute>
+          } />
+          <Route path="/" element={
+            <PrivateRoute><MainPage /></PrivateRoute>
+          } />
+          <Route path='*' element={
+            <PrivateRoute><Error404Page /></PrivateRoute>
+          } />
         </Routes>
       </Router>
-    </>
+    </AuthProvider>
   );
 }
 
