@@ -7,7 +7,7 @@ const LoginButton = () => {
     const auth = useAuth();
     const location = useLocation();
     
-    if (auth.loggedIn) {
+    if (auth.logged()) {
         return null;
     }
     return <Button as={Link} to={queryString.loginPath()} state={{ from: location }}>Log in</Button>;

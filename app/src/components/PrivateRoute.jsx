@@ -6,7 +6,7 @@ const PrivateRoute = ({children}) => {
     const auth = useAuth();
     const location = useLocation();
 
-    if (auth.loggedIn) {
+    if (auth.logged()) {
         return children;
     }
     return <Navigate to={queryString.loginPath()} state={{ from: location }} />;

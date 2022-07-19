@@ -4,7 +4,7 @@ import useAuth from "../context/useAuth";
 const LogoutButton = () => {
     const auth = useAuth();
 
-    if (!auth.loggedIn) {
+    if (!auth.logged()) {
         return null;
     }
     return <Button onClick={auth.logOut} >Log out</Button>;
