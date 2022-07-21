@@ -8,7 +8,7 @@ export const fetchData = createAsyncThunk(
 
         const response = await axios.get(routes.dataPath(), {
             headers: {
-                'Authorization': `Basic ${access_token}`
+                'Authorization': `Bearer ${access_token}`
             }
         });
         return response.data;
@@ -17,17 +17,19 @@ export const fetchData = createAsyncThunk(
 
 const dataSlice = createSlice({
     name: 'data',
-    initialState: [],
+    initialState: {},
     extraReducers: (builder) => {
         builder
-        .addCase(fetchData.fulfilled, (state, action) => {
-            state.data = action.payload;
-        })
-        .addCase(fetchData.rejected, (state, action) => {
-            console.log('extraReducers builder');
-            console.log('state', state);
-            console.log('action', action);
-        })
+            .addCase(fetchData.fulfilled, (state, action) => {
+                console.log('state', state);
+                console.log('action', action);
+                state.data = { ...state, k: action.payload };
+            })
+            .addCase(fetchData.rejected, (state, action) => {
+                console.log('extraReducers builder');
+                console.log('state', state);
+                console.log('action', action);
+            })
     }
 });
 
