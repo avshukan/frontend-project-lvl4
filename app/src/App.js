@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   BrowserRouter as Router,
   Routes,
@@ -21,16 +22,21 @@ import queryString from './routes/queryString';
 import routes from './routes/routes';
 import { Button, Container, Navbar, Row, Col } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { fetchData } from './slices/dataSlice';
 
 const App = () => {
+  const dispatch = useDispatch();
 
   const [text, setText] = useState('Hello, World!');
+
+  const data = useSelector((state) => state.data);
 
   const getToken = async () => {
     const response = await axios.post(routes.loginPath(), { username: 'admin', password: 'admin' });
     const { data } = response;
     const { token } = data;
     setText(token);
+    dispatch(fetchData(token));
   };
 
   useEffect(() => {
@@ -78,6 +84,12 @@ const App = () => {
                 } />
               </Routes>
             </Col>
+          </Row>
+          <Row>
+            <Col>Left</Col>
+            <Col>{text}</Col>
+            <Col>{JSON.stringify(data)}</Col>
+            <Col>Right</Col>
           </Row>
         </Container>
       </Router>
