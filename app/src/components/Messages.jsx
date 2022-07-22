@@ -9,7 +9,7 @@ const Messages = () => {
     return (
         <Container className="d-flex flex-column h-100">
             <Container className="chat-messages overflow-auto px-5">
-                {messages.map((message) => <div className="text-break mb-2" onClick={() => { alert(id)}}>{JSON.stringify(message)}</div> )}
+                {messages.map((message) => <div className="text-break mb-2" onClick={() => { alert('!')}}>{JSON.stringify(message)}</div> )}
             </Container>
         </Container>
     );

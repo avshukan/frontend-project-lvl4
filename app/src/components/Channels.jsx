@@ -7,7 +7,7 @@ const Channels = () => {
 
     return (
         <Container className="d-flex flex-column mb-3">
-            {channels.map(({ id, name, removable }) => <Button className="mt-3" onClick={() => { alert(id)}}>{name}</Button> )}
+            {channels.map(({ id, name, removable }) => <Button key={id} className="mt-3" onClick={() => { alert(id)}}>{name}</Button> )}
         </Container>
     );
 };

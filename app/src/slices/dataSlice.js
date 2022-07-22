@@ -14,9 +14,17 @@ export const fetchData = createAsyncThunk(
     },
 );
 
+const initialState = {
+    data: {
+        channels: [], 
+        currentChannelId: null,
+        messages: [],
+    }
+};
+
 const dataSlice = createSlice({
     name: 'data',
-    initialState: {},
+    initialState: initialState,
     extraReducers: (builder) => {
         builder
             .addCase(fetchData.fulfilled, (state, action) => {
