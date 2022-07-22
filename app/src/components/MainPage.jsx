@@ -1,6 +1,7 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import Channels from "./Channels";
+import Messages from "./Messages";
 
 const MainPage = () => {
     const data = useSelector(state => state.data.data);
@@ -11,7 +12,9 @@ const MainPage = () => {
                 <Col xs="3" className="bg-light border">
                     <Channels />
                 </Col>
-                <Col xs="9" className="bg-light border">Content</Col>
+                <Col xs="9" className="bg-light border">
+                    <Messages />
+                </Col>
             </Row>
             <Row>
                 <Col ></Col>

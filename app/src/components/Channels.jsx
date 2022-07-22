@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Button, Container } from "react-bootstrap";
 
 const Channels = () => {
-    const { channels } = useSelector(state => state.data.data);
+    const { channels, currentChannelId } = useSelector(state => state.data.data);
 
     return (
         <Container className="d-flex flex-column mb-3">

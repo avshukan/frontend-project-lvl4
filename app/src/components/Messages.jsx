@@ -1,10 +1,18 @@
-import { Link, useLocation } from "react-router-dom";
-import { Button } from "react-bootstrap";
-import useAuth from "../context/useAuth";
-import queryString from '../routes/queryString';
+import React from "react";
+import { useSelector } from "react-redux";
+import { Container } from "react-bootstrap";
+
 
 const Messages = () => {
-    return <Button as={Link} to={queryString.loginPath()} state={{ from: location }}>Messages</Button>;
+    const { messages } = useSelector(state => state.data.data);
+
+    return (
+        <Container className="d-flex flex-column h-100">
+            <Container className="chat-messages overflow-auto px-5">
+                {messages.map((message) => <div className="text-break mb-2" onClick={() => { alert(id)}}>{JSON.stringify(message)}</div> )}
+            </Container>
+        </Container>
+    );
 };
 
 export default Messages;
