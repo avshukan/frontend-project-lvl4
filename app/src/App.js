@@ -35,7 +35,7 @@ const App = () => {
       dispatch(fetchData(token));
     };
     initData();
-  }, []);
+  }, [dispatch]);
 
   return (
     <AuthProvider>
