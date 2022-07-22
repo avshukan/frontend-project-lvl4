@@ -1,6 +1,17 @@
+import { Container, Row, Col } from "react-bootstrap";
+import { useSelector } from "react-redux";
+
 const MainPage = () => {
+    const data = useSelector(state => state.data);
+
     return (
-        <div>Main Content</div>
+        <Container>
+          <Row>
+            <Col>Left</Col>
+            <Col>{JSON.stringify(data)}</Col>
+            <Col>Right</Col>
+          </Row>
+        </Container>
     );
 };
 

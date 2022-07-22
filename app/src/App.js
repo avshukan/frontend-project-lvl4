@@ -27,20 +27,14 @@ import { fetchData } from './slices/dataSlice';
 const App = () => {
   const dispatch = useDispatch();
 
-  const [text, setText] = useState('Hello, World!');
-
   const data = useSelector((state) => state.data);
 
-  const getToken = async () => {
-    const response = await axios.post(routes.loginPath(), { username: 'admin', password: 'admin' });
-    const { data } = response;
-    const { token } = data;
-    setText(token);
-    dispatch(fetchData(token));
-  };
-
   useEffect(() => {
-    getToken();
+    const initData = async () => {
+      const { data: { token }} = await axios.post(routes.loginPath(), { username: 'admin', password: 'admin' });
+      dispatch(fetchData(token));
+    };
+    initData();
   }, []);
 
   return (
@@ -84,12 +78,6 @@ const App = () => {
                 } />
               </Routes>
             </Col>
-          </Row>
-          <Row>
-            <Col>Left</Col>
-            <Col>{text}</Col>
-            <Col>{JSON.stringify(data)}</Col>
-            <Col>Right</Col>
           </Row>
         </Container>
       </Router>

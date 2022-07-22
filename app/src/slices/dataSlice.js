@@ -5,13 +5,12 @@ import routes from "../routes/routes";
 export const fetchData = createAsyncThunk(
     'data/fetchData',
     async (access_token) => {
-
-        const response = await axios.get(routes.dataPath(), {
+        const { data } = await axios.get(routes.dataPath(), {
             headers: {
                 'Authorization': `Bearer ${access_token}`
             }
         });
-        return response.data;
+        return data;
     },
 );
 
@@ -21,9 +20,7 @@ const dataSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchData.fulfilled, (state, action) => {
-                console.log('state', state);
-                console.log('action', action);
-                state.data = { ...state, k: action.payload };
+                state.data = { ...action.payload };
             })
             .addCase(fetchData.rejected, (state, action) => {
                 console.log('extraReducers builder');
