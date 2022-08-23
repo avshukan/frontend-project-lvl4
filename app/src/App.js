@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useCallback, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link,
+  // Link,
   // useRouteMatch,
   // useParams
 } from "react-router-dom";
-import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import AuthProvider from './context/AuthProvider';
@@ -19,81 +17,90 @@ import LoginPage from './components/LoginPage';
 import MainPage from './components/MainPage';
 import Error404Page from './components/Error404Page';
 import queryString from './routes/queryString';
-import routes from './routes/routes';
 import { Button, Container, Navbar, Row, Col } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { fetchData } from './slices/dataSlice';
+import { useDispatch } from 'react-redux';
+import { io } from "socket.io-client";
+import { addMessage, fetchData } from './slices/dataSlice';
+import useAuth from './context/useAuth';
 
 const App = () => {
-  const dispatch = useDispatch();
-
-  const [text, setText] = useState('Hello, World!');
-
-  const data = useSelector((state) => state.data);
-
-  const getToken = async () => {
-    const response = await axios.post(routes.loginPath(), { username: 'admin', password: 'admin' });
-    const { data } = response;
-    const { token } = data;
-    setText(token);
-    dispatch(fetchData(token));
-  };
-
-  useEffect(() => {
-    getToken();
-  }, []);
-
   return (
     <AuthProvider>
-      <Router>
-        <Container fluid='md'>
-          <Navbar bg='light' expand='lg'>
-            <Container>
-              <Navbar.Brand href={queryString.chatPath()}>_Speaky_</Navbar.Brand>
-              <Navbar.Toggle aria-controls='basic-navbar-nav' />
-              <Navbar.Collapse id='basic-navbar-nav'>
-                <LinkContainer to={queryString.chatPath()}>
-                  <Button>Chat</Button>
-                </LinkContainer>
-                <LinkContainer to='/about'>
-                  <Button>About</Button>
-                </LinkContainer>
-                <LinkContainer to='/topics'>
-                  <Button>Topics</Button>
-                </LinkContainer>
-                <LoginButton />
-                <LogoutButton />
-              </Navbar.Collapse>
-            </Container>
-          </Navbar>
-          <Row>
-            <Col>
-              <Routes>
-                <Route path={queryString.loginPath()} element={<LoginPage />} />
-                <Route path="/about" element={
-                  <PrivateRoute><div>About text</div></PrivateRoute>
-                } />
-                <Route path="/topics" element={
-                  <PrivateRoute><div>Topics text</div></PrivateRoute>
-                } />
-                <Route path={queryString.chatPath()} element={
-                  <PrivateRoute><MainPage /></PrivateRoute>
-                } />
-                <Route path={queryString.errorPath()} element={
-                  <PrivateRoute><Error404Page /></PrivateRoute>
-                } />
-              </Routes>
-            </Col>
-          </Row>
-          <Row>
-            <Col>Left</Col>
-            <Col>{text}</Col>
-            <Col>{JSON.stringify(data)}</Col>
-            <Col>Right</Col>
-          </Row>
-        </Container>
-      </Router>
+      <AppInsider />
     </AuthProvider>
+  )
+};
+
+const AppInsider = () => {
+  const dispatch = useDispatch();
+
+  const socket = io();
+
+  const auth = useAuth();
+
+  useEffect(() => {
+    socket.on('newMessage', (payload) => {
+      if (!auth.logged()) {
+        return;
+      }
+      dispatch(addMessage(payload));
+    });
+  }, []);
+
+  const initFetchData = useCallback(() => {
+    if (!auth.logged()) {
+      return;
+    }
+    const token = auth.getToken();
+    dispatch(fetchData(token));
+  }, []);
+
+  useEffect(() => initFetchData(), []);
+
+  return (
+    <Router>
+      <Container fluid='md'>
+        <Navbar bg='light' expand='lg'>
+          <Container>
+            <Navbar.Brand href={queryString.chatPath()}>_Speaky_</Navbar.Brand>
+            <Navbar.Toggle aria-controls='basic-navbar-nav' />
+            <Navbar.Collapse id='basic-navbar-nav'>
+              <LinkContainer to={queryString.chatPath()}>
+                <Button>Chat</Button>
+              </LinkContainer>
+              <LinkContainer to='/about'>
+                <Button>About</Button>
+              </LinkContainer>
+              <LinkContainer to='/topics'>
+                <Button>Topics</Button>
+              </LinkContainer>
+              <LoginButton />
+              <LogoutButton />
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+        <Row>
+          <Col>
+            <Routes>
+              <Route path={queryString.loginPath()} element={<LoginPage />} />
+              <Route path="/about" element={
+                <PrivateRoute><div>About text</div></PrivateRoute>
+              } />
+              <Route path="/topics" element={
+                <PrivateRoute><div>Topics text</div></PrivateRoute>
+              } />
+              <Route path={queryString.chatPath()} element={
+                <PrivateRoute><MainPage /></PrivateRoute>
+              } />
+              <Route path={queryString.errorPath()} element={
+                <PrivateRoute><Error404Page /></PrivateRoute>
+              } />
+            </Routes>
+          </Col>
+        </Row>
+      </Container>
+    </Router>
   );
 }
 

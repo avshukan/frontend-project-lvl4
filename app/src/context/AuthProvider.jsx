@@ -26,8 +26,18 @@ const AuthProvider = ({ children }) => {
         setLoggedIn(false);
     };
 
+    const getToken = () => {
+        try {
+            const keyStorage = localStorage.getItem(KEY);
+            const token = JSON.parse(keyStorage)[KEY];
+            return token;
+        } catch (error) {
+            return null;
+        }
+    }
+
     return (
-        <AuthContext.Provider value={{ loggedIn, logged, logIn, logOut }}>
+        <AuthContext.Provider value={{ loggedIn, logged, logIn, logOut, getToken }}>
             {children}
         </AuthContext.Provider>
     );

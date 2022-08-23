@@ -7,6 +7,8 @@ import useAuth from '../context/useAuth';
 import routes from '../routes/routes';
 import queryString from '../routes/queryString';
 import * as yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { fetchData } from '../slices/dataSlice';
 
 const schema = yup.object().shape({
     username: yup.string().required(),
@@ -14,6 +16,7 @@ const schema = yup.object().shape({
 });
 
 const LoginPage = () => {
+    const dispatch = useDispatch();
     const [feedbackError, setFeedbackError] = useState(null);
     const location = useLocation();
     const navigate = useNavigate();
@@ -40,9 +43,9 @@ const LoginPage = () => {
                         password: values.password,
                     })
                 })
-                .then(({ data }) => {
-                    const { token } = data;
+                .then(({ data: { token } }) => {
                     auth.logIn(token);
+                    // dispatch(fetchData(token));
                     navigate(queryString.chatPath());
                 })
                 .catch((error) => {
