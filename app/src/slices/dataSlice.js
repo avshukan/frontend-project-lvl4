@@ -19,6 +19,10 @@ const dataSlice = createSlice({
     name: 'data',
     initialState,
     reducers: {
+        switchChannel: (state, action) => {
+            console.log('action.payload', action.payload)
+            state.currentChannelId = action.payload.channelId;
+        },
         addMessage: (state, action) => {
             console.log('action.payload', action.payload)
             state.messages.push(action.payload)
@@ -37,6 +41,9 @@ const dataSlice = createSlice({
     }
 });
 
-export const { addMessage } = dataSlice.actions;
+export const {
+    switchChannel,
+    addMessage,
+} = dataSlice.actions;
 
 export default dataSlice.reducer;
