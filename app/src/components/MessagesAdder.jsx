@@ -1,8 +1,11 @@
 import { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { io } from "socket.io-client";
 const socket = io();
 
 const MainPage = () => {
+    const dispath = useDispatch();
+    const { currentChannelId } = useSelector(state => state.data);
     const [textMessage, setTextMessage] = useState('');
 
     const ref = useRef();
@@ -14,7 +17,7 @@ const MainPage = () => {
     const onSubmit = (event) => {
         event.preventDefault();
         alert('Submit text!');
-        socket.emit('newMessage', { body: textMessage, channelId: 1, username: 'admin' });
+        socket.emit('newMessage', { body: textMessage, channelId: currentChannelId, username: 'admin' });
         setTextMessage('');
         ref.current.focus();
     };
