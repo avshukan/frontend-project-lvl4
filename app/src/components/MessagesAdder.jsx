@@ -1,10 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
 const socket = io();
 
 const MainPage = () => {
-    const dispath = useDispatch();
     const { currentChannelId } = useSelector(state => state.data);
     const [textMessage, setTextMessage] = useState('');
 
