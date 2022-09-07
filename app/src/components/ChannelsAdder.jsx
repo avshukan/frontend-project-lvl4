@@ -1,10 +1,10 @@
-import { io } from "socket.io-client";
-const socket = io();
+// import { io } from "socket.io-client";
+// const socket = io();
 
 const ChannelsAdder = () => {
     const onClick = () => {
         alert('CLcik!!');
-        socket.emit('newChannel', { name: "new channel" });
+        // socket.emit('newChannel', { name: "new channel" });
     };
 
     return (

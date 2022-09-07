@@ -3,7 +3,7 @@ import AuthContext from "./AuthContext";
 
 const KEY = 'token';
 
-const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children, socket }) => {
     const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect(() => {
@@ -19,11 +19,13 @@ const AuthProvider = ({ children }) => {
     const logIn = (token) => {
         localStorage.setItem(KEY, JSON.stringify({ token }));
         setLoggedIn(true);
+        socket.connect();
     };
 
     const logOut = () => {
         localStorage.removeItem(KEY);
         setLoggedIn(false);
+        // socket.disconnect();
     };
 
     const getToken = () => {
@@ -37,7 +39,7 @@ const AuthProvider = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ loggedIn, logged, logIn, logOut, getToken }}>
+        <AuthContext.Provider value={{ socket, loggedIn, logged, logIn, logOut, getToken }}>
             {children}
         </AuthContext.Provider>
     );

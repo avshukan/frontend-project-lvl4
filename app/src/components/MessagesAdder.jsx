@@ -1,9 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { io } from "socket.io-client";
-const socket = io();
+// import { io } from "socket.io-client";
+import useAuth from "../context/useAuth";
+// const socket = io();
 
 const MainPage = () => {
+    const auth = useAuth();
+    const socket = auth.socket;
     const { currentChannelId } = useSelector(state => state.data);
     const [textMessage, setTextMessage] = useState('');
 

@@ -24,9 +24,11 @@ import { io } from "socket.io-client";
 import { addMessage, fetchData } from './slices/dataSlice';
 import useAuth from './context/useAuth';
 
+const socket = io({autoConnect: false});
+
 const App = () => {
   return (
-    <AuthProvider>
+    <AuthProvider socket={socket}>
       <AppInsider />
     </AuthProvider>
   )
@@ -34,8 +36,6 @@ const App = () => {
 
 const AppInsider = () => {
   const dispatch = useDispatch();
-
-  const socket = io();
 
   const auth = useAuth();
 
