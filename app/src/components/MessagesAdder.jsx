@@ -1,8 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-// import { io } from "socket.io-client";
 import useAuth from "../context/useAuth";
-// const socket = io();
 
 const MainPage = () => {
     const auth = useAuth();
@@ -18,7 +16,6 @@ const MainPage = () => {
 
     const onSubmit = (event) => {
         event.preventDefault();
-        alert('Submit text!');
         socket.emit('newMessage', { body: textMessage, channelId: currentChannelId, username: 'admin' });
         setTextMessage('');
         ref.current.focus();

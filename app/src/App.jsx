@@ -1,12 +1,5 @@
-import React, { useCallback, useEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  // Link,
-  // useRouteMatch,
-  // useParams
-} from "react-router-dom";
+import React from 'react';
+import {BrowserRouter,  Routes,  Route,} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import AuthProvider from './context/AuthProvider';
@@ -19,47 +12,11 @@ import Error404Page from './components/Error404Page';
 import queryString from './routes/queryString';
 import { Button, Container, Navbar, Row, Col } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { useDispatch } from 'react-redux';
-import { io } from "socket.io-client";
-import { addMessage, fetchData } from './slices/dataSlice';
-import useAuth from './context/useAuth';
-
-const socket = io({autoConnect: false});
 
 const App = () => {
   return (
-    <AuthProvider socket={socket}>
-      <AppInsider />
-    </AuthProvider>
-  )
-};
-
-const AppInsider = () => {
-  const dispatch = useDispatch();
-
-  const auth = useAuth();
-
-  useEffect(() => {
-    socket.on('newMessage', (payload) => {
-      if (!auth.logged()) {
-        return;
-      }
-      dispatch(addMessage(payload));
-    });
-  }, []);
-
-  const initFetchData = useCallback(() => {
-    if (!auth.logged()) {
-      return;
-    }
-    const token = auth.getToken();
-    dispatch(fetchData(token));
-  }, []);
-
-  useEffect(() => initFetchData(), []);
-
-  return (
-    <Router>
+    <AuthProvider>
+    <BrowserRouter>
       <Container fluid='md'>
         <Navbar bg='light' expand='lg'>
           <Container>
@@ -100,7 +57,8 @@ const AppInsider = () => {
           </Col>
         </Row>
       </Container>
-    </Router>
+    </BrowserRouter>
+    </AuthProvider>
   );
 }
 
