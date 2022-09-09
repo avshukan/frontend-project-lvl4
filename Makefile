@@ -2,10 +2,10 @@ install:
 	npm install & npm --prefix ./app install ./app
 
 lint:
-	npx eslint --ext .js,.jsx .
+	npx eslint --no-eslintrc --config .eslintrc.json --ext .js,.jsx .
 
 lint-fix:
-	npx eslint --ext .js,.jsx . --fix
+	npx eslint --no-eslintrc --config .eslintrc.json --ext .js,.jsx . --fix
 
 start-frontend:
 	make -C app start

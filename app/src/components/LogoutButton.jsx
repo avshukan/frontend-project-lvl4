@@ -1,13 +1,14 @@
-import { Button } from "react-bootstrap";
-import useAuth from "../context/useAuth";
+import React from 'react';
+import { Button } from 'react-bootstrap';
+import useAuth from '../context/useAuth';
 
-const LogoutButton = () => {
-    const auth = useAuth();
+function LogoutButton() {
+  const { isLogged, logOut } = useAuth();
 
-    if (!auth.logged()) {
-        return null;
-    }
-    return <Button onClick={auth.logOut} >Log out</Button>;
-};
+  if (!isLogged) {
+    return null;
+  }
+  return <Button onClick={logOut}>Log out</Button>;
+}
 
 export default LogoutButton;
