@@ -39,6 +39,7 @@ function LoginPage() {
         }))
         .then(({ data: { token } }) => {
           auth.logIn(token);
+          auth.setUsername(values.username);
           navigate(queryString.chatPath());
         })
         .catch((error) => {

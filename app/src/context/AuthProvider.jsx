@@ -29,6 +29,7 @@ const getToken = () => {
 function AuthProvider({ children }) {
   const dispatch = useDispatch();
   const [isLogged, setIsLogged] = useState(false);
+  const [username, setUsername] = useState('');
 
   const initFetchData = useCallback(() => {
     const token = getToken();
@@ -59,8 +60,8 @@ function AuthProvider({ children }) {
   }, [dispatch, initFetchData]);
 
   const value = useMemo(() => ({
-    socket, hasToken, getToken, isLogged, logIn, logOut,
-  }));
+    socket, hasToken, getToken, isLogged, logIn, logOut, username, setUsername,
+  }), [socket, hasToken, getToken, isLogged, logIn, logOut, username, setUsername]);
 
   return (
     <AuthContext.Provider value={value}>

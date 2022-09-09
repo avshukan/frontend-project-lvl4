@@ -36,16 +36,10 @@ const dataSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchData.fulfilled, (state, action) => {
-        // state.channels = action.payload.channels;
-        // state.messages = action.payload.messages;
-        // state.currentChannelId = action.payload.currentChannelId;
-        const { channels, messages, currentChannelId } = action.payload;
-        return {
-          ...state,
-          channels,
-          messages,
-          currentChannelId,
-        };
+        const proxyState = state;
+        proxyState.channels = action.payload.channels;
+        proxyState.messages = action.payload.messages;
+        proxyState.currentChannelId = action.payload.currentChannelId;
       })
       .addCase(fetchData.rejected, (state, action) => {
         console.error('extraReducers builder rejected', state, action);

@@ -4,7 +4,7 @@ import useAuth from '../context/useAuth';
 
 function MainPage() {
   const auth = useAuth();
-  const { socket } = auth;
+  const { socket, username } = auth;
   const { currentChannelId } = useSelector((state) => state.data);
   const [textMessage, setTextMessage] = useState('');
 
@@ -16,7 +16,7 @@ function MainPage() {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    socket.emit('newMessage', { body: textMessage, channelId: currentChannelId, username: 'admin' });
+    socket.emit('newMessage', { body: textMessage, channelId: currentChannelId, username });
     setTextMessage('');
     ref.current.focus();
   };
