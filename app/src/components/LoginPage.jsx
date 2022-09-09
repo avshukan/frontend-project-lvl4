@@ -38,8 +38,7 @@ function LoginPage() {
           password: values.password,
         }))
         .then(({ data: { token } }) => {
-          auth.logIn(token);
-          auth.setUsername(values.username);
+          auth.logIn(values.username, token);
           navigate(queryString.chatPath());
         })
         .catch((error) => {

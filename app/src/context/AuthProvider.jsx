@@ -6,62 +6,52 @@ import { useDispatch } from 'react-redux';
 import AuthContext from './AuthContext';
 import { addMessage, fetchData } from '../slices/dataSlice';
 
-const KEY = 'token';
-
 const socket = io({ autoConnect: false });
-
-const hasToken = () => {
-  const token = localStorage.getItem(KEY);
-  const result = !!token;
-  return result;
-};
-
-const getToken = () => {
-  try {
-    const keyStorage = localStorage.getItem(KEY);
-    const token = JSON.parse(keyStorage)[KEY];
-    return token;
-  } catch (error) {
-    return null;
-  }
-};
 
 function AuthProvider({ children }) {
   const dispatch = useDispatch();
-  const [isLogged, setIsLogged] = useState(false);
   const [username, setUsername] = useState('');
 
-  const initFetchData = useCallback(() => {
-    const token = getToken();
+  const initFetchData = useCallback((token) => dispatch(fetchData(token)), [dispatch]);
+
+  const isLogged = useCallback(() => {
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+    return !!(token && user);
+  }, []);
+
+  const logIn = useCallback((user, token) => {
+    localStorage.setItem('user', user);
+    localStorage.setItem('token', token);
+    setUsername(user);
+    socket.connect();
     dispatch(fetchData(token));
   }, [dispatch]);
 
-  const logIn = (token) => {
-    localStorage.setItem(KEY, JSON.stringify({ token }));
-    setIsLogged(true);
-    initFetchData();
-    socket.connect();
-  };
-
-  const logOut = () => {
-    localStorage.removeItem(KEY);
-    setIsLogged(false);
+  const logOut = useCallback(() => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setUsername('');
     socket.disconnect();
-  };
+  }, []);
 
   useEffect(() => {
-    const isToken = hasToken();
-    setIsLogged(isToken);
-    if (isToken) {
+    console.log('useEffect');
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+    console.log('token', token);
+    console.log('user', user);
+    if (token) {
+      dispatch(fetchData(token));
+      setUsername(user);
       socket.connect();
-      initFetchData();
     }
     socket.on('newMessage', (payload) => dispatch(addMessage(payload)));
   }, [dispatch, initFetchData]);
 
   const value = useMemo(() => ({
-    socket, hasToken, getToken, isLogged, logIn, logOut, username, setUsername,
-  }), [socket, hasToken, getToken, isLogged, logIn, logOut, username, setUsername]);
+    socket, isLogged, logIn, logOut, username,
+  }), [isLogged, logIn, logOut, username]);
 
   return (
     <AuthContext.Provider value={value}>

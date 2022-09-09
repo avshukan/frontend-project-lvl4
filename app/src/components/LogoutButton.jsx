@@ -5,7 +5,7 @@ import useAuth from '../context/useAuth';
 function LogoutButton() {
   const { isLogged, logOut } = useAuth();
 
-  if (!isLogged) {
+  if (!isLogged()) {
     return null;
   }
   return <Button onClick={logOut}>Log out</Button>;
