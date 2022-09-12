@@ -20,20 +20,14 @@ const dataSlice = createSlice({
   initialState,
   reducers: {
     addChannel: (state, action) => {
-      console.log('action.payload', action.payload);
       state.channels.push(action.payload);
     },
     switchChannel: (state, action) => {
-      console.log('action.payload', action.payload);
-      // state.currentChannelId = action.payload.channelId;
+      const proxyState = state;
       const { channelId } = action.payload;
-      return {
-        ...state,
-        currentChannelId: channelId,
-      };
+      proxyState.currentChannelId = channelId;
     },
     addMessage: (state, action) => {
-      console.log('action.payload', action.payload);
       state.messages.push(action.payload);
     },
   },
@@ -41,9 +35,10 @@ const dataSlice = createSlice({
     builder
       .addCase(fetchData.fulfilled, (state, action) => {
         const proxyState = state;
-        proxyState.channels = action.payload.channels;
-        proxyState.messages = action.payload.messages;
-        proxyState.currentChannelId = action.payload.currentChannelId;
+        const { channels, messages, currentChannelId } = action.payload;
+        proxyState.channels = channels;
+        proxyState.messages = messages;
+        proxyState.currentChannelId = currentChannelId;
       })
       .addCase(fetchData.rejected, (state, action) => {
         console.error('extraReducers builder rejected', state, action);

@@ -4,10 +4,13 @@ import {
 import React, { useState } from 'react';
 // import { useSelector } from 'react-redux';
 import { Button, Modal, ModalTitle } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 import { object, string } from 'yup';
 import useAuth from '../context/useAuth';
+import { switchChannel } from '../slices/dataSlice';
 
 function ChannelsAdder() {
+  const dispatch = useDispatch();
   const { socket } = useAuth();
 
   // const { channels, currentChannelId } = useSelector((state) => state.data);
@@ -19,7 +22,11 @@ function ChannelsAdder() {
   const handleShow = () => setShowModal(true);
 
   const onSubmit = (values) => {
-    socket.emit('newChannel', values);
+    socket.emit('newChannel', values, ({ status, data: { id } }) => {
+      if (status === 'ok') {
+        dispatch(switchChannel({ channelId: id }));
+      }
+    });
     handleClose();
   };
 
