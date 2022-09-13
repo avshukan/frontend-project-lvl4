@@ -10,9 +10,11 @@ function ChannelsList() {
 
   const { channels, currentChannelId } = useSelector((state) => state.data);
 
+  const onSwitch = (id) => dispatch(switchChannel({ channelId: id }));
+
   const getChannelVariant = (id) => (currentChannelId === id ? 'primary' : '');
 
-  const onSwitch = (id) => dispatch(switchChannel({ channelId: id }));
+  const getToggleDisplay = (removable) => (removable ? 'inline' : 'none');
 
   return (
     <Nav
@@ -22,14 +24,14 @@ function ChannelsList() {
       activeKey={currentChannelId}
       onSelect={onSwitch}
     >
-      {channels.map(({ id, name }) => (
+      {channels.map(({ id, name, removable }) => (
         <Nav.Item key={id} className="w-100">
-          <Dropdown as={ButtonGroup} className="w-100 justify-content-between">
+          <Dropdown as={ButtonGroup} className="w-100">
             <Nav.Link as={Button} eventKey={id} className="text-truncate text-start">
               <span className="me-1">#</span>
               {name}
             </Nav.Link>
-            <Dropdown.Toggle variant={getChannelVariant(id)} style={{ width: '30px', flexGrow: 0 }} />
+            <Dropdown.Toggle active variant={getChannelVariant(id)} style={{ display: getToggleDisplay(removable), width: '30px', flexGrow: 0 }} />
             <Dropdown.Menu>
               <Dropdown.Item>Переименовать</Dropdown.Item>
               <Dropdown.Item>Удалить</Dropdown.Item>
