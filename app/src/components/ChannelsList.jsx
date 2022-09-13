@@ -1,6 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import classnames from 'classnames';
+import {
+  Button, ButtonGroup, Dropdown, Nav,
+} from 'react-bootstrap';
 import { switchChannel } from '../slices/dataSlice';
 
 function ChannelsList() {
@@ -8,25 +10,34 @@ function ChannelsList() {
 
   const { channels, currentChannelId } = useSelector((state) => state.data);
 
-  const onSwitch = (id) => (event) => {
-    event.preventDefault();
-    dispatch(switchChannel({ channelId: id }));
-  };
+  const getChannelVariant = (id) => (currentChannelId === id ? 'primary' : '');
+
+  const onSwitch = (id) => dispatch(switchChannel({ channelId: id }));
 
   return (
-    <ul className="nav flex-column nav-pills nav-fill px-2">
-      {channels.map((({ id, name }) => {
-        const classname = classnames('w-100 rounded-0 text-start btn', { 'btn-secondary': currentChannelId !== id }, { 'btn-primary': currentChannelId === id });
-        return (
-          <li key={id} className="nav-item w-100">
-            <button type="button" className={classname} onClick={onSwitch(id)}>
+    <Nav
+      as="ul"
+      variant="pills"
+      className="flex-column"
+      activeKey={currentChannelId}
+      onSelect={onSwitch}
+    >
+      {channels.map(({ id, name }) => (
+        <Nav.Item key={id} className="w-100">
+          <Dropdown as={ButtonGroup} className="w-100 justify-content-between">
+            <Nav.Link as={Button} eventKey={id} className="text-truncate text-start">
               <span className="me-1">#</span>
               {name}
-            </button>
-          </li>
-        );
-      }))}
-    </ul>
+            </Nav.Link>
+            <Dropdown.Toggle variant={getChannelVariant(id)} style={{ width: '30px', flexGrow: 0 }} />
+            <Dropdown.Menu>
+              <Dropdown.Item>Переименовать</Dropdown.Item>
+              <Dropdown.Item>Удалить</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Nav.Item>
+      ))}
+    </Nav>
   );
 }
 
