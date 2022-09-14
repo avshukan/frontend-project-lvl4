@@ -4,6 +4,7 @@ import {
   Button, ButtonGroup, Dropdown, Nav,
 } from 'react-bootstrap';
 import { switchChannel } from '../slices/dataSlice';
+import ChannelsMenu from './ChannelsMenu';
 
 function ChannelsList() {
   const dispatch = useDispatch();
@@ -14,7 +15,9 @@ function ChannelsList() {
 
   const getChannelVariant = (id) => (currentChannelId === id ? 'primary' : '');
 
-  const getToggleDisplay = (removable) => (removable ? 'inline' : 'none');
+  const getChannelsMenu = (id, name, removable) => (removable
+    ? <ChannelsMenu id={id} name={name} variant={getChannelVariant(id)} />
+    : null);
 
   return (
     <Nav
@@ -31,11 +34,7 @@ function ChannelsList() {
               <span className="me-1">#</span>
               {name}
             </Nav.Link>
-            <Dropdown.Toggle active variant={getChannelVariant(id)} style={{ display: getToggleDisplay(removable), width: '30px', flexGrow: 0 }} />
-            <Dropdown.Menu>
-              <Dropdown.Item>Переименовать</Dropdown.Item>
-              <Dropdown.Item>Удалить</Dropdown.Item>
-            </Dropdown.Menu>
+            {getChannelsMenu(id, name, removable)}
           </Dropdown>
         </Nav.Item>
       ))}

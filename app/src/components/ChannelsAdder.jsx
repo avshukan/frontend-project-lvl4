@@ -3,7 +3,9 @@ import {
 } from 'formik';
 import React, { useState } from 'react';
 // import { useSelector } from 'react-redux';
-import { Button, FormLabel, Modal, ModalTitle } from 'react-bootstrap';
+import {
+  Button, FormLabel, Modal, ModalTitle,
+} from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { object, string } from 'yup';
 import useAuth from '../context/useAuth';
@@ -53,7 +55,7 @@ function ChannelsAdder() {
         >
           <Form>
             <Modal.Body>
-              <FormLabel htmlFor='name' className='visually-hidden'>Имя канала</FormLabel>
+              <FormLabel htmlFor="name" className="visually-hidden">Имя канала</FormLabel>
               <Field id="name" name="name" type="text" />
               <ErrorMessage name="name" />
             </Modal.Body>
