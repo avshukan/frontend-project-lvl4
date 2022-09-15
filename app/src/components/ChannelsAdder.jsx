@@ -1,27 +1,31 @@
 import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
-import React, { useState } from 'react';
-// import { useSelector } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Button, FormLabel, Modal, ModalTitle,
 } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { object, string } from 'yup';
 import useAuth from '../context/useAuth';
 import { switchChannel } from '../slices/dataSlice';
 
 function ChannelsAdder() {
   const dispatch = useDispatch();
+
   const { socket } = useAuth();
 
-  // const { channels, currentChannelId } = useSelector((state) => state.data);
+  const { channels } = useSelector((state) => state.data);
+
+  const ref = useRef(null);
 
   const [showModal, setShowModal] = useState(false);
 
   const handleClose = () => setShowModal(false);
 
-  const handleShow = () => setShowModal(true);
+  const handleShow = () => {
+    setShowModal(true);
+  };
 
   const onSubmit = (values) => {
     socket.emit('newChannel', values, ({ status, data: { id } }) => {
@@ -31,6 +35,8 @@ function ChannelsAdder() {
     });
     handleClose();
   };
+
+  useEffect(() => ref.current?.focus(), [showModal]);
 
   return (
     <>
@@ -50,13 +56,17 @@ function ChannelsAdder() {
         </Modal.Header>
         <Formik
           initialValues={{ name: '' }}
-          validationSchema={object({ name: string() })}
+          validationSchema={object({
+            name: string()
+              .required()
+              .notOneOf(channels.map(({ name }) => name)),
+          })}
           onSubmit={onSubmit}
         >
           <Form>
             <Modal.Body>
               <FormLabel htmlFor="name" className="visually-hidden">Имя канала</FormLabel>
-              <Field id="name" name="name" type="text" />
+              <Field innerRef={ref} id="name" name="name" type="text" />
               <ErrorMessage name="name" />
             </Modal.Body>
             <Modal.Footer>
