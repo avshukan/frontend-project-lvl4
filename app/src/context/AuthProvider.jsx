@@ -4,7 +4,9 @@ import React, {
 import { io } from 'socket.io-client';
 import { useDispatch } from 'react-redux';
 import AuthContext from './AuthContext';
-import { addChannel, addMessage, fetchData } from '../slices/dataSlice';
+import {
+  addChannel, addMessage, fetchData, removeChannel,
+} from '../slices/dataSlice';
 
 const socket = io({ autoConnect: false });
 
@@ -46,8 +48,9 @@ function AuthProvider({ children }) {
       setUsername(user);
       socket.connect();
     }
-    socket.on('newMessage', (payload) => dispatch(addMessage(payload)));
     socket.on('newChannel', (payload) => dispatch(addChannel(payload)));
+    socket.on('removeChannel', (payload) => dispatch(removeChannel(payload)));
+    socket.on('newMessage', (payload) => dispatch(addMessage(payload)));
   }, [dispatch, initFetchData]);
 
   const value = useMemo(() => ({

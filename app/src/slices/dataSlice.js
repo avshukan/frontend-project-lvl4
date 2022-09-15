@@ -9,10 +9,12 @@ export const fetchData = createAsyncThunk(
     .then(({ data }) => data),
 );
 
+const defaultChannelId = 1;
+
 const initialState = {
   channels: [],
   messages: [],
-  currentChannelId: null,
+  currentChannelId: defaultChannelId,
 };
 
 const dataSlice = createSlice({
@@ -26,6 +28,17 @@ const dataSlice = createSlice({
       const proxyState = state;
       const { channelId } = action.payload;
       proxyState.currentChannelId = channelId;
+    },
+    removeChannel: (state, action) => {
+      const proxyState = state;
+      const { id: removedChannelId } = action.payload;
+      proxyState.channels = state.channels
+        .filter(({ id }) => id !== removedChannelId);
+      proxyState.messages = state.messages
+        .filter(({ channelId }) => channelId !== removedChannelId);
+      proxyState.currentChannelId = state.currentChannelId === removedChannelId
+        ? defaultChannelId
+        : state.currentChannelId;
     },
     addMessage: (state, action) => {
       state.messages.push(action.payload);
@@ -49,6 +62,7 @@ const dataSlice = createSlice({
 export const {
   addChannel,
   switchChannel,
+  removeChannel,
   addMessage,
 } = dataSlice.actions;
 
