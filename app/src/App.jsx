@@ -6,6 +6,8 @@ import {
   Button, Container, Navbar, Row, Col,
 } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import i18n from 'i18next';
+import { initReactI18next, useTranslation } from 'react-i18next';
 import AuthProvider from './context/AuthProvider';
 import LoginButton from './components/LoginButton';
 import LogoutButton from './components/LogoutButton';
@@ -15,29 +17,17 @@ import MainPage from './components/MainPage';
 import Error404Page from './components/Error404Page';
 import queryString from './routes/queryString';
 import SignupPage from './components/SignupPage';
-import i18n from 'i18next';
-import { initReactI18next, useTranslation } from 'react-i18next';
+import locales from './locales';
 
 i18n
   .use(initReactI18next)
   .init({
-    resources: {
-      en: {
-        translation: {
-          "ChatLink": "Chat i18n"
-        }
-      },
-      ru: {
-        translation: {
-          "ChatLink": "Чат i18n"
-        }
-      }
-    },
-    lng: "ru", // if you're using a language detector, do not define the lng option
-    fallbackLng: "ru",
+    resources: locales,
+    lng: 'ru', // if you're using a language detector, do not define the lng option
+    fallbackLng: 'ru',
     interpolation: {
-      escapeValue: false // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
-    }
+      escapeValue: false, // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
+    },
   });
 
 function App() {
@@ -49,17 +39,17 @@ function App() {
         <Container fluid="md">
           <Navbar bg="light" expand="lg">
             <Container>
-              <Navbar.Brand href={queryString.chatPath()}>_Speaky_</Navbar.Brand>
+              <Navbar.Brand href={queryString.chatPath()}>{t('navBar.brand')}</Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <LinkContainer to={queryString.chatPath()}>
-                  <Button>{t('ChatLink')}</Button>
+                  <Button>{t('navBar.chat')}</Button>
                 </LinkContainer>
                 <LinkContainer to="/about">
-                  <Button>About</Button>
+                  <Button>{t('navBar.about')}</Button>
                 </LinkContainer>
                 <LinkContainer to="/topics">
-                  <Button>Topics</Button>
+                  <Button>{t('navBar.topics')}</Button>
                 </LinkContainer>
                 <LoginButton />
                 <LogoutButton />
