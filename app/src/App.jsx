@@ -14,6 +14,7 @@ import LoginPage from './components/LoginPage';
 import MainPage from './components/MainPage';
 import Error404Page from './components/Error404Page';
 import queryString from './routes/queryString';
+import SignupPage from './components/SignupPage';
 
 function App() {
   return (
@@ -42,30 +43,31 @@ function App() {
           <Row>
             <Col>
               <Routes>
+                <Route path={queryString.signupPath()} element={<SignupPage />} />
                 <Route path={queryString.loginPath()} element={<LoginPage />} />
                 <Route
                   path="/about"
                   element={
                     <PrivateRoute><div>About text</div></PrivateRoute>
-                }
+                  }
                 />
                 <Route
                   path="/topics"
                   element={
                     <PrivateRoute><div>Topics text</div></PrivateRoute>
-                }
+                  }
                 />
                 <Route
                   path={queryString.chatPath()}
                   element={
                     <PrivateRoute><MainPage /></PrivateRoute>
-                }
+                  }
                 />
                 <Route
                   path={queryString.errorPath()}
                   element={
                     <PrivateRoute><Error404Page /></PrivateRoute>
-                }
+                  }
                 />
               </Routes>
             </Col>
