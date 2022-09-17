@@ -15,8 +15,34 @@ import MainPage from './components/MainPage';
 import Error404Page from './components/Error404Page';
 import queryString from './routes/queryString';
 import SignupPage from './components/SignupPage';
+import i18n from 'i18next';
+import { initReactI18next, useTranslation } from 'react-i18next';
+
+i18n
+  .use(initReactI18next)
+  .init({
+    resources: {
+      en: {
+        translation: {
+          "ChatLink": "Chat i18n"
+        }
+      },
+      ru: {
+        translation: {
+          "ChatLink": "Чат i18n"
+        }
+      }
+    },
+    lng: "ru", // if you're using a language detector, do not define the lng option
+    fallbackLng: "ru",
+    interpolation: {
+      escapeValue: false // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
+    }
+  });
 
 function App() {
+  const { t } = useTranslation();
+
   return (
     <AuthProvider>
       <BrowserRouter>
@@ -27,7 +53,7 @@ function App() {
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <LinkContainer to={queryString.chatPath()}>
-                  <Button>Chat</Button>
+                  <Button>{t('ChatLink')}</Button>
                 </LinkContainer>
                 <LinkContainer to="/about">
                   <Button>About</Button>
