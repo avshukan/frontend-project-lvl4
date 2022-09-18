@@ -21,7 +21,7 @@ const en = {
       rename: 'Rename',
       remove: 'Remove',
     },
-    modalRenameChannel:{
+    modalRenameChannel: {
       title: 'Rename channel {{name}}',
       name: 'Channel name',
       save: 'Save',

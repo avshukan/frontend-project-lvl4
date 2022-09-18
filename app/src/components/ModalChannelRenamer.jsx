@@ -7,11 +7,11 @@ import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
 import { object, string } from 'yup';
-import useAuth from '../context/useAuth';
 import { useTranslation } from 'react-i18next';
+import useAuth from '../context/useAuth';
 
 function ModalChannelRemover({ id, name, hideModal }) {
-const {t} = useTranslation();
+  const { t } = useTranslation();
 
   const { socket } = useAuth();
 
@@ -33,7 +33,7 @@ const {t} = useTranslation();
   return (
     <Modal show onHide={hideModal}>
       <Modal.Header closeButton>
-        <ModalTitle>{t('modalRenameChannel.title', {name})}</ModalTitle>
+        <ModalTitle>{t('modalRenameChannel.title', { name })}</ModalTitle>
       </Modal.Header>
       <Formik
         initialValues={{ newname: name }}

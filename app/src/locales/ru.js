@@ -21,7 +21,7 @@ const ru = {
       rename: 'Переименовать',
       remove: 'Удалить',
     },
-    modalRenameChannel:{
+    modalRenameChannel: {
       title: 'Переименовать канал {{name}}',
       name: 'Название канала',
       save: 'Сохранить',
