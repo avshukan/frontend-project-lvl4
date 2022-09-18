@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import Providers from './context';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import ReduxProvider from './context/ReduxProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
-  <ReduxProvider>
+  <Providers>
     <App />
-  </ReduxProvider>
+  </Providers>
   // </React.StrictMode>
   ,
 );
