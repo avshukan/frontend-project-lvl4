@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import useAuth from '../context/useAuth';
 import { switchChannel } from '../slices/dataSlice';
 
-function ChannelsAdder() {
+function ChannelAdder() {
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
@@ -84,4 +84,4 @@ function ChannelsAdder() {
   );
 }
 
-export default ChannelsAdder;
+export default ChannelAdder;

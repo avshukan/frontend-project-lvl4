@@ -3,7 +3,7 @@ import { Dropdown } from 'react-bootstrap';
 import ModalChannelRenamer from './ModalChannelRenamer';
 import ModalChannelRemover from './ModalChannelRemover';
 
-function ChannelsMenu({ id, name, variant }) {
+function ChannelMenu({ id, name, variant }) {
   const [useModalChannelRenamer, setUseModalChannelRenamer] = useState(false);
 
   const showModalChannelRenamer = () => setUseModalChannelRenamer(true);
@@ -33,4 +33,4 @@ function ChannelsMenu({ id, name, variant }) {
   );
 }
 
-export default ChannelsMenu;
+export default ChannelMenu;

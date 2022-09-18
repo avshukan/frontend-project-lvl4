@@ -4,7 +4,7 @@ import {
   Button, ButtonGroup, Dropdown, Nav,
 } from 'react-bootstrap';
 import { switchChannel } from '../slices/dataSlice';
-import ChannelsMenu from './ChannelsMenu';
+import ChannelMenu from './ChannelMenu';
 
 function ChannelsList() {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ function ChannelsList() {
   const getChannelVariant = (id) => (currentChannelId === id ? 'primary' : '');
 
   const getChannelsMenu = (id, name, removable) => (removable
-    ? <ChannelsMenu id={id} name={name} variant={getChannelVariant(id)} />
+    ? <ChannelMenu id={id} name={name} variant={getChannelVariant(id)} />
     : null);
 
   return (
