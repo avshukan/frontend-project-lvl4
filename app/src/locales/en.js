@@ -10,6 +10,9 @@ const en = {
       about: 'About',
       topics: 'Topics',
     },
+    channelsAdder: {
+      channels: 'Cha-channels',
+    },
   },
 };
 

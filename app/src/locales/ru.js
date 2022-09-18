@@ -10,6 +10,9 @@ const ru = {
       about: 'Про нас',
       topics: 'Топики',
     },
+    channelsAdder: {
+      channels: 'Ка-каналы',
+    },
   },
 };
 
