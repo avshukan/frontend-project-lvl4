@@ -8,8 +8,11 @@ import {
 } from 'formik';
 import { object, string } from 'yup';
 import useAuth from '../context/useAuth';
+import { useTranslation } from 'react-i18next';
 
 function ModalChannelRemover({ id, name, hideModal }) {
+const {t} = useTranslation();
+
   const { socket } = useAuth();
 
   const deniedChannelsNames = useSelector((state) => state.data.channels
@@ -30,10 +33,7 @@ function ModalChannelRemover({ id, name, hideModal }) {
   return (
     <Modal show onHide={hideModal}>
       <Modal.Header closeButton>
-        <ModalTitle>
-          Переименовать канал
-          {name}
-        </ModalTitle>
+        <ModalTitle>{t('modalRenameChannel.title', {name})}</ModalTitle>
       </Modal.Header>
       <Formik
         initialValues={{ newname: name }}
@@ -46,13 +46,13 @@ function ModalChannelRemover({ id, name, hideModal }) {
       >
         <Form>
           <Modal.Body>
-            <FormLabel htmlFor="newname" className="visually-hidden">Имя канала</FormLabel>
+            <FormLabel htmlFor="newname" className="visually-hidden">{t('modalRenameChannel.name')}</FormLabel>
             <Field innerRef={ref} id="newname" name="newname" type="text" />
             <ErrorMessage name="newname" />
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={hideModal}>Отменить</Button>
-            <Button variant="primary" type="submit">Переименовать</Button>
+            <Button variant="secondary" onClick={hideModal}>{t('modalRenameChannel.cancel')}</Button>
+            <Button variant="primary" type="submit">{t('modalRenameChannel.save')}</Button>
           </Modal.Footer>
         </Form>
       </Formik>

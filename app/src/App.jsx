@@ -6,8 +6,7 @@ import {
   Button, Container, Navbar, Row, Col,
 } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import i18n from 'i18next';
-import { initReactI18next, useTranslation, I18nextProvider } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import AuthProvider from './context/AuthProvider';
 import LoginButton from './components/LoginButton';
 import LogoutButton from './components/LogoutButton';
@@ -17,29 +16,14 @@ import MainPage from './components/MainPage';
 import Error404Page from './components/Error404Page';
 import queryString from './routes/queryString';
 import SignupPage from './components/SignupPage';
-import locales from './locales';
 import LanguageButton from './components/LanguageButton';
-
-const defaultLng = 'ru';
-
-const i18nInstance = i18n.createInstance();
-
-i18nInstance
-  .use(initReactI18next)
-  .init({
-    resources: locales,
-    lng: defaultLng, // if you're using a language detector, do not define the lng option
-    fallbackLng: defaultLng,
-    interpolation: {
-      escapeValue: false, // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
-    },
-  });
+import I18nProvider from './context/I18nProvider';
 
 function App() {
   const { t } = useTranslation();
 
   return (
-    <I18nextProvider i18n={i18nInstance}>
+    <I18nProvider>
       <AuthProvider>
         <BrowserRouter>
           <Container fluid="md">
@@ -98,7 +82,7 @@ function App() {
           </Container>
         </BrowserRouter>
       </AuthProvider>
-    </I18nextProvider>
+    </I18nProvider>
   );
 }
 
