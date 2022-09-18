@@ -5,7 +5,7 @@ import { io } from 'socket.io-client';
 import { useDispatch } from 'react-redux';
 import AuthContext from './AuthContext';
 import {
-  addChannel, addMessage, fetchData, removeChannel,
+  addChannel, addMessage, fetchData, removeChannel, renameChannel,
 } from '../slices/dataSlice';
 
 const socket = io({ autoConnect: false });
@@ -38,17 +38,18 @@ function AuthProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    console.log('useEffect');
+    // console.log('useEffect');
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
-    console.log('token', token);
-    console.log('user', user);
+    // console.log('token', token);
+    // console.log('user', user);
     if (token) {
       dispatch(fetchData(token));
       setUsername(user);
       socket.connect();
     }
     socket.on('newChannel', (payload) => dispatch(addChannel(payload)));
+    socket.on('renameChannel', (payload) => dispatch(renameChannel(payload)));
     socket.on('removeChannel', (payload) => dispatch(removeChannel(payload)));
     socket.on('newMessage', (payload) => dispatch(addMessage(payload)));
   }, [dispatch, initFetchData]);

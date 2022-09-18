@@ -7,7 +7,8 @@ import useAuth from '../context/useAuth';
 function ModalChannelRemover({ id, name, hideModal }) {
   const { socket } = useAuth();
 
-  const onRemove = () => {
+  const onRemove = (event) => {
+    event.preventDefault();
     hideModal();
     socket.emit('removeChannel', { id });
   };

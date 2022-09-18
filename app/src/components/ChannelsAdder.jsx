@@ -1,11 +1,11 @@
-import {
-  Formik, Form, Field, ErrorMessage,
-} from 'formik';
 import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Button, FormLabel, Modal, ModalTitle,
 } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  Formik, Form, Field, ErrorMessage,
+} from 'formik';
 import { object, string } from 'yup';
 import useAuth from '../context/useAuth';
 import { switchChannel } from '../slices/dataSlice';
@@ -29,6 +29,7 @@ function ChannelsAdder() {
 
   const onSubmit = (values) => {
     socket.emit('newChannel', values, ({ status, data: { id } }) => {
+      console.log('id', id, typeof id);
       if (status === 'ok') {
         dispatch(switchChannel({ channelId: id }));
       }

@@ -29,16 +29,27 @@ const dataSlice = createSlice({
       const { channelId } = action.payload;
       proxyState.currentChannelId = channelId;
     },
+    renameChannel: (state, action) => {
+      const proxyState = state;
+      const { id, name } = action.payload;
+      proxyState.channels.find((channel) => channel.id === id).name = name;
+    },
     removeChannel: (state, action) => {
+      console.log('state', state.channels, state.messages, state.currentChannelId);
+      console.log('payload', action.payload);
       const proxyState = state;
       const { id: removedChannelId } = action.payload;
+      console.log('removedChannelId', removedChannelId, typeof removedChannelId);
+      console.log('state.currentChannelId', state.currentChannelId, typeof state.currentChannelId);
+      console.log('removedChannelId === state.currentChannelId', removedChannelId === state.currentChannelId);
       proxyState.channels = state.channels
         .filter(({ id }) => id !== removedChannelId);
       proxyState.messages = state.messages
-        .filter(({ channelId }) => channelId !== removedChannelId);
-      proxyState.currentChannelId = state.currentChannelId === removedChannelId
+        .filter(({ channelId }) => +channelId !== +removedChannelId);
+      proxyState.currentChannelId = +state.currentChannelId === +removedChannelId
         ? defaultChannelId
         : state.currentChannelId;
+      console.log('proxyState', proxyState.channels, proxyState.messages, proxyState.currentChannelId);
     },
     addMessage: (state, action) => {
       state.messages.push(action.payload);
@@ -62,6 +73,7 @@ const dataSlice = createSlice({
 export const {
   addChannel,
   switchChannel,
+  renameChannel,
   removeChannel,
   addMessage,
 } = dataSlice.actions;
