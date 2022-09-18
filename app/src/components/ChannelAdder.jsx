@@ -45,7 +45,7 @@ function ChannelAdder() {
   return (
     <>
       <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
-        <span>{t('channelsAdder.channels')}</span>
+        <span>{t('channelAdder.channels')}</span>
         <button type="button" className="p-0 text-primary btn btn-group-vertical" onClick={handleShow}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
             <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
@@ -56,7 +56,7 @@ function ChannelAdder() {
       </div>
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
-          <ModalTitle>Добавить канал</ModalTitle>
+          <ModalTitle>{t('channelAdder.add')}</ModalTitle>
         </Modal.Header>
         <Formik
           initialValues={{ name: '' }}
@@ -69,13 +69,13 @@ function ChannelAdder() {
         >
           <Form>
             <Modal.Body>
-              <FormLabel htmlFor="name" className="visually-hidden">Имя канала</FormLabel>
+              <FormLabel htmlFor="name" className="visually-hidden">{t('channelAdder.name')}</FormLabel>
               <Field innerRef={ref} id="name" name="name" type="text" />
               <ErrorMessage name="name" />
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>Отменить</Button>
-              <Button variant="primary" type="submit">Отправить</Button>
+              <Button variant="secondary" onClick={handleClose}>{t('channelAdder.cancel')}</Button>
+              <Button variant="primary" type="submit">{t('channelAdder.save')}</Button>
             </Modal.Footer>
           </Form>
         </Formik>

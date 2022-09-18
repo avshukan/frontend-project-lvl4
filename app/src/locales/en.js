@@ -10,8 +10,16 @@ const en = {
       about: 'About',
       topics: 'Topics',
     },
-    channelsAdder: {
-      channels: 'Cha-channels',
+    channelAdder: {
+      channels: 'Channels',
+      name: 'Channel name',
+      add: 'Add channel',
+      save: 'Save',
+      cancel: 'Cancel',
+    },
+    channelMenu: {
+      rename: 'Rename',
+      remove: 'Remove',
     },
   },
 };

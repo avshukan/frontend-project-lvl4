@@ -10,8 +10,16 @@ const ru = {
       about: 'Про нас',
       topics: 'Топики',
     },
-    channelsAdder: {
-      channels: 'Ка-каналы',
+    channelAdder: {
+      channels: 'Каналы',
+      name: 'Название канала',
+      add: 'Добавить канал',
+      save: 'Сохранить',
+      cancel: 'Отменить',
+    },
+    channelMenu: {
+      rename: 'Переименовать',
+      remove: 'Удалить',
     },
   },
 };
