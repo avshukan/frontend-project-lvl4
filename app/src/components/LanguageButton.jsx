@@ -9,11 +9,8 @@ function LanguageButton() {
 
   const toggleLanguage = () => {
     const lng = getOtherLanguage(i18n.language);
-    console.log('i18n.language', i18n.language);
-    console.log('lng', lng);
     i18n.changeLanguage(lng, (error, tt) => {
-      console.log('error language', error);
-      console.log('tt language', tt);
+      console.log('changeLanguage', error, tt);
     });
   };
 
