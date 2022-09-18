@@ -18,6 +18,7 @@ import Error404Page from './components/Error404Page';
 import queryString from './routes/queryString';
 import SignupPage from './components/SignupPage';
 import locales from './locales';
+import LanguageButton from './components/LanguageButton';
 
 const defaultLng = 'ru';
 
@@ -56,6 +57,7 @@ function App() {
                   <LinkContainer to="/topics">
                     <Button>{t('navBar.topics')}</Button>
                   </LinkContainer>
+                  <LanguageButton />
                   <LoginButton />
                   <LogoutButton />
                 </Navbar.Collapse>
