@@ -33,7 +33,7 @@ function ModalChannelRemover({ id, name, hideModal }) {
   return (
     <Modal show onHide={hideModal}>
       <Modal.Header closeButton>
-        <ModalTitle>{t('modalRenameChannel.title', { name })}</ModalTitle>
+        <ModalTitle>{t('modalChannelRenamer.title', { name })}</ModalTitle>
       </Modal.Header>
       <Formik
         initialValues={{ newname: name }}
@@ -46,13 +46,13 @@ function ModalChannelRemover({ id, name, hideModal }) {
       >
         <Form>
           <Modal.Body>
-            <FormLabel htmlFor="newname" className="visually-hidden">{t('modalRenameChannel.name')}</FormLabel>
+            <FormLabel htmlFor="newname" className="visually-hidden">{t('modalChannelRenamer.name')}</FormLabel>
             <Field innerRef={ref} id="newname" name="newname" type="text" />
             <ErrorMessage name="newname" />
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={hideModal}>{t('modalRenameChannel.cancel')}</Button>
-            <Button variant="primary" type="submit">{t('modalRenameChannel.save')}</Button>
+            <Button variant="secondary" onClick={hideModal}>{t('modalChannelRenamer.cancel')}</Button>
+            <Button variant="primary" type="submit">{t('modalChannelRenamer.save')}</Button>
           </Modal.Footer>
         </Form>
       </Formik>

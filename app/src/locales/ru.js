@@ -9,6 +9,29 @@ const ru = {
       chat: 'Чат',
       about: 'Про нас',
       topics: 'Топики',
+      loginButton: 'Войти',
+      logoutButton: 'Выйти',
+    },
+    loginPage: {
+      title: 'Авторизация',
+      username: 'Пользователь',
+      password: 'Пароль',
+      login: 'Войти',
+      toSignup: 'Регистрация',
+      errors: {
+        invalidPassword: 'Неверные имя пользователя или пароль',
+      },
+    },
+    signupPage: {
+      title: 'Регистрация',
+      username: 'Пользователь',
+      password: 'Пароль',
+      passwordConfirmation: 'Подтверждение пароля',
+      signup: 'Зарегистрировать',
+      toLogin: 'Авторизация',
+      errors: {
+        invalidPassword: 'Неверные имя пользователя или пароль',
+      },
     },
     channelAdder: {
       channels: 'Каналы',
@@ -21,11 +44,31 @@ const ru = {
       rename: 'Переименовать',
       remove: 'Удалить',
     },
-    modalRenameChannel: {
+    modalChannelRenamer: {
       title: 'Переименовать канал {{name}}',
       name: 'Название канала',
       save: 'Сохранить',
       cancel: 'Отменить',
+    },
+    modalChannelRemover: {
+      title: 'Remove channel {{name}}',
+      remove: 'Remove',
+      cancel: 'Cancel',
+    },
+    messagesHeader: {
+      messages_zero: 'Нет сообщений',
+      messages_one: '{{count}} сообщение',
+      messages_few: '{{count}} сообщения',
+      messages_many: '{{count}} сообщений',
+      messages_other: '{{count}} сообщений',
+    },
+    messageAdder: {
+      ariaLabel: 'Новое сообщение',
+      placeholder: 'Отправьте сообщение...',
+      send: 'Отправить',
+    },
+    error404: {
+      message: 'Страница не найдена. Ошибка 404',
     },
   },
 };

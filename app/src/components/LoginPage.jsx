@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { Button, Card, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
@@ -14,9 +15,14 @@ const schema = yup.object().shape({
 });
 
 function LoginPage() {
-  const [feedbackError, setFeedbackError] = useState(null);
-  const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const auth = useAuth();
+
+  const [feedbackError, setFeedbackError] = useState(null);
+
+  const navigate = useNavigate();
+
   const ref = useRef();
 
   useEffect(() => {
@@ -52,10 +58,10 @@ function LoginPage() {
   return (
     <Card style={{ width: '300px', margin: 'auto' }}>
       <Card.Body>
-        <Card.Title style={{ textAlign: 'center' }}>Авторизация</Card.Title>
+        <Card.Title style={{ textAlign: 'center' }}>{t('loginPage.title')}</Card.Title>
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group className="my-4">
-            <Form.Label htmlFor="username">Username</Form.Label>
+            <Form.Label htmlFor="username">{t('loginPage.username')}</Form.Label>
             <Form.Control
               ref={ref}
               id="username"
@@ -70,7 +76,7 @@ function LoginPage() {
             />
           </Form.Group>
           <Form.Group className="my-4">
-            <Form.Label htmlFor="password">Password</Form.Label>
+            <Form.Label htmlFor="password">{t('loginPage.password')}</Form.Label>
             <Form.Control
               id="password"
               placeholder="password"
@@ -83,13 +89,13 @@ function LoginPage() {
               value={formik.values.password}
               isInvalid={feedbackError}
             />
-            <div className="invalid-feedback active show" style={{ display: feedbackError ? 'block' : 'none' }}>the username or password is incorrect</div>
+            <div className="invalid-feedback active show" style={{ display: feedbackError ? 'block' : 'none' }}>{t('loginPage.errors.invalidPassword')}</div>
           </Form.Group>
-          <Button type="submit" variant="outline-primary" style={{ width: '100%' }}>Submit</Button>
+          <Button type="submit" variant="outline-primary" style={{ width: '100%' }}>{t('loginPage.login')}</Button>
         </Form>
       </Card.Body>
       <Card.Footer className="d-flex justify-content-center">
-        <Link to={queryString.signupPath()}>Регистрация</Link>
+        <Link to={queryString.signupPath()}>{t('loginPage.toSignup')}</Link>
       </Card.Footer>
     </Card>
   );

@@ -9,6 +9,29 @@ const en = {
       chat: 'Chat',
       about: 'About',
       topics: 'Topics',
+      loginButton: 'Log in',
+      logoutButton: 'Log out',
+    },
+    loginPage: {
+      title: 'Authorization',
+      username: 'Username',
+      password: 'Password',
+      login: 'Log in',
+      toSignup: 'Signup',
+      errors: {
+        invalidPassword: 'The username or password is incorrect',
+      },
+    },
+    signupPage: {
+      title: 'Registration',
+      username: 'Username',
+      password: 'Password',
+      passwordConfirmation: 'Confirm password',
+      signup: 'Sign up',
+      toLogin: 'Log in',
+      errors: {
+        invalidPassword: 'The username or password is incorrect',
+      },
     },
     channelAdder: {
       channels: 'Channels',
@@ -21,11 +44,31 @@ const en = {
       rename: 'Rename',
       remove: 'Remove',
     },
-    modalRenameChannel: {
+    modalChannelRenamer: {
       title: 'Rename channel {{name}}',
       name: 'Channel name',
       save: 'Save',
       cancel: 'Cancel',
+    },
+    modalChannelRemover: {
+      title: 'Remove channel {{name}}',
+      remove: 'Remove',
+      cancel: 'Cancel',
+    },
+    messagesHeader: {
+      messages_zero: 'No messages',
+      messages_one: '{{count}} message',
+      messages_few: '{{count}} messages',
+      messages_many: '{{count}} messages',
+      messages_other: '{{count}} messages',
+    },
+    messageAdder: {
+      ariaLabel: 'New message',
+      placeholder: 'Type message...',
+      send: 'Send',
+    },
+    error404: {
+      message: 'Page not found. Error 404',
     },
   },
 };
