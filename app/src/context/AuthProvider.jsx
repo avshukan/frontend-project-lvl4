@@ -38,11 +38,8 @@ function AuthProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    // console.log('useEffect');
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
-    // console.log('token', token);
-    // console.log('user', user);
     if (token) {
       dispatch(fetchData(token));
       setUsername(user);

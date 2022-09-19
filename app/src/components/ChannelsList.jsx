@@ -11,7 +11,7 @@ function ChannelsList() {
 
   const { channels, currentChannelId } = useSelector((state) => state.data);
 
-  const onSwitch = (id) => dispatch(switchChannel({ channelId: id }));
+  const onSwitch = (id) => dispatch(switchChannel({ channelId: +id }));
 
   const getChannelVariant = (id) => (currentChannelId === id ? 'primary' : '');
 

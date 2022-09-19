@@ -16,7 +16,8 @@ function MainPage() {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    socket.emit('newMessage', { body: textMessage, channelId: currentChannelId, username });
+    const newMessage = { body: textMessage, channelId: currentChannelId, username };
+    socket.emit('newMessage', newMessage);
     setTextMessage('');
     ref.current.focus();
   };
