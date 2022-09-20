@@ -2,11 +2,13 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   Button, Container, Navbar, Row, Col,
 } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { ToastContainer } from 'react-toastify';
 import LoginButton from './components/LoginButton';
 import LogoutButton from './components/LogoutButton';
 import PrivateRoute from './components/PrivateRoute';
@@ -23,6 +25,7 @@ function App() {
   return (
     <BrowserRouter>
       <Container fluid="md">
+        <ToastContainer />
         <Navbar bg="light" expand="lg">
           <Container>
             <Navbar.Brand href={queryString.chatPath()}>{t('navBar.brand')}</Navbar.Brand>

@@ -39,6 +39,14 @@ const en = {
       add: 'Add channel',
       save: 'Save',
       cancel: 'Cancel',
+      validation: {
+        required: 'Name is a required field',
+        notOneOf: 'Name must not be one of the following values: {{list}}',
+      },
+      toast: {
+        success: 'Channel {{name}} was created!',
+        error: 'Error creating channel {{name}}!',
+      },
     },
     channelMenu: {
       rename: 'Rename',

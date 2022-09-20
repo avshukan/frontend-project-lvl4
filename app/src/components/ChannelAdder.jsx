@@ -8,17 +8,18 @@ import {
 } from 'formik';
 import { object, string } from 'yup';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import useAuth from '../context/useAuth';
 import { switchChannel } from '../slices/dataSlice';
 
 function ChannelAdder() {
   const dispatch = useDispatch();
 
+  const namesList = useSelector((state) => state.data.channels.map(({ name }) => name));
+
   const { t } = useTranslation();
 
   const { socket } = useAuth();
-
-  const { channels } = useSelector((state) => state.data);
 
   const ref = useRef(null);
 
@@ -32,9 +33,11 @@ function ChannelAdder() {
 
   const onSubmit = (values) => {
     socket.emit('newChannel', values, ({ status, data: { id } }) => {
-      console.log('id', id, typeof id);
       if (status === 'ok') {
+        toast.info(t('channelAdder.toast.success', { name: values.name }), { delay: 3000 });
         dispatch(switchChannel({ channelId: id }));
+      } else {
+        toast.error(t('channelAdder.toast.error', { name: values.name }), { delay: 3000 });
       }
     });
     handleClose();
@@ -62,8 +65,8 @@ function ChannelAdder() {
           initialValues={{ name: '' }}
           validationSchema={object({
             name: string()
-              .required()
-              .notOneOf(channels.map(({ name }) => name)),
+              .required(t('channelAdder.validation.required'))
+              .notOneOf(namesList, t('channelAdder.validation.notOneOf', { list: namesList })),
           })}
           onSubmit={onSubmit}
         >
