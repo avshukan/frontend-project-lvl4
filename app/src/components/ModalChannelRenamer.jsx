@@ -37,7 +37,6 @@ function ModalChannelRemover({ id, name, hideModal }) {
         });
       }
     });
-    // socket.emit('renameChannel', { id, name: newname });
     actions.setSubmitting(false);
   };
 

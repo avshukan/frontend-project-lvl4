@@ -71,6 +71,11 @@ const en = {
       title: 'Remove channel {{name}}',
       remove: 'Remove',
       cancel: 'Cancel',
+      toast: {
+        loading: 'Channel removing...',
+        success: 'The channel {{name}} was removed!',
+        error: 'Error removing channel {{name}}!',
+      },
     },
     messagesHeader: {
       messages_zero: 'No messages',

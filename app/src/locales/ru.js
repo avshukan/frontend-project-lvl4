@@ -68,9 +68,14 @@ const ru = {
       },
     },
     modalChannelRemover: {
-      title: 'Remove channel {{name}}',
-      remove: 'Remove',
-      cancel: 'Cancel',
+      title: 'Удалить канал {{name}}',
+      remove: 'Удалить',
+      cancel: 'Отменить',
+      toast: {
+        loading: 'Удаление канала...',
+        success: 'Канал {{name}} удалён!',
+        error: 'Ошибка удаления канала {{name}}!',
+      },
     },
     messagesHeader: {
       messages_zero: 'Нет сообщений',

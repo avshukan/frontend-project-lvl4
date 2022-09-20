@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import {
   Button, Form, Modal, ModalTitle,
 } from 'react-bootstrap';
@@ -12,8 +13,19 @@ function ModalChannelRemover({ id, name, hideModal }) {
 
   const onRemove = (event) => {
     event.preventDefault();
+    const toastId = toast.loading(t('modalChannelRemover.toast.loading'));
     hideModal();
-    socket.emit('removeChannel', { id });
+    socket.emit('removeChannel', { id }, ({ status }) => {
+      if (status === 'ok') {
+        toast.update(toastId, {
+          render: t('modalChannelRemover.toast.success', { name }), type: 'success', isLoading: false, autoClose: 3000,
+        });
+      } else {
+        toast.update(toastId, {
+          render: t('modalChannelRemover.toast.error', { name }), type: 'error', isLoading: false, autoClose: 3000,
+        });
+      }
+    });
   };
 
   return (
