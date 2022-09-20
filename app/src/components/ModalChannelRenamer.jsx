@@ -29,11 +29,11 @@ function ModalChannelRemover({ id, name, hideModal }) {
     socket.emit('renameChannel', { id, name: newname }, ({ status }) => {
       if (status === 'ok') {
         toast.update(toastId, {
-          render: t('modalChannelRenamer.toast.success', { name: values.newname }), type: 'success', isLoading: false, autoClose: 3000,
+          render: t('modalChannelRenamer.toast.success', { name: values.newname }), type: 'success', isLoading: false, autoClose: 3000, delay: 1000,
         });
       } else {
         toast.update(toastId, {
-          render: t('modalChannelRenamer.toast.error', { name: values.newname }), type: 'error', isLoading: false, autoClose: 3000,
+          render: t('modalChannelRenamer.toast.error', { name: values.newname }), type: 'error', isLoading: false, autoClose: 3000, delay: 1000,
         });
       }
     });

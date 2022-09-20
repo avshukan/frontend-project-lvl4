@@ -4,6 +4,13 @@ const en = {
       en: 'English',
       ru: 'Русский',
     },
+    authProvider: {
+      toast: {
+        pending: 'Data loading...',
+        success: 'Data loaded!',
+        error: 'Data loading error!',
+      },
+    },
     navBar: {
       brand: 'Spechat',
       chat: 'Chat',

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import {
   Button, FormLabel, Modal, ModalTitle,
 } from 'react-bootstrap';
@@ -8,7 +9,6 @@ import {
 } from 'formik';
 import { object, string } from 'yup';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
 import useAuth from '../context/useAuth';
 import { switchChannel } from '../slices/dataSlice';
 
@@ -34,10 +34,10 @@ function ChannelAdder() {
   const onSubmit = (values) => {
     socket.emit('newChannel', values, ({ status, data: { id } }) => {
       if (status === 'ok') {
-        toast.info(t('channelAdder.toast.success', { name: values.name }), { delay: 3000 });
+        toast.info(t('channelAdder.toast.success', { name: values.name }), { autoClose: 3000, delay: 1000 });
         dispatch(switchChannel({ channelId: id }));
       } else {
-        toast.error(t('channelAdder.toast.error', { name: values.name }), { delay: 3000 });
+        toast.error(t('channelAdder.toast.error', { name: values.name }), { autoClose: 3000, delay: 1000 });
       }
     });
     handleClose();

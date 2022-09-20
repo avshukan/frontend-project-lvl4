@@ -3,6 +3,8 @@ import React, {
 } from 'react';
 import { io } from 'socket.io-client';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import AuthContext from './AuthContext';
 import {
   addChannel, addMessage, fetchData, removeChannel, renameChannel,
@@ -12,9 +14,10 @@ const socket = io({ autoConnect: false });
 
 function AuthProvider({ children }) {
   const dispatch = useDispatch();
-  const [username, setUsername] = useState('');
 
-  const initFetchData = useCallback((token) => dispatch(fetchData(token)), [dispatch]);
+  const { t } = useTranslation();
+
+  const [username, setUsername] = useState('');
 
   const isLogged = useCallback(() => {
     const token = localStorage.getItem('token');
@@ -22,13 +25,25 @@ function AuthProvider({ children }) {
     return !!(token && user);
   }, []);
 
+  const uploadData = useCallback((token) => {
+    const dataDispatcher = dispatch(fetchData(token));
+    toast.promise(
+      dataDispatcher,
+      {
+        pending: t('authProvider.toast.pending'),
+        success: t('authProvider.toast.success'),
+        error: t('authProvider.toast.error'),
+      },
+    );
+  }, [dispatch, t]);
+
   const logIn = useCallback((user, token) => {
     localStorage.setItem('user', user);
     localStorage.setItem('token', token);
     setUsername(user);
     socket.connect();
-    dispatch(fetchData(token));
-  }, [dispatch]);
+    uploadData(token);
+  }, [uploadData]);
 
   const logOut = useCallback(() => {
     localStorage.removeItem('token');
@@ -41,7 +56,7 @@ function AuthProvider({ children }) {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
     if (token) {
-      dispatch(fetchData(token));
+      uploadData(token);
       setUsername(user);
       socket.connect();
     }
@@ -49,7 +64,7 @@ function AuthProvider({ children }) {
     socket.on('renameChannel', (payload) => dispatch(renameChannel(payload)));
     socket.on('removeChannel', (payload) => dispatch(removeChannel(payload)));
     socket.on('newMessage', (payload) => dispatch(addMessage(payload)));
-  }, [dispatch, initFetchData]);
+  }, [dispatch, uploadData]);
 
   const value = useMemo(() => ({
     socket, isLogged, logIn, logOut, username,

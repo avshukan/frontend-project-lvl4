@@ -18,11 +18,11 @@ function ModalChannelRemover({ id, name, hideModal }) {
     socket.emit('removeChannel', { id }, ({ status }) => {
       if (status === 'ok') {
         toast.update(toastId, {
-          render: t('modalChannelRemover.toast.success', { name }), type: 'success', isLoading: false, autoClose: 3000,
+          render: t('modalChannelRemover.toast.success', { name }), type: 'success', isLoading: false, autoClose: 3000, delay: 1000,
         });
       } else {
         toast.update(toastId, {
-          render: t('modalChannelRemover.toast.error', { name }), type: 'error', isLoading: false, autoClose: 3000,
+          render: t('modalChannelRemover.toast.error', { name }), type: 'error', isLoading: false, autoClose: 3000, delay: 1000,
         });
       }
     });

@@ -4,6 +4,13 @@ const ru = {
       en: 'English',
       ru: 'Русский',
     },
+    authProvider: {
+      toast: {
+        pending: 'Загрузка данных...',
+        success: 'Данные загружены!',
+        error: 'Ошибка загрузки данных!',
+      },
+    },
     navBar: {
       brand: 'Болточат',
       chat: 'Чат',
