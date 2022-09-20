@@ -57,6 +57,15 @@ const en = {
       name: 'Channel name',
       save: 'Save',
       cancel: 'Cancel',
+      validation: {
+        required: 'Name is a required field',
+        notOneOf: 'Name must not be one of the following values: {{list}}',
+      },
+      toast: {
+        loading: 'Channel renaming...',
+        success: 'The channel was renamed into {{name}}!',
+        error: 'Error renaming channel into {{name}}!',
+      },
     },
     modalChannelRemover: {
       title: 'Remove channel {{name}}',

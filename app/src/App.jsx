@@ -25,7 +25,7 @@ function App() {
   return (
     <BrowserRouter>
       <Container fluid="md">
-        <ToastContainer />
+        <ToastContainer autoClose={3000} />
         <Navbar bg="light" expand="lg">
           <Container>
             <Navbar.Brand href={queryString.chatPath()}>{t('navBar.brand')}</Navbar.Brand>

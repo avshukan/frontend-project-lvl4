@@ -57,6 +57,15 @@ const ru = {
       name: 'Название канала',
       save: 'Сохранить',
       cancel: 'Отменить',
+      validation: {
+        required: 'Название канала является обязательным полем',
+        notOneOf: 'Название канала не должно содержаться в списке: {{list}}',
+      },
+      toast: {
+        loading: 'Переименование канала...',
+        success: 'Канал переименован в {{name}}!',
+        error: 'Ошибка переименования канала в {{name}}!',
+      },
     },
     modalChannelRemover: {
       title: 'Remove channel {{name}}',
