@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import filter from 'leo-profanity';
 
 function MessagesList() {
   const channelMessages = useSelector((state) => state
@@ -14,7 +15,7 @@ function MessagesList() {
           <b>{username}</b>
           :
           {' '}
-          {body}
+          {filter.clean(body)}
         </div>
       ))}
     </div>

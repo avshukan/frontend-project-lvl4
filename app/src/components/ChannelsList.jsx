@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   Button, ButtonGroup, Dropdown, Nav,
 } from 'react-bootstrap';
+import filter from 'leo-profanity';
 import { switchChannel } from '../slices/dataSlice';
 import ChannelMenu from './ChannelMenu';
 
@@ -32,7 +33,7 @@ function ChannelsList() {
           <Dropdown as={ButtonGroup} className="w-100">
             <Nav.Link as={Button} eventKey={id} className="text-truncate text-start">
               <span className="me-1">#</span>
-              {name}
+              {filter.clean(name)}
             </Nav.Link>
             {getChannelsMenu(id, name, removable)}
           </Dropdown>

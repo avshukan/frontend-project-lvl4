@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { toast } from 'react-toastify';
 import routes from '../routes/routes';
 
 export const fetchData = createAsyncThunk(
@@ -60,7 +59,6 @@ const dataSlice = createSlice({
         proxyState.currentChannelId = currentChannelId;
       })
       .addCase(fetchData.rejected, (state, action) => {
-        toast.error('ALARM!!!', { autoClose: 10000 });
         console.error('extraReducers builder rejected', state, action);
       });
   },

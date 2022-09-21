@@ -26,15 +26,19 @@ function AuthProvider({ children }) {
   }, []);
 
   const uploadData = useCallback((token) => {
-    const dataDispatcher = dispatch(fetchData(token));
-    toast.promise(
-      dataDispatcher,
-      {
-        pending: t('authProvider.toast.pending'),
-        success: t('authProvider.toast.success'),
-        error: t('authProvider.toast.error'),
-      },
-    );
+    const toastId = toast.loading(t('authProvider.toast.pending'));
+    dispatch(fetchData(token))
+      .unwrap()
+      .then(() => {
+        toast.update(toastId, {
+          render: t('authProvider.toast.success'), type: 'success', isLoading: false, autoClose: 3000, delay: 1000,
+        });
+      })
+      .catch(() => {
+        toast.update(toastId, {
+          render: t('authProvider.toast.error'), type: 'error', isLoading: false, autoClose: 3000, delay: 1000,
+        });
+      });
   }, [dispatch, t]);
 
   const logIn = useCallback((user, token) => {
