@@ -1,5 +1,6 @@
-import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
+import { useRollbar } from '@rollbar/react';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { Button, Card, Form } from 'react-bootstrap';
@@ -16,6 +17,8 @@ const schema = yup.object().shape({
 });
 
 function SignupPage() {
+  const rollbar = useRollbar();
+
   const { t } = useTranslation();
 
   const auth = useAuth();
@@ -50,7 +53,7 @@ function SignupPage() {
           navigate(queryString.chatPath());
         })
         .catch((error) => {
-          console.error('error', error);
+          rollbar.error('Error on signup', error, values);
           setFeedbackError(true);
           ref.current.select();
         });

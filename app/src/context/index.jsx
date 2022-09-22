@@ -1,17 +1,20 @@
 import React from 'react';
-import AuthProvider from './AuthProvider';
-import I18nProvider from './I18nProvider';
+import RollbarProvider from './RollbarProvider';
 import ReduxProvider from './ReduxProvider';
+import I18nProvider from './I18nProvider';
+import AuthProvider from './AuthProvider';
 
 function Providers({ children }) {
   return (
-    <ReduxProvider>
-      <I18nProvider>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
-      </I18nProvider>
-    </ReduxProvider>
+    <RollbarProvider>
+      <ReduxProvider>
+        <I18nProvider>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </I18nProvider>
+      </ReduxProvider>
+    </RollbarProvider>
   );
 }
 

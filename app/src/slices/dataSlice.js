@@ -57,9 +57,6 @@ const dataSlice = createSlice({
         proxyState.channels = channels;
         proxyState.messages = messages;
         proxyState.currentChannelId = currentChannelId;
-      })
-      .addCase(fetchData.rejected, (state, action) => {
-        console.error('extraReducers builder rejected', state, action);
       });
   },
 });

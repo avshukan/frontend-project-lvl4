@@ -1,10 +1,11 @@
 import React, {
   useCallback, useEffect, useMemo, useState,
 } from 'react';
-import { io } from 'socket.io-client';
+import { useRollbar } from '@rollbar/react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { io } from 'socket.io-client';
 import AuthContext from './AuthContext';
 import {
   addChannel, addMessage, fetchData, removeChannel, renameChannel,
@@ -13,6 +14,8 @@ import {
 const socket = io({ autoConnect: false });
 
 function AuthProvider({ children }) {
+  const rollbar = useRollbar();
+
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
@@ -34,12 +37,13 @@ function AuthProvider({ children }) {
           render: t('authProvider.toast.success'), type: 'success', isLoading: false, autoClose: 3000, delay: 1000,
         });
       })
-      .catch(() => {
+      .catch((error) => {
+        rollbar.error('Error fetching data', error, { token });
         toast.update(toastId, {
           render: t('authProvider.toast.error'), type: 'error', isLoading: false, autoClose: 3000, delay: 1000,
         });
       });
-  }, [dispatch, t]);
+  }, [dispatch, rollbar, t]);
 
   const logIn = useCallback((user, token) => {
     localStorage.setItem('user', user);
