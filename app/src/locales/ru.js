@@ -12,7 +12,7 @@ const ru = {
       },
     },
     navBar: {
-      brand: 'Болточат',
+      brand: 'Hexlet Chat',
       chat: 'Чат',
       about: 'Про нас',
       topics: 'Топики',

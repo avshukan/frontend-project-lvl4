@@ -12,7 +12,7 @@ const en = {
       },
     },
     navBar: {
-      brand: 'Spechat',
+      brand: 'Hexlet Chat',
       chat: 'Chat',
       about: 'About',
       topics: 'Topics',
