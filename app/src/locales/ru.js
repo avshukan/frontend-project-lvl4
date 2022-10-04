@@ -31,7 +31,7 @@ const ru = {
     },
     signupPage: {
       title: 'Регистрация',
-      username: 'Пользователь',
+      username: 'Имя пользователя',
       password: 'Пароль',
       passwordConfirmation: 'Подтверждение пароля',
       signup: 'Зарегистрировать',
