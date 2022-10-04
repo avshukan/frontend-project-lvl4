@@ -21,7 +21,7 @@ const ru = {
     },
     loginPage: {
       title: 'Авторизация',
-      username: 'Пользователь',
+      username: 'Имя пользователя',
       password: 'Пароль',
       login: 'Войти',
       toSignup: 'Регистрация',
