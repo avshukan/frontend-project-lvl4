@@ -6,7 +6,6 @@
   "scripts": {
     "build": "npm run build --prefix app",
     "start": "start-server -s ./app/build",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "cd app && npm ci"
   },
   "repository": {
@@ -30,6 +29,7 @@
     "socket.io-client": "^4.5.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.26.1",
     "eslint": "^8.19.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-base": "^15.0.0",

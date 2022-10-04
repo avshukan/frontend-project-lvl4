@@ -16,5 +16,8 @@ start-backend:
 start:
 	make start-backend & make start-frontend
 
+test:
+	npx playwright test --project=chromium
+
 deploy:
 	git push heroku main
