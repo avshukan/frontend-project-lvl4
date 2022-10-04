@@ -33,7 +33,7 @@ const ru = {
       title: 'Регистрация',
       username: 'Имя пользователя',
       password: 'Пароль',
-      passwordConfirmation: 'Подтверждение пароля',
+      passwordConfirmation: 'Подтвердите пароль',
       signup: 'Зарегистрировать',
       toLogin: 'Авторизация',
       errors: {
