@@ -94,7 +94,7 @@ function SignupPage() {
               value={formik.values.password}
               isInvalid={feedbackError}
             />
-            <div className="invalid-feedback active show" style={{ display: feedbackError ? 'block' : 'none' }}>{t('signupPage.errors.invalidPassword')}</div>
+            <div className="invalid-feedback active show" style={{ display: feedbackError ? 'block' : 'none' }}>{feedbackError ? t('signupPage.errors.invalidPassword') : ''}</div>
           </Form.Group>
           <Form.Group className="my-4">
             <Form.Label htmlFor="passwordConfirmation">{t('signupPage.passwordConfirmation')}</Form.Label>
@@ -110,7 +110,7 @@ function SignupPage() {
               value={formik.values.passwordConfirmation}
               isInvalid={feedbackError}
             />
-            <div className="invalid-feedback active show" style={{ display: feedbackError ? 'block' : 'none' }}>{t('signupPage.errors.invalidPassword')}</div>
+            <div className="invalid-feedback active show" style={{ display: feedbackError ? 'block' : 'none' }}>{feedbackError ? t('signupPage.errors.invalidPassword') : null}</div>
           </Form.Group>
           <Button type="submit" variant="outline-primary" style={{ width: '100%' }}>{t('signupPage.signup')}</Button>
         </Form>

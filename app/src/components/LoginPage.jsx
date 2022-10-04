@@ -92,7 +92,7 @@ function LoginPage() {
               value={formik.values.password}
               isInvalid={feedbackError}
             />
-            <div className="invalid-feedback active show" style={{ display: feedbackError ? 'block' : 'none' }}>{t('loginPage.errors.invalidPassword')}</div>
+            <div className="invalid-feedback active show" style={{ display: feedbackError ? 'block' : 'none' }}>{feedbackError ? t('loginPage.errors.invalidPassword') : ''}</div>
           </Form.Group>
           <Button type="submit" variant="outline-primary" style={{ width: '100%' }}>{t('loginPage.login')}</Button>
         </Form>
