@@ -62,68 +62,68 @@ test.describe('auth', () => {
   });
 });
 
-// test.describe('chat', () => {
-//     test.beforeEach(async ({ page }) => {
-//         await page.locator('text=Ваш ник').type('admin');
-//         await page.locator('text=/^Пароль$/').type('admin');
-//         await page.locator('button[type="submit"]').click();
-//         await page.locator('[aria-label="Новое сообщение"]');
-//     });
+test.describe('chat', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.locator('text=Ваш ник').type('admin');
+    await page.locator('text=/^Пароль$/').type('admin');
+    await page.locator('button[type="submit"]').click();
+    await page.locator('[aria-label="Новое сообщение"]');
+  });
 
-//     test('messaging', async ({ page }) => {
-//         await page.locator('[aria-label="Новое сообщение"]').type('hello');
-//         await page.keyboard.press('Enter');
-//         expect(await page.$('text=hello')).not.toBeNull();
-//     });
+  test('messaging', async ({ page }) => {
+    await page.locator('[aria-label="Новое сообщение"]').type('hello');
+    await page.keyboard.press('Enter');
+    expect(await page.$('text=hello')).not.toBeNull();
+  });
 
-//     test('profanity filter', async ({ page }) => {
-//         const profanityText = 'you have nice boobs';
-//         await page.locator('[aria-label="Новое сообщение"]').type(profanityText);
-//         await page.keyboard.press('Enter');
-//         expect(await page.locator(`text=${profanityText}`, { timeout: 0 })).not.toBe();
-//         expect(await page.locator('text="you have nice *****"', { timeout: 30000 })).not.toBeNull();
-//     });
+  test('profanity filter', async ({ page }) => {
+    const profanityText = 'you have nice boobs';
+    await page.locator('[aria-label="Новое сообщение"]').type(profanityText);
+    await page.keyboard.press('Enter');
+    expect(await page.locator(`text=${profanityText}`, { timeout: 0 })).not.toBe();
+    expect(await page.locator('text="you have nice *****"', { timeout: 30000 })).not.toBeNull();
+  });
 
-//     test('different channels', async ({ page }) => {
-//         await page.locator('[aria-label="Новое сообщение"]').type('message for general');
-//         await page.keyboard.press('Enter');
-//         expect(await page.$('text=message for general')).not.toBeNull();
-//         await page.locator('text=random').click();
-//         expect(await page.$("text='message for general'")).toBeNull();
-//         await page.locator('[aria-label="Новое сообщение"]').type('message for random');
-//         await page.keyboard.press('Enter');
-//         expect(await page.$('text=message for random')).not.toBeNull();
-//     });
+  test('different channels', async ({ page }) => {
+    await page.locator('[aria-label="Новое сообщение"]').type('message for general');
+    await page.keyboard.press('Enter');
+    expect(await page.$('text=message for general')).not.toBeNull();
+    await page.locator('text=random').click();
+    expect(await page.$("text='message for general'")).toBeNull();
+    await page.locator('[aria-label="Новое сообщение"]').type('message for random');
+    await page.keyboard.press('Enter');
+    expect(await page.$('text=message for random')).not.toBeNull();
+  });
 
-//     test('adding channel', async ({ page }) => {
-//         await page.locator('text=+').click();
-//         await page.locator('text=Имя канала').type('test channel');
-//         await page.keyboard.press('Enter');
+  test('adding channel', async ({ page }) => {
+    await page.locator('text=+').click();
+    await page.locator('text=Имя канала').type('test channel');
+    await page.keyboard.press('Enter');
 
-//         expect(await page.locator('text=Канал создан')).toBeVisible();
-//         expect(await page.$('text=# test channel')).not.toBeNull();
-//     });
+    expect(await page.locator('text=Канал создан')).toBeVisible();
+    expect(await page.$('text=# test channel')).not.toBeNull();
+  });
 
-//     test('rename channel', async ({ page }) => {
-//         await page.locator('text="Управление каналом"').click();
-//         await page.locator('text=Переименовать').click();
-//         const input = await page.locator('text=Имя канала');
-//         await input.fill('');
-//         await input.type('new test channel');
-//         await page.keyboard.press('Enter');
+  test('rename channel', async ({ page }) => {
+    await page.locator('text="Управление каналом"').click();
+    await page.locator('text=Переименовать').click();
+    const input = await page.locator('text=Имя канала');
+    await input.fill('');
+    await input.type('new test channel');
+    await page.keyboard.press('Enter');
 
-//         await expect(await page.locator('text=Канал переименован')).toBeVisible();
-//         expect(await page.locator('text="# new test channel"')).not.toBeNull();
-//         // await expect(await page.$('text="# new test channel"')).not.toBeNull();
-//     });
+    await expect(await page.locator('text=Канал переименован')).toBeVisible();
+    expect(await page.locator('text="# new test channel"')).not.toBeNull();
+    // await expect(await page.$('text="# new test channel"')).not.toBeNull();
+  });
 
-//     test('remove channel', async ({ page }) => {
-//         await page.locator('text=Управление каналом').click();
-//         await page.locator('text=Удалить').click();
+  test('remove channel', async ({ page }) => {
+    await page.locator('text=Управление каналом').click();
+    await page.locator('text=Удалить').click();
 
-//         await page.locator('button.btn-danger').click();
+    await page.locator('button.btn-danger').click();
 
-//         await expect(await page.locator('text=Канал удалён')).toBeVisible();
-//         await expect(await page.$('text=# new test channel')).toBeNull();
-//     });
-// });
+    await expect(await page.locator('text=Канал удалён')).toBeVisible();
+    await expect(await page.$('text=# new test channel')).toBeNull();
+  });
+});
