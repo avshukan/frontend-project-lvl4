@@ -34,7 +34,7 @@ function AuthProvider({ children }) {
       .unwrap()
       .then(() => {
         toast.update(toastId, {
-          render: t('authProvider.toast.success'), type: 'success', isLoading: false, autoClose: 3000, delay: 1000,
+          render: t('authProvider.toast.success'), type: 'success', isLoading: false, autoClose: 100, delay: 100,
         });
       })
       .catch((error) => {
