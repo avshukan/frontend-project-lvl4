@@ -3,40 +3,40 @@
 import { test, expect } from '@playwright/test';
 
 const user = {
-    login: 'user',
-    password: 'password',
+  login: 'user',
+  password: 'password',
 };
 
 test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000');
-    await page.waitForTimeout(300);
+  await page.goto('http://localhost:3000');
+  await page.waitForTimeout(300);
 
-    await page.locator('text=Hexlet Chat').click();
+  await page.locator('text=Hexlet Chat').click();
 });
 
 test.describe('registration', () => {
-    test('handle new user creation', async ({ page }) => {
-        await page.click('text=Регистрация');
-        await page.waitForURL('**/signup');
-        await page.locator('text=Имя пользователя').type(user.login);
-        await page.locator('text=/^Пароль$/').type(user.password);
-        await page.locator('text=Подтвердите пароль').type(user.password);
-        await page.locator('button[type="submit"]').click();
-        await page.waitForURL('**/');
-    });
+  test('handle new user creation', async ({ page }) => {
+    await page.click('text=Регистрация');
+    await page.waitForURL('**/signup');
+    await page.locator('text=Имя пользователя').type(user.login);
+    await page.locator('text=/^Пароль$/').type(user.password);
+    await page.locator('text=Подтвердите пароль').type(user.password);
+    await page.locator('button[type="submit"]').click();
+    await page.waitForURL('**/');
+  });
 
-    test('handle validation', async ({ page }) => {
-        await page.click('text=Регистрация');
-        await page.waitForURL('**/signup');
+  test('handle validation', async ({ page }) => {
+    await page.click('text=Регистрация');
+    await page.waitForURL('**/signup');
 
-        await page.locator('text=Имя пользователя').type('u');
-        await page.locator('text=/^Пароль$/').type('pass');
-        await page.locator('text=Подтвердите пароль').type('passw');
-        await page.locator('button[type="submit"]').click();
-        expect(await page.$('text=От 3 до 20 символов')).not.toBeNull();
-        expect(await page.$('text=Не менее 6 символов')).not.toBeNull();
-        expect(await page.$('text=Пароли должны совпадать')).not.toBeNull();
-    });
+    await page.locator('text=Имя пользователя').type('u');
+    await page.locator('text=/^Пароль$/').type('pass');
+    await page.locator('text=Подтвердите пароль').type('passw');
+    await page.locator('button[type="submit"]').click();
+    expect(await page.$('text=От 3 до 20 символов')).not.toBeNull();
+    expect(await page.$('text=Не менее 6 символов')).not.toBeNull();
+    expect(await page.$('text=Пароли должны совпадать')).not.toBeNull();
+  });
 });
 
 // test.describe('auth', () => {

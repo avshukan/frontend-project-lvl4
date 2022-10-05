@@ -37,7 +37,17 @@ const ru = {
       signup: 'Зарегистрировать',
       toLogin: 'Авторизация',
       errors: {
-        invalidPassword: 'Неверные имя пользователя или пароль',
+        username: {
+          required: 'Имя пользователя обязательно',
+          wrongLength: 'От 3 до 20 символов',
+        },
+        password: {
+          required: 'Пароль обязателен',
+          wrongLength: 'Не менее 6 символов',
+        },
+        passwordConfirmation: {
+          notMatch: 'Пароли должны совпадать',
+        },
       },
     },
     channelAdder: {

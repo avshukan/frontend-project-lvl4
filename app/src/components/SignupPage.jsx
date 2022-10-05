@@ -11,9 +11,15 @@ import routes from '../routes/routes';
 import queryString from '../routes/queryString';
 
 const schema = yup.object().shape({
-  username: yup.string().required('Username is required').min(3).max(20),
-  password: yup.string().required('Password is required').min(6),
-  passwordConfirmation: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
+  username: yup.string()
+    .required('signupPage.errors.username.required')
+    .min(3, 'signupPage.errors.username.wrongLength')
+    .max(20, 'signupPage.errors.username.wrongLength'),
+  password: yup.string()
+    .required('signupPage.errors.password.required')
+    .min(6, 'signupPage.errors.password.wrongLength'),
+  passwordConfirmation: yup.string()
+    .oneOf([yup.ref('password'), null], 'signupPage.errors.passwordConfirmation.notMatch'),
 });
 
 function SignupPage() {
@@ -23,7 +29,7 @@ function SignupPage() {
 
   const auth = useAuth();
 
-  const [feedbackError, setFeedbackError] = useState(null);
+  const [feedbackError, setFeedbackError] = useState({});
 
   const navigate = useNavigate();
 
@@ -39,11 +45,13 @@ function SignupPage() {
       password: '',
       passwordConfirmation: '',
     },
+    validateOnChange: true,
+    validateOnBlur: true,
     onSubmit: async (values) => {
-      setFeedbackError(false);
+      setFeedbackError({});
       const route = routes.signupPath();
       await schema
-        .validate(values)
+        .validate(values, { abortEarly: false })
         .then(() => axios.post(route, {
           username: values.username,
           password: values.password,
@@ -53,8 +61,14 @@ function SignupPage() {
           navigate(queryString.chatPath());
         })
         .catch((error) => {
+          if (error.errors) {
+            const newFeedbackError = error.inner.reduce((acc, { path, message }) => ({
+              ...acc,
+              [path]: message,
+            }), {});
+            setFeedbackError(newFeedbackError);
+          }
           rollbar.error('Error on signup', error, values);
-          setFeedbackError(true);
           ref.current.select();
         });
     },
@@ -70,21 +84,22 @@ function SignupPage() {
             <Form.Control
               ref={ref}
               id="username"
-              placeholder={t('signupPage.')}
+              placeholder={t('signupPage.username')}
               name="username"
               autoComplete="username"
               required
               className="form-control"
               onChange={formik.handleChange}
               value={formik.values.username}
-              isInvalid={feedbackError}
+              isInvalid={!!feedbackError.username}
             />
+            {feedbackError.username && <div className="invalid-feedback active show">{t(feedbackError.username)}</div>}
           </Form.Group>
           <Form.Group className="my-4">
             <Form.Label htmlFor="password">{t('signupPage.password')}</Form.Label>
             <Form.Control
               id="password"
-              placeholder={t('signupPage.')}
+              placeholder={t('signupPage.password')}
               name="password"
               autoComplete="current-password"
               required
@@ -92,9 +107,9 @@ function SignupPage() {
               type="password"
               onChange={formik.handleChange}
               value={formik.values.password}
-              isInvalid={feedbackError}
+              isInvalid={!!feedbackError.password}
             />
-            <div className="invalid-feedback active show" style={{ display: feedbackError ? 'block' : 'none' }}>{feedbackError ? t('signupPage.errors.invalidPassword') : ''}</div>
+            {feedbackError.password && <div className="invalid-feedback active show">{t(feedbackError.password)}</div>}
           </Form.Group>
           <Form.Group className="my-4">
             <Form.Label htmlFor="passwordConfirmation">{t('signupPage.passwordConfirmation')}</Form.Label>
@@ -108,9 +123,9 @@ function SignupPage() {
               type="password"
               onChange={formik.handleChange}
               value={formik.values.passwordConfirmation}
-              isInvalid={feedbackError}
+              isInvalid={!!feedbackError.passwordConfirmation}
             />
-            <div className="invalid-feedback active show" style={{ display: feedbackError ? 'block' : 'none' }}>{feedbackError ? t('signupPage.errors.invalidPassword') : null}</div>
+            {feedbackError.passwordConfirmation && <div className="invalid-feedback active show">{t(feedbackError.passwordConfirmation)}</div>}
           </Form.Group>
           <Button type="submit" variant="outline-primary" style={{ width: '100%' }}>{t('signupPage.signup')}</Button>
         </Form>

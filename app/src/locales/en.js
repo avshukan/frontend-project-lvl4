@@ -37,7 +37,17 @@ const en = {
       signup: 'Sign up',
       toLogin: 'Log in',
       errors: {
-        invalidPassword: 'The username or password is incorrect',
+        username: {
+          required: 'username is required',
+          wrongLength: 'Username must be at least 3 and most 20 characters',
+        },
+        password: {
+          required: 'password is required',
+          wrongLength: 'Password must be at least 6 characters',
+        },
+        passwordConfirmation: {
+          notMatch: 'Passwords must match',
+        },
       },
     },
     channelAdder: {
