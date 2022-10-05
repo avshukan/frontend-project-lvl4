@@ -34,13 +34,13 @@ function AuthProvider({ children }) {
       .unwrap()
       .then(() => {
         toast.update(toastId, {
-          render: t('authProvider.toast.success'), type: 'success', isLoading: false, autoClose: 100, delay: 100,
+          render: t('authProvider.toast.success'), type: 'success', isLoading: false, autoClose: 1000,
         });
       })
       .catch((error) => {
         rollbar.error('Error fetching data', error, { token });
         toast.update(toastId, {
-          render: t('authProvider.toast.error'), type: 'error', isLoading: false, autoClose: 3000, delay: 1000,
+          render: t('authProvider.toast.error'), type: 'error', isLoading: false, autoClose: 3000,
         });
       });
   }, [dispatch, rollbar, t]);

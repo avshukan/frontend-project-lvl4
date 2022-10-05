@@ -34,10 +34,10 @@ function ChannelAdder() {
   const onSubmit = (values) => {
     socket.emit('newChannel', values, ({ status, data: { id } }) => {
       if (status === 'ok') {
-        toast.info(t('channelAdder.toast.success', { name: values.name }), { autoClose: 3000, delay: 1000 });
+        toast.info(t('channelAdder.toast.success', { name: values.name }), { autoClose: 3000 });
         dispatch(switchChannel({ channelId: id }));
       } else {
-        toast.error(t('channelAdder.toast.error', { name: values.name }), { autoClose: 3000, delay: 1000 });
+        toast.error(t('channelAdder.toast.error', { name: values.name }), { autoClose: 3000 });
       }
     });
     handleClose();
