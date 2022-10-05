@@ -21,7 +21,9 @@ function ChannelMenu({ id, name, variant }) {
 
   return (
     <>
-      <Dropdown.Toggle active variant={variant} style={{ width: '30px', flexGrow: 0 }} />
+      <Dropdown.Toggle active variant={variant} style={{ width: '30px', flexGrow: 0 }}>
+        <span className="visually-hidden">{t('channelMenu.title')}</span>
+      </Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item onClick={showModalChannelRenamer}>{t('channelMenu.rename')}</Dropdown.Item>
         <Dropdown.Item onClick={showModalChannelRemover}>{t('channelMenu.remove')}</Dropdown.Item>

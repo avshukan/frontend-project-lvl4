@@ -66,13 +66,14 @@ const ru = {
       },
     },
     channelMenu: {
+      title: 'Управление каналом',
       rename: 'Переименовать',
       remove: 'Удалить',
     },
     modalChannelRenamer: {
       title: 'Переименовать канал {{name}}',
-      name: 'Название канала',
-      save: 'Сохранить',
+      name: 'Имя канала',
+      save: 'Переименовать',
       cancel: 'Отменить',
       validation: {
         required: 'Название канала является обязательным полем',
@@ -90,7 +91,7 @@ const ru = {
       cancel: 'Отменить',
       toast: {
         loading: 'Удаление канала...',
-        success: 'Канал {{name}} удалён!',
+        success: 'Канал удалён',
         error: 'Ошибка удаления канала {{name}}!',
       },
     },

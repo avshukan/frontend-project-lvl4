@@ -66,6 +66,7 @@ const en = {
       },
     },
     channelMenu: {
+      title: 'Run channel',
       rename: 'Rename',
       remove: 'Remove',
     },
