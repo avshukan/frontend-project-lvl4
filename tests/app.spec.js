@@ -39,28 +39,28 @@ test.describe('registration', () => {
   });
 });
 
-// test.describe('auth', () => {
-//     test('login page on enter as guest', async ({ page }) => {
-//         expect(await page.$('text=Ваш ник')).not.toBeNull();
-//         expect(await page.$('text=/^Пароль$/')).not.toBeNull();
-//     });
+test.describe('auth', () => {
+  test('login page on enter as guest', async ({ page }) => {
+    expect(await page.$('text=Ваш ник')).not.toBeNull();
+    expect(await page.$('text=/^Пароль$/')).not.toBeNull();
+  });
 
-//     test('successful login', async ({ page }) => {
-//         await page.locator('text=Ваш ник').type('admin');
-//         await page.locator('text=/^Пароль$/').type('admin');
-//         await page.locator('button[type="submit"]').click();
+  test('successful login', async ({ page }) => {
+    await page.locator('text=Ваш ник').type('admin');
+    await page.locator('text=/^Пароль$/').type('admin');
+    await page.locator('button[type="submit"]').click();
 
-//         expect(await page.$('text=Неверные имя пользователя или пароль')).toBeNull();
-//     });
+    expect(await page.$('text=Неверные имя пользователя или пароль')).toBeNull();
+  });
 
-//     test('handle login error', async ({ page }) => {
-//         await page.locator('text=Ваш ник').type('guest');
-//         await page.locator('text=/^Пароль$/').type('pass');
-//         await page.locator('button[type="submit"]').click();
+  test('handle login error', async ({ page }) => {
+    await page.locator('text=Ваш ник').type('guest');
+    await page.locator('text=/^Пароль$/').type('pass');
+    await page.locator('button[type="submit"]').click();
 
-//         expect(await page.$('text=Неверные имя пользователя или пароль')).not.toBeNull();
-//     });
-// });
+    expect(await page.$('text=Неверные имя пользователя или пароль')).not.toBeNull();
+  });
+});
 
 // test.describe('chat', () => {
 //     test.beforeEach(async ({ page }) => {

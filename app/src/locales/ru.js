@@ -20,8 +20,8 @@ const ru = {
       logoutButton: 'Выйти',
     },
     loginPage: {
-      title: 'Авторизация',
-      username: 'Имя пользователя',
+      title: 'Войти',
+      username: 'Ваш ник',
       password: 'Пароль',
       login: 'Войти',
       toSignup: 'Регистрация',
@@ -34,7 +34,7 @@ const ru = {
       username: 'Имя пользователя',
       password: 'Пароль',
       passwordConfirmation: 'Подтвердите пароль',
-      signup: 'Зарегистрировать',
+      signup: 'Зарегистрироваться',
       toLogin: 'Авторизация',
       errors: {
         username: {
