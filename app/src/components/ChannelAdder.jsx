@@ -57,7 +57,6 @@ function ChannelAdder() {
           <span className="visually-hidden">+</span>
         </button>
       </div>
-
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
           <ModalTitle>{t('channelAdder.add')}</ModalTitle>
