@@ -59,7 +59,7 @@ function ModalChannelRemover({ id, name, hideModal }) {
         <Form>
           <Modal.Body>
             <FormLabel htmlFor="newname" className="visually-hidden">{t('modalChannelRenamer.name')}</FormLabel>
-            <Field innerRef={ref} id="newname" name="newname" type="text" />
+            <Field className='w-100' innerRef={ref} id="newname" name="newname" type="text" />
             <ErrorMessage name="newname" />
           </Modal.Body>
           <Modal.Footer>

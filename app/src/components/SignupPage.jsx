@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useRollbar } from '@rollbar/react';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
-import { Button, Card, Form } from 'react-bootstrap';
+import { Button, Card, Container, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import useAuth from '../context/useAuth';
@@ -75,65 +75,67 @@ function SignupPage() {
   });
 
   return (
-    <Card style={{ width: '300px', margin: 'auto' }}>
-      <Card.Body>
-        <Card.Title style={{ textAlign: 'center' }}>{t('signupPage.title')}</Card.Title>
-        <Form onSubmit={formik.handleSubmit}>
-          <Form.Group className="my-4">
-            <Form.Label htmlFor="username">{t('signupPage.username')}</Form.Label>
-            <Form.Control
-              ref={ref}
-              id="username"
-              placeholder={t('signupPage.username')}
-              name="username"
-              autoComplete="username"
-              required
-              className="form-control"
-              onChange={formik.handleChange}
-              value={formik.values.username}
-              isInvalid={!!feedbackError.username}
-            />
-            {feedbackError.username && <div className="invalid-feedback active show">{t(feedbackError.username)}</div>}
-          </Form.Group>
-          <Form.Group className="my-4">
-            <Form.Label htmlFor="password">{t('signupPage.password')}</Form.Label>
-            <Form.Control
-              id="password"
-              placeholder={t('signupPage.password')}
-              name="password"
-              autoComplete="current-password"
-              required
-              className="form-control"
-              type="password"
-              onChange={formik.handleChange}
-              value={formik.values.password}
-              isInvalid={!!feedbackError.password}
-            />
-            {feedbackError.password && <div className="invalid-feedback active show">{t(feedbackError.password)}</div>}
-          </Form.Group>
-          <Form.Group className="my-4">
-            <Form.Label htmlFor="passwordConfirmation">{t('signupPage.passwordConfirmation')}</Form.Label>
-            <Form.Control
-              id="passwordConfirmation"
-              placeholder={t('signupPage.passwordConfirmation')}
-              name="passwordConfirmation"
-              autoComplete="current-password"
-              required
-              className="form-control"
-              type="password"
-              onChange={formik.handleChange}
-              value={formik.values.passwordConfirmation}
-              isInvalid={!!feedbackError.passwordConfirmation}
-            />
-            {feedbackError.passwordConfirmation && <div className="invalid-feedback active show">{t(feedbackError.passwordConfirmation)}</div>}
-          </Form.Group>
-          <Button type="submit" variant="outline-primary" style={{ width: '100%' }}>{t('signupPage.signup')}</Button>
-        </Form>
-      </Card.Body>
-      <Card.Footer className="d-flex justify-content-center">
-        <Link to={queryString.loginPath()}>{t('signupPage.toLogin')}</Link>
-      </Card.Footer>
-    </Card>
+    <Container className='h-100 w-100 d-flex align-content-center justify-content-center'>
+      <Card style={{ width: '300px', margin: 'auto' }}>
+        <Card.Body>
+          <Card.Title style={{ textAlign: 'center' }}>{t('signupPage.title')}</Card.Title>
+          <Form onSubmit={formik.handleSubmit}>
+            <Form.Group className="my-4">
+              <Form.Label htmlFor="username">{t('signupPage.username')}</Form.Label>
+              <Form.Control
+                ref={ref}
+                id="username"
+                placeholder={t('signupPage.username')}
+                name="username"
+                autoComplete="username"
+                required
+                className="form-control"
+                onChange={formik.handleChange}
+                value={formik.values.username}
+                isInvalid={!!feedbackError.username}
+              />
+              {feedbackError.username && <div className="invalid-feedback active show">{t(feedbackError.username)}</div>}
+            </Form.Group>
+            <Form.Group className="my-4">
+              <Form.Label htmlFor="password">{t('signupPage.password')}</Form.Label>
+              <Form.Control
+                id="password"
+                placeholder={t('signupPage.password')}
+                name="password"
+                autoComplete="current-password"
+                required
+                className="form-control"
+                type="password"
+                onChange={formik.handleChange}
+                value={formik.values.password}
+                isInvalid={!!feedbackError.password}
+              />
+              {feedbackError.password && <div className="invalid-feedback active show">{t(feedbackError.password)}</div>}
+            </Form.Group>
+            <Form.Group className="my-4">
+              <Form.Label htmlFor="passwordConfirmation">{t('signupPage.passwordConfirmation')}</Form.Label>
+              <Form.Control
+                id="passwordConfirmation"
+                placeholder={t('signupPage.passwordConfirmation')}
+                name="passwordConfirmation"
+                autoComplete="current-password"
+                required
+                className="form-control"
+                type="password"
+                onChange={formik.handleChange}
+                value={formik.values.passwordConfirmation}
+                isInvalid={!!feedbackError.passwordConfirmation}
+              />
+              {feedbackError.passwordConfirmation && <div className="invalid-feedback active show">{t(feedbackError.passwordConfirmation)}</div>}
+            </Form.Group>
+            <Button type="submit" variant="outline-primary" style={{ width: '100%' }}>{t('signupPage.signup')}</Button>
+          </Form>
+        </Card.Body>
+        <Card.Footer className="d-flex justify-content-center">
+          <Link to={queryString.loginPath()}>{t('signupPage.toLogin')}</Link>
+        </Card.Footer>
+      </Card>
+    </Container>
   );
 }
 

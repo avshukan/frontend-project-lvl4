@@ -73,7 +73,7 @@ function ChannelAdder() {
           <Form>
             <Modal.Body>
               <FormLabel htmlFor="name" className="visually-hidden">{t('channelAdder.name')}</FormLabel>
-              <Field innerRef={ref} id="name" name="name" type="text" />
+              <Field className='w-100' innerRef={ref} id="name" name="name" type="text" />
               <ErrorMessage name="name" />
             </Modal.Body>
             <Modal.Footer>

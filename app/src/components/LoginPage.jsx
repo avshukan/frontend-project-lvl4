@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useRollbar } from '@rollbar/react';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
-import { Button, Card, Form } from 'react-bootstrap';
+import { Button, Card, Container, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import useAuth from '../context/useAuth';
@@ -59,48 +59,50 @@ function LoginPage() {
   });
 
   return (
-    <Card style={{ width: '300px', margin: 'auto' }}>
-      <Card.Body>
-        <Card.Title style={{ textAlign: 'center' }}>{t('loginPage.title')}</Card.Title>
-        <Form onSubmit={formik.handleSubmit}>
-          <Form.Group className="my-4">
-            <Form.Label htmlFor="username">{t('loginPage.username')}</Form.Label>
-            <Form.Control
-              ref={ref}
-              id="username"
-              placeholder="username"
-              name="username"
-              autoComplete="username"
-              required
-              className="form-control"
-              onChange={formik.handleChange}
-              value={formik.values.username}
-              isInvalid={feedbackError}
-            />
-          </Form.Group>
-          <Form.Group className="my-4">
-            <Form.Label htmlFor="password">{t('loginPage.password')}</Form.Label>
-            <Form.Control
-              id="password"
-              placeholder="password"
-              name="password"
-              autoComplete="current-password"
-              required
-              className="form-control"
-              type="password"
-              onChange={formik.handleChange}
-              value={formik.values.password}
-              isInvalid={feedbackError}
-            />
-            {feedbackError && <div className="invalid-feedback active show">{t('loginPage.errors.invalidPassword')}</div>}
-          </Form.Group>
-          <Button type="submit" variant="outline-primary" style={{ width: '100%' }}>{t('loginPage.login')}</Button>
-        </Form>
-      </Card.Body>
-      <Card.Footer className="d-flex justify-content-center">
-        <Link to={queryString.signupPath()}>{t('loginPage.toSignup')}</Link>
-      </Card.Footer>
-    </Card>
+    <Container className='h-100 w-100 d-flex align-content-center justify-content-center'>
+      <Card className="my-auto mx-auto" style={{ width: '300px' }}>
+        <Card.Body>
+          <Card.Title style={{ textAlign: 'center' }}>{t('loginPage.title')}</Card.Title>
+          <Form onSubmit={formik.handleSubmit}>
+            <Form.Group className="my-4">
+              <Form.Label htmlFor="username">{t('loginPage.username')}</Form.Label>
+              <Form.Control
+                ref={ref}
+                id="username"
+                placeholder="username"
+                name="username"
+                autoComplete="username"
+                required
+                className="form-control"
+                onChange={formik.handleChange}
+                value={formik.values.username}
+                isInvalid={feedbackError}
+              />
+            </Form.Group>
+            <Form.Group className="my-4">
+              <Form.Label htmlFor="password">{t('loginPage.password')}</Form.Label>
+              <Form.Control
+                id="password"
+                placeholder="password"
+                name="password"
+                autoComplete="current-password"
+                required
+                className="form-control"
+                type="password"
+                onChange={formik.handleChange}
+                value={formik.values.password}
+                isInvalid={feedbackError}
+              />
+              {feedbackError && <div className="invalid-feedback active show">{t('loginPage.errors.invalidPassword')}</div>}
+            </Form.Group>
+            <Button type="submit" variant="outline-primary" style={{ width: '100%' }}>{t('loginPage.login')}</Button>
+          </Form>
+        </Card.Body>
+        <Card.Footer className="d-flex justify-content-center">
+          <Link to={queryString.signupPath()}>{t('loginPage.toSignup')}</Link>
+        </Card.Footer>
+      </Card>
+    </Container>
   );
 }
 
