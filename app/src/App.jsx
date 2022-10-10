@@ -2,7 +2,6 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { useTranslation } from 'react-i18next';
 import { BrowserRouter } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
@@ -11,8 +10,6 @@ import Pages from './components/Pages';
 import Footer from './components/Footer';
 
 function App() {
-  const { t } = useTranslation();
-
   return (
     <BrowserRouter>
       <Container fluid="md h-100 d-flex flex-column">

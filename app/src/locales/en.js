@@ -58,6 +58,7 @@ const en = {
       cancel: 'Cancel',
       validation: {
         required: 'Name is a required field',
+        wrongLength: 'Channel name must be at least 3 and most 20 characters',
         notOneOf: 'Name must not be one of the following values: {{list}}',
       },
       toast: {
@@ -77,6 +78,7 @@ const en = {
       cancel: 'Cancel',
       validation: {
         required: 'Name is a required field',
+        wrongLength: 'Channel name must be at least 3 and most 20 characters',
         notOneOf: 'Name must not be one of the following values: {{list}}',
       },
       toast: {
@@ -109,6 +111,11 @@ const en = {
     },
     error404: {
       message: 'Page not found. Error 404',
+      toIndex: 'Go Home',
+    },
+    about: {
+      header: 'Diploma project "Chat"',
+      text: 'The purpose of the project is to show the range of all the standard tasks that you will have to face in real life. Among them: working with web sockets, interacting with the REST API, using React (with hooks), Redux (via reduxjs/toolkit), organizing routing to the client, authorization and authentication, and, of course, building (webpack) and deploying (heroku ).',
     },
   },
 };

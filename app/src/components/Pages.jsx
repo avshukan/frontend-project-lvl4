@@ -1,45 +1,38 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { Routes, Route } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import PrivateRoute from './PrivateRoute';
+import NonPrivateRoute from './NonPrivateRoute';
 import LoginPage from './LoginPage';
 import ChatPage from './ChatPage';
 import Error404Page from './Error404Page';
+import AboutPage from './AboutPage';
 import queryString from '../routes/queryString';
 import SignupPage from './SignupPage';
 
 function Pages() {
-  const { t } = useTranslation();
-
   return (
-    <Container className='flex-grow-1 p-0'>
+    <Container className="flex-grow-1 p-0">
       <Routes>
-        <Route path={queryString.signupPath()} element={<SignupPage />} />
-        <Route path={queryString.loginPath()} element={<LoginPage />} />
         <Route
-          path="/about"
-          element={
-            <PrivateRoute><div>About text</div></PrivateRoute>
-          }
+          path={queryString.signupPath()}
+          element={<NonPrivateRoute><SignupPage /></NonPrivateRoute>}
         />
         <Route
-          path="/topics"
-          element={
-            <PrivateRoute><div>Topics text</div></PrivateRoute>
-          }
+          path={queryString.loginPath()}
+          element={<NonPrivateRoute><LoginPage /></NonPrivateRoute>}
+        />
+        <Route
+          path={queryString.aboutPath()}
+          element={<PrivateRoute><AboutPage /></PrivateRoute>}
         />
         <Route
           path={queryString.chatPath()}
-          element={
-            <PrivateRoute><ChatPage /></PrivateRoute>
-          }
+          element={<PrivateRoute><ChatPage /></PrivateRoute>}
         />
         <Route
           path={queryString.errorPath()}
-          element={
-            <PrivateRoute><Error404Page /></PrivateRoute>
-          }
+          element={<PrivateRoute><Error404Page /></PrivateRoute>}
         />
       </Routes>
     </Container>

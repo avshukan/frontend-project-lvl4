@@ -20,9 +20,11 @@ function MainPage() {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    const newMessage = { body: textMessage, channelId: currentChannelId, username };
-    socket.emit('newMessage', newMessage);
-    setTextMessage('');
+    if (textMessage) {
+      const newMessage = { body: textMessage, channelId: currentChannelId, username };
+      socket.emit('newMessage', newMessage);
+      setTextMessage('');
+    }
     ref.current.focus();
   };
 

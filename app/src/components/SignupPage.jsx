@@ -2,25 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useRollbar } from '@rollbar/react';
 import { useTranslation } from 'react-i18next';
-import { useFormik } from 'formik';
-import { Button, Card, Container, Form } from 'react-bootstrap';
+import {
+  Button, Card, Container, Form,
+} from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import useAuth from '../context/useAuth';
 import routes from '../routes/routes';
 import queryString from '../routes/queryString';
-
-const schema = yup.object().shape({
-  username: yup.string()
-    .required('signupPage.errors.username.required')
-    .min(3, 'signupPage.errors.username.wrongLength')
-    .max(20, 'signupPage.errors.username.wrongLength'),
-  password: yup.string()
-    .required('signupPage.errors.password.required')
-    .min(6, 'signupPage.errors.password.wrongLength'),
-  passwordConfirmation: yup.string()
-    .oneOf([yup.ref('password'), null], 'signupPage.errors.passwordConfirmation.notMatch'),
-});
 
 function SignupPage() {
   const rollbar = useRollbar();
@@ -29,57 +18,99 @@ function SignupPage() {
 
   const auth = useAuth();
 
-  const [feedbackError, setFeedbackError] = useState({});
-
   const navigate = useNavigate();
 
+  const [data, setData] = useState({
+    username: '',
+    password: '',
+    passwordConfirmation: '',
+  });
+
+  const [feedbackError, setFeedbackError] = useState({});
+
+  const [signupError, setSignupError] = useState('');
+
   const ref = useRef();
+
+  const validateUsername = (value) => yup
+    .string()
+    .required('signupPage.errors.username.required')
+    .min(3, 'signupPage.errors.username.wrongLength')
+    .max(20, 'signupPage.errors.username.wrongLength')
+    .validate(value)
+    .then(() => setFeedbackError({ ...feedbackError, username: '' }))
+    .catch((error) => setFeedbackError({ ...feedbackError, username: error.message }));
+
+  const validatePasswords = (values) => yup
+    .object({
+      password: yup.string()
+        .required('signupPage.errors.password.required')
+        .min(6, 'signupPage.errors.password.wrongLength'),
+      passwordConfirmation: yup.string()
+        .oneOf([yup.ref('password'), null], 'signupPage.errors.passwordConfirmation.notMatch'),
+    })
+    .validate(values, { abortEarly: false })
+    .then(() => setFeedbackError({ ...feedbackError, password: '', passwordConfirmation: '' }))
+    .catch((error) => {
+      const newFeedbackError = error.inner.reduce((acc, { path, message }) => ({
+        ...acc,
+        [path]: message,
+      }), {});
+      setFeedbackError({
+        ...feedbackError, password: '', passwordConfirmation: '', ...newFeedbackError,
+      });
+    });
+
+  const validate = (id, value) => (id === 'username'
+    ? validateUsername(value)
+    : validatePasswords({ ...data, [id]: value }));
+
+  const handleChange = (event) => {
+    event.preventDefault();
+    const { target: { id, value } } = event;
+    setSignupError('');
+    setData((oldData) => ({ ...oldData, [id]: value }));
+    validate(id, value);
+  };
+
+  const handleBlur = (event) => {
+    event.preventDefault();
+    const { target: { id } } = event;
+    validate(id, data[id]);
+  };
+
+  const hasFeedbackError = () => Object
+    .values(feedbackError)
+    .reduce((acc, value) => acc || !!value, false);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (hasFeedbackError()) {
+      return;
+    }
+    const { username, password } = data;
+    axios.post(routes.signupPath(), { username, password })
+      .then(({ data: { token } }) => {
+        auth.logIn(username, token);
+        navigate(queryString.chatPath());
+      })
+      .catch((error) => {
+        setSignupError(error.message);
+        rollbar.error('Error on signup', error, { username, password });
+        ref.current.select();
+      });
+  };
 
   useEffect(() => {
     ref.current.focus();
   }, []);
 
-  const formik = useFormik({
-    initialValues: {
-      username: '',
-      password: '',
-      passwordConfirmation: '',
-    },
-    validateOnChange: true,
-    validateOnBlur: true,
-    onSubmit: async (values) => {
-      setFeedbackError({});
-      const route = routes.signupPath();
-      await schema
-        .validate(values, { abortEarly: false })
-        .then(() => axios.post(route, {
-          username: values.username,
-          password: values.password,
-        }))
-        .then(({ data: { token } }) => {
-          auth.logIn(values.username, token);
-          navigate(queryString.chatPath());
-        })
-        .catch((error) => {
-          if (error.errors) {
-            const newFeedbackError = error.inner.reduce((acc, { path, message }) => ({
-              ...acc,
-              [path]: message,
-            }), {});
-            setFeedbackError(newFeedbackError);
-          }
-          rollbar.error('Error on signup', error, values);
-          ref.current.select();
-        });
-    },
-  });
-
   return (
-    <Container className='h-100 w-100 d-flex align-content-center justify-content-center'>
+    <Container className="h-100 w-100 d-flex align-content-center justify-content-center">
       <Card style={{ width: '300px', margin: 'auto' }}>
         <Card.Body>
           <Card.Title style={{ textAlign: 'center' }}>{t('signupPage.title')}</Card.Title>
-          <Form onSubmit={formik.handleSubmit}>
+          <Form onSubmit={handleSubmit}>
             <Form.Group className="my-4">
               <Form.Label htmlFor="username">{t('signupPage.username')}</Form.Label>
               <Form.Control
@@ -88,10 +119,10 @@ function SignupPage() {
                 placeholder={t('signupPage.username')}
                 name="username"
                 autoComplete="username"
-                required
                 className="form-control"
-                onChange={formik.handleChange}
-                value={formik.values.username}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={data.username}
                 isInvalid={!!feedbackError.username}
               />
               {feedbackError.username && <div className="invalid-feedback active show">{t(feedbackError.username)}</div>}
@@ -103,11 +134,11 @@ function SignupPage() {
                 placeholder={t('signupPage.password')}
                 name="password"
                 autoComplete="current-password"
-                required
                 className="form-control"
                 type="password"
-                onChange={formik.handleChange}
-                value={formik.values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={data.password}
                 isInvalid={!!feedbackError.password}
               />
               {feedbackError.password && <div className="invalid-feedback active show">{t(feedbackError.password)}</div>}
@@ -119,16 +150,17 @@ function SignupPage() {
                 placeholder={t('signupPage.passwordConfirmation')}
                 name="passwordConfirmation"
                 autoComplete="current-password"
-                required
                 className="form-control"
                 type="password"
-                onChange={formik.handleChange}
-                value={formik.values.passwordConfirmation}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={data.passwordConfirmation}
                 isInvalid={!!feedbackError.passwordConfirmation}
               />
-              {feedbackError.passwordConfirmation && <div className="invalid-feedback active show">{t(feedbackError.passwordConfirmation)}</div>}
+              {feedbackError.passwordConfirmation && <div id="a" className="invalid-feedback active show">{t(feedbackError.passwordConfirmation)}</div>}
             </Form.Group>
             <Button type="submit" variant="outline-primary" style={{ width: '100%' }}>{t('signupPage.signup')}</Button>
+            {signupError && <div id="b" className="invalid-feedback active show d-block">{signupError}</div>}
           </Form>
         </Card.Body>
         <Card.Footer className="d-flex justify-content-center">

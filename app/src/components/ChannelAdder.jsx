@@ -15,7 +15,7 @@ import { switchChannel } from '../slices/dataSlice';
 function ChannelAdder() {
   const dispatch = useDispatch();
 
-  const namesList = useSelector((state) => state.data.channels.map(({ name }) => name));
+  const deniedChannelsNames = useSelector((state) => state.data.channels.map(({ name }) => name));
 
   const { t } = useTranslation();
 
@@ -66,15 +66,17 @@ function ChannelAdder() {
           validationSchema={object({
             name: string()
               .required(t('channelAdder.validation.required'))
-              .notOneOf(namesList, t('channelAdder.validation.notOneOf', { list: namesList })),
+              .min(3, 'channelAdder.validation.wrongLength')
+              .max(20, 'channelAdder.validation.wrongLength')
+              .notOneOf(deniedChannelsNames, t('channelAdder.validation.notOneOf', { list: deniedChannelsNames })),
           })}
           onSubmit={onSubmit}
         >
           <Form>
             <Modal.Body>
               <FormLabel htmlFor="name" className="visually-hidden">{t('channelAdder.name')}</FormLabel>
-              <Field className='w-100' innerRef={ref} id="name" name="name" type="text" />
-              <ErrorMessage name="name" />
+              <Field className="w-100" innerRef={ref} id="name" name="name" type="text" />
+              <ErrorMessage name="name">{t}</ErrorMessage>
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>{t('channelAdder.cancel')}</Button>

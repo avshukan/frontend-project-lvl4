@@ -2,14 +2,14 @@ import React, { Navigate, useLocation } from 'react-router-dom';
 import useAuth from '../context/useAuth';
 import queryString from '../routes/queryString';
 
-function PrivateRoute({ children }) {
+function NonPrivateRoute({ children }) {
   const { isLogged } = useAuth();
 
   const location = useLocation();
 
   return isLogged()
-    ? children
-    : <Navigate to={queryString.loginPath()} state={{ from: location }} />;
+    ? <Navigate to={queryString.chatPath()} state={{ from: location }} />
+    : children;
 }
 
-export default PrivateRoute;
+export default NonPrivateRoute;

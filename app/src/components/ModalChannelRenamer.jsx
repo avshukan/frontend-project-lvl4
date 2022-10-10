@@ -11,10 +11,9 @@ import {
 import { object, string } from 'yup';
 import useAuth from '../context/useAuth';
 
-function ModalChannelRemover({ id, name, hideModal }) {
+function ModalChannelRenamer({ id, name, hideModal }) {
   const deniedChannelsNames = useSelector((state) => state.data.channels
-    .map(({ name: channelName }) => channelName)
-    .filter((channelName) => channelName !== name));
+    .map(({ name: channelName }) => channelName));
 
   const { t } = useTranslation();
 
@@ -51,16 +50,19 @@ function ModalChannelRemover({ id, name, hideModal }) {
         initialValues={{ newname: name }}
         validationSchema={object({
           newname: string()
-            .required()
-            .notOneOf(deniedChannelsNames),
+            .trim()
+            .required(t('modalChannelRenamer.validation.required'))
+            .min(3, 'modalChannelRenamer.validation.wrongLength')
+            .max(20, 'modalChannelRenamer.validation.wrongLength')
+            .notOneOf(deniedChannelsNames, t('modalChannelRenamer.validation.notOneOf', { list: deniedChannelsNames })),
         })}
         onSubmit={onRename}
       >
         <Form>
           <Modal.Body>
             <FormLabel htmlFor="newname" className="visually-hidden">{t('modalChannelRenamer.name')}</FormLabel>
-            <Field className='w-100' innerRef={ref} id="newname" name="newname" type="text" />
-            <ErrorMessage name="newname" />
+            <Field className="w-100" innerRef={ref} id="newname" name="newname" type="text" />
+            <ErrorMessage name="newname">{t}</ErrorMessage>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={hideModal}>{t('modalChannelRenamer.cancel')}</Button>
@@ -72,4 +74,4 @@ function ModalChannelRemover({ id, name, hideModal }) {
   );
 }
 
-export default ModalChannelRemover;
+export default ModalChannelRenamer;

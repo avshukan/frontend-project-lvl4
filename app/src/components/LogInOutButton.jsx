@@ -13,8 +13,8 @@ function LogInOutButton() {
   const location = useLocation();
 
   return isLogged()
-    ? <Button onClick={logOut} style={{ marginLeft: "auto" }}>{t('navBar.logoutButton')}</Button>
-    : <Button as={Link} to={queryString.loginPath()} state={{ from: location }} style={{ marginLeft: "auto" }}>{t('navBar.loginButton')}</Button>;
+    ? <Button onClick={logOut} style={{ marginLeft: 'auto' }}>{t('navBar.logoutButton')}</Button>
+    : <Button as={Link} to={queryString.loginPath()} state={{ from: location }} style={{ marginLeft: 'auto' }}>{t('navBar.loginButton')}</Button>;
 }
 
 export default LogInOutButton;

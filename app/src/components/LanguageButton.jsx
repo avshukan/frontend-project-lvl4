@@ -2,10 +2,10 @@ import React, { useCallback } from 'react';
 import { useRollbar } from '@rollbar/react';
 import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { LinkContainer } from 'react-router-bootstrap';
 
 function LanguageButton() {
   const rollbar = useRollbar();
+
   const { t, i18n } = useTranslation();
 
   const getOtherLanguage = useCallback((lng) => (lng === 'ru' ? 'en' : 'ru'), []);

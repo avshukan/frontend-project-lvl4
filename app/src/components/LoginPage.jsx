@@ -3,7 +3,9 @@ import axios from 'axios';
 import { useRollbar } from '@rollbar/react';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
-import { Button, Card, Container, Form } from 'react-bootstrap';
+import {
+  Button, Card, Container, Form,
+} from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import useAuth from '../context/useAuth';
@@ -59,7 +61,7 @@ function LoginPage() {
   });
 
   return (
-    <Container className='h-100 w-100 d-flex align-content-center justify-content-center'>
+    <Container className="h-100 w-100 d-flex align-content-center justify-content-center">
       <Card className="my-auto mx-auto" style={{ width: '300px' }}>
         <Card.Body>
           <Card.Title style={{ textAlign: 'center' }}>{t('loginPage.title')}</Card.Title>

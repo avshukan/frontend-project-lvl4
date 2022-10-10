@@ -1,10 +1,10 @@
 import React from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 import ChannelAdder from './ChannelAdder';
 import ChannelsList from './ChannelsList';
 import MessagesHeader from './MessagesHeader';
 import MessagesList from './MessagesList';
 import MessagesAdder from './MessagesAdder';
-import { Col, Container, Row } from 'react-bootstrap';
 
 function ChatPage() {
   return (
