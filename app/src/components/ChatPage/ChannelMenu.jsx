@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import ModalChannelRenamer from './ModalChannelRenamer';
-import ModalChannelRemover from './ModalChannelRemover';
+import ModalChannelRenamer from '../Modals/ModalChannelRenamer';
+import ModalChannelRemover from '../Modals/ModalChannelRemover';
 
 function ChannelMenu({ id, name, variant }) {
   const { t } = useTranslation();

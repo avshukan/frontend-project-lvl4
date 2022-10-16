@@ -3,9 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   Button, ButtonGroup, Dropdown, Nav,
 } from 'react-bootstrap';
-import classnames from 'classnames';
 import filter from 'leo-profanity';
-import { switchChannel } from '../slices/dataSlice';
+import { switchChannel } from '../../slices/dataSlice';
 import ChannelMenu from './ChannelMenu';
 
 function ChannelsList() {

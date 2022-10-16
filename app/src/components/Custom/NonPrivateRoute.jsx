@@ -1,6 +1,6 @@
 import React, { Navigate, useLocation } from 'react-router-dom';
-import useAuth from '../context/useAuth';
-import queryString from '../routes/queryString';
+import useAuth from '../../context/useAuth';
+import queryString from '../../routes/queryString';
 
 function NonPrivateRoute({ children }) {
   const { isLogged } = useAuth();

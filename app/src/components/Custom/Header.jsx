@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Container, Navbar } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import queryString from '../routes/queryString';
+import queryString from '../../routes/queryString';
 import LogInOutButton from './LogInOutButton';
 import LanguageButton from './LanguageButton';
 

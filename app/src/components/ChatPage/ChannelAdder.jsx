@@ -9,8 +9,8 @@ import {
 } from 'formik';
 import { object, string } from 'yup';
 import { useTranslation } from 'react-i18next';
-import useAuth from '../context/useAuth';
-import { switchChannel } from '../slices/dataSlice';
+import useAuth from '../../context/useAuth';
+import { switchChannel } from '../../slices/dataSlice';
 
 function ChannelAdder() {
   const dispatch = useDispatch();

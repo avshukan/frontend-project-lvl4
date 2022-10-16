@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Container } from 'react-bootstrap';
-import queryString from '../routes/queryString';
+import queryString from '../../routes/queryString';
 
 function Error404Page() {
   const { t } = useTranslation();

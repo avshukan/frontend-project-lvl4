@@ -1,14 +1,14 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
+import queryString from '../../routes/queryString';
 import PrivateRoute from './PrivateRoute';
 import NonPrivateRoute from './NonPrivateRoute';
-import LoginPage from './LoginPage';
-import ChatPage from './ChatPage';
-import Error404Page from './Error404Page';
-import AboutPage from './AboutPage';
-import queryString from '../routes/queryString';
-import SignupPage from './SignupPage';
+import LoginPage from '../LoginPage/LoginPage';
+import ChatPage from '../ChatPage/ChatPage';
+import Error404Page from '../Error404Page/Error404Page';
+import AboutPage from '../AboutPage/AboutPage';
+import SignupPage from '../SignupPage/SignupPage';
 
 function Pages() {
   return (

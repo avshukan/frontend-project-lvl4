@@ -8,9 +8,9 @@ import {
 } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
-import useAuth from '../context/useAuth';
-import routes from '../routes/routes';
-import queryString from '../routes/queryString';
+import useAuth from '../../context/useAuth';
+import routes from '../../routes/routes';
+import queryString from '../../routes/queryString';
 
 const schema = yup.object().shape({
   username: yup.string().required(),
