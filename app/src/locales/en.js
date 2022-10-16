@@ -59,7 +59,7 @@ const en = {
       validation: {
         required: 'Name is a required field',
         wrongLength: 'Channel name must be at least 3 and most 20 characters',
-        notOneOf: 'Name must not be one of the following values: {{list}}',
+        notOneOf: 'Name must not be one of the existing channels',
       },
       toast: {
         success: 'Channel {{name}} was created!',
@@ -79,7 +79,7 @@ const en = {
       validation: {
         required: 'Name is a required field',
         wrongLength: 'Channel name must be at least 3 and most 20 characters',
-        notOneOf: 'Name must not be one of the following values: {{list}}',
+        notOneOf: 'Name must not be one of the existing channels',
       },
       toast: {
         loading: 'Channel renaming...',

@@ -68,7 +68,7 @@ function ChannelAdder() {
               .required(t('channelAdder.validation.required'))
               .min(3, 'channelAdder.validation.wrongLength')
               .max(20, 'channelAdder.validation.wrongLength')
-              .notOneOf(deniedChannelsNames, t('channelAdder.validation.notOneOf', { list: deniedChannelsNames })),
+              .notOneOf(deniedChannelsNames, t('channelAdder.validation.notOneOf')),
           })}
           onSubmit={onSubmit}
         >

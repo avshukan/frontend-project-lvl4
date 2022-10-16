@@ -54,7 +54,7 @@ function ModalChannelRenamer({ id, name, hideModal }) {
             .required(t('modalChannelRenamer.validation.required'))
             .min(3, 'modalChannelRenamer.validation.wrongLength')
             .max(20, 'modalChannelRenamer.validation.wrongLength')
-            .notOneOf(deniedChannelsNames, t('modalChannelRenamer.validation.notOneOf', { list: deniedChannelsNames })),
+            .notOneOf(deniedChannelsNames, t('modalChannelRenamer.validation.notOneOf')),
         })}
         onSubmit={onRename}
       >
