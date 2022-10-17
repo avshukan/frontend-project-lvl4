@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import Header from './components/Custom/Header';
 import Pages from './components/Custom/Pages';
 import Footer from './components/Custom/Footer';
+import Modals from './components/Modals';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Header />
         <Pages />
         <Footer />
+        <Modals />
       </Container>
     </BrowserRouter>
   );

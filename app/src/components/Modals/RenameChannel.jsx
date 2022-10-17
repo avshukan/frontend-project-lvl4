@@ -11,7 +11,7 @@ import {
 import { object, string } from 'yup';
 import { useAuth } from '../../context/AuthProvider';
 
-function ModalChannelRenamer({ id, name, hideModal }) {
+function RenameChannel({ info: { id, name }, onHide }) {
   const deniedChannelsNames = useSelector((state) => state.data.channels
     .map(({ name: channelName }) => channelName));
 
@@ -24,7 +24,7 @@ function ModalChannelRenamer({ id, name, hideModal }) {
   const onRename = (values, actions) => {
     const { newname } = values;
     const toastId = toast.loading(t('modalChannelRenamer.toast.loading'));
-    hideModal();
+    onHide();
     socket.emit('renameChannel', { id, name: newname }, ({ status }) => {
       if (status === 'ok') {
         toast.update(toastId, {
@@ -42,7 +42,7 @@ function ModalChannelRenamer({ id, name, hideModal }) {
   useEffect(() => ref.current?.focus());
 
   return (
-    <Modal show onHide={hideModal}>
+    <Modal show onHide={onHide}>
       <Modal.Header closeButton>
         <ModalTitle>{t('modalChannelRenamer.title', { name })}</ModalTitle>
       </Modal.Header>
@@ -65,7 +65,7 @@ function ModalChannelRenamer({ id, name, hideModal }) {
             <ErrorMessage name="newname">{t}</ErrorMessage>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={hideModal}>{t('modalChannelRenamer.cancel')}</Button>
+            <Button variant="secondary" onClick={onHide}>{t('modalChannelRenamer.cancel')}</Button>
             <Button variant="primary" type="submit">{t('modalChannelRenamer.save')}</Button>
           </Modal.Footer>
         </Form>
@@ -74,4 +74,4 @@ function ModalChannelRenamer({ id, name, hideModal }) {
   );
 }
 
-export default ModalChannelRenamer;
+export default RenameChannel;

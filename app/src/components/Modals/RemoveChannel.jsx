@@ -6,7 +6,7 @@ import {
 } from 'react-bootstrap';
 import { useAuth } from '../../context/AuthProvider';
 
-function ModalChannelRemover({ id, name, hideModal }) {
+function RemoveChannel({ info: { id, name }, onHide }) {
   const { t } = useTranslation();
 
   const { socket } = useAuth();
@@ -14,7 +14,7 @@ function ModalChannelRemover({ id, name, hideModal }) {
   const onRemove = (event) => {
     event.preventDefault();
     const toastId = toast.loading(t('modalChannelRemover.toast.loading'));
-    hideModal();
+    onHide();
     socket.emit('removeChannel', { id }, ({ status }) => {
       if (status === 'ok') {
         toast.update(toastId, {
@@ -29,13 +29,13 @@ function ModalChannelRemover({ id, name, hideModal }) {
   };
 
   return (
-    <Modal show onHide={hideModal}>
+    <Modal show onHide={onHide}>
       <Modal.Header closeButton>
         <ModalTitle>{t('modalChannelRemover.title', { name })}</ModalTitle>
       </Modal.Header>
       <Form onSubmit={onRemove}>
         <Modal.Footer>
-          <Button variant="secondary" onClick={hideModal}>{t('modalChannelRemover.cancel')}</Button>
+          <Button variant="secondary" onClick={onHide}>{t('modalChannelRemover.cancel')}</Button>
           <Button variant="danger" type="submit">{t('modalChannelRemover.remove')}</Button>
         </Modal.Footer>
       </Form>
@@ -43,4 +43,4 @@ function ModalChannelRemover({ id, name, hideModal }) {
   );
 }
 
-export default ModalChannelRemover;
+export default RemoveChannel;

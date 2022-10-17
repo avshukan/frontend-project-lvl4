@@ -1,23 +1,15 @@
-import React, { useState } from 'react';
-import { Dropdown } from 'react-bootstrap';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import ModalChannelRenamer from '../Modals/ModalChannelRenamer';
-import ModalChannelRemover from '../Modals/ModalChannelRemover';
+import { Dropdown } from 'react-bootstrap';
+import { showModal } from '../../slices/modalsSlice';
 
 function ChannelMenu({ id, name, variant }) {
+  const dispatch = useDispatch();
+
   const { t } = useTranslation();
 
-  const [useModalChannelRenamer, setUseModalChannelRenamer] = useState(false);
-
-  const showModalChannelRenamer = () => setUseModalChannelRenamer(true);
-
-  const hideModalChannelRenamer = () => setUseModalChannelRenamer(false);
-
-  const [useModalChannelRemover, setUseModalChannelRemover] = useState(false);
-
-  const showModalChannelRemover = () => setUseModalChannelRemover(true);
-
-  const hideModalChannelRemover = () => setUseModalChannelRemover(false);
+  const showModalChannel = (type) => () => dispatch(showModal({ type, info: { id, name } }));
 
   return (
     <>
@@ -25,15 +17,9 @@ function ChannelMenu({ id, name, variant }) {
         <span className="visually-hidden">{t('channelMenu.title')}</span>
       </Dropdown.Toggle>
       <Dropdown.Menu>
-        <Dropdown.Item onClick={showModalChannelRenamer}>{t('channelMenu.rename')}</Dropdown.Item>
-        <Dropdown.Item onClick={showModalChannelRemover}>{t('channelMenu.remove')}</Dropdown.Item>
+        <Dropdown.Item onClick={showModalChannel('rename')}>{t('channelMenu.rename')}</Dropdown.Item>
+        <Dropdown.Item onClick={showModalChannel('remove')}>{t('channelMenu.remove')}</Dropdown.Item>
       </Dropdown.Menu>
-      {useModalChannelRenamer
-        ? <ModalChannelRenamer id={id} name={name} hideModal={hideModalChannelRenamer} />
-        : null}
-      {useModalChannelRemover
-        ? <ModalChannelRemover id={id} name={name} hideModal={hideModalChannelRemover} />
-        : null}
     </>
   );
 }
