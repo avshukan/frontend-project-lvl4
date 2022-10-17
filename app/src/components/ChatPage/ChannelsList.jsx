@@ -17,7 +17,7 @@ function ChannelsList() {
   const getChannelVariant = (id) => (currentChannelId === id ? 'primary' : 'light');
 
   const getChannelsMenu = (id, name, removable) => (removable
-    ? <ChannelMenu id={id} name={name} variant={getChannelVariant(id)} isActive={id === currentChannelId} />
+    ? <ChannelMenu id={id} name={name} variant={getChannelVariant(id)} />
     : null);
 
   return (
@@ -31,7 +31,7 @@ function ChannelsList() {
       {channels.map(({ id, name, removable }) => (
         <Nav.Item key={id} className="w-100">
           <Dropdown as={ButtonGroup} className="w-100">
-            <Button variant={getChannelVariant(id)} className='text-truncate text-start' onClick={onSwitch(id)}>
+            <Button variant={getChannelVariant(id)} className="text-truncate text-start" onClick={onSwitch(id)}>
               <span className="me-1">#</span>
               {filter.clean(name)}
             </Button>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import useAuth from '../../context/useAuth';
+import { useAuth } from '../../context/AuthProvider';
 import queryString from '../../routes/queryString';
 
 function LogInOutButton() {

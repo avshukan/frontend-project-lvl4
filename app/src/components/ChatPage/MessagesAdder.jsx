@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import useAuth from '../../context/useAuth';
+import { useAuth } from '../../context/AuthProvider';
 
 function MainPage() {
   const { currentChannelId } = useSelector((state) => state.data);

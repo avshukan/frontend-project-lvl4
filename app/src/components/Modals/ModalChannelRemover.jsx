@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import {
   Button, Form, Modal, ModalTitle,
 } from 'react-bootstrap';
-import useAuth from '../../context/useAuth';
+import { useAuth } from '../../context/AuthProvider';
 
 function ModalChannelRemover({ id, name, hideModal }) {
   const { t } = useTranslation();

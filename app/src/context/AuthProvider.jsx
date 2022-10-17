@@ -1,17 +1,18 @@
 import React, {
-  useCallback, useEffect, useMemo, useState,
+  createContext, useCallback, useContext, useEffect, useMemo, useState,
 } from 'react';
 import { useRollbar } from '@rollbar/react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { io } from 'socket.io-client';
-import AuthContext from './AuthContext';
 import {
   addChannel, addMessage, fetchData, removeChannel, renameChannel,
 } from '../slices/dataSlice';
 
 const socket = io({ autoConnect: false });
+
+const AuthContext = createContext({});
 
 function AuthProvider({ children }) {
   const rollbar = useRollbar();
@@ -84,5 +85,7 @@ function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
+
+export const useAuth = () => useContext(AuthContext);
 
 export default AuthProvider;

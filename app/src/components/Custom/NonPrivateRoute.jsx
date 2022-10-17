@@ -1,5 +1,5 @@
 import React, { Navigate, useLocation } from 'react-router-dom';
-import useAuth from '../../context/useAuth';
+import { useAuth } from '../../context/AuthProvider';
 import queryString from '../../routes/queryString';
 
 function NonPrivateRoute({ children }) {

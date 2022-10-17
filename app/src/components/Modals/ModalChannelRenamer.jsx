@@ -9,7 +9,7 @@ import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
 import { object, string } from 'yup';
-import useAuth from '../../context/useAuth';
+import { useAuth } from '../../context/AuthProvider';
 
 function ModalChannelRenamer({ id, name, hideModal }) {
   const deniedChannelsNames = useSelector((state) => state.data.channels

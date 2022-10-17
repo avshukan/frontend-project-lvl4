@@ -7,7 +7,7 @@ import {
 } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
-import useAuth from '../../context/useAuth';
+import { useAuth } from '../../context/AuthProvider';
 import routes from '../../routes/routes';
 import queryString from '../../routes/queryString';
 

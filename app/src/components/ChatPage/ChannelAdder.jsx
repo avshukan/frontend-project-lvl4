@@ -9,7 +9,7 @@ import {
 } from 'formik';
 import { object, string } from 'yup';
 import { useTranslation } from 'react-i18next';
-import useAuth from '../../context/useAuth';
+import { useAuth } from '../../context/AuthProvider';
 import { switchChannel } from '../../slices/dataSlice';
 
 function ChannelAdder() {
