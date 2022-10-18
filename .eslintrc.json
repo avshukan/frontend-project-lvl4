@@ -40,15 +40,5 @@
                 ]
             }
         ]
-    },
-    "overrides": [
-        {
-            "files": [
-                "*"
-            ],
-            "rules": {
-                "no-param-reassign": 0
-            }
-        }
-    ]
+    }
 }
