@@ -20,14 +20,16 @@ const dataSlice = createSlice({
       state.currentChannelId = channelId;
     },
     renameChannel: (state, action) => {
+      const proxyState = state;
       const { id, name } = action.payload;
-      state.channels.find((channel) => channel.id === id).name = name;
+      proxyState.channels.find((channel) => channel.id === id).name = name;
     },
     removeChannel: (state, action) => {
+      const proxyState = state;
       const { id: removedChannelId } = action.payload;
-      state.channels = state.channels
+      proxyState.channels = state.channels
         .filter(({ id }) => id !== removedChannelId);
-      state.currentChannelId = +state.currentChannelId === +removedChannelId
+      proxyState.currentChannelId = +state.currentChannelId === +removedChannelId
         ? defaultChannelId
         : state.currentChannelId;
     },
@@ -35,9 +37,10 @@ const dataSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchDataThunk.fulfilled, (state, action) => {
+        const proxyState = state;
         const { channels, currentChannelId } = action.payload;
-        state.channels = channels;
-        state.currentChannelId = currentChannelId;
+        proxyState.channels = channels;
+        proxyState.currentChannelId = currentChannelId;
       });
   },
 });

@@ -67,6 +67,7 @@ function SocketProvider({ children }) {
   const emitRenameChannel = emitActionChannel(actions.rename);
 
   const emitRemoveChannel = emitActionChannel(actions.remove);
+
   const emitCreateMessage = (data) => socket.emit('newMessage', data);
 
   useEffect(() => {
@@ -81,7 +82,7 @@ function SocketProvider({ children }) {
 
   const value = useMemo(() => ({
     socket, emitNewChannel, emitRenameChannel, emitRemoveChannel, emitCreateMessage,
-  }), []);
+  }), [emitNewChannel, emitRenameChannel, emitRemoveChannel]);
 
   return (
     <SocketContext.Provider value={value}>

@@ -10,6 +10,18 @@ import fetchDataThunk from '../slices/fetchDataThunk';
 
 const AuthContext = createContext({});
 
+const getUserFromLocalStorage = () => {
+  try {
+    const storage = JSON.parse(localStorage.getItem('user')) ?? {};
+    if (typeof storage === 'object') {
+      return storage;
+    }
+    return {};
+  } catch {
+    return {};
+  }
+};
+
 function AuthProvider({ children }) {
   const { socket } = useSocket();
 
@@ -57,13 +69,7 @@ function AuthProvider({ children }) {
   }, [socket]);
 
   useEffect(() => {
-    let storage = {};
-    try {
-      storage = JSON.parse(localStorage.getItem('user')) ?? {};
-    } catch {
-      storage = {};
-    }
-    const { username, token } = storage;
+    const { username, token } = getUserFromLocalStorage();
     if (username && token) {
       uploadData(token);
       setUser({ username, token });
