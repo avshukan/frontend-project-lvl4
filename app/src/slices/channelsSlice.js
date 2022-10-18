@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 import fetchDataThunk from './fetchDataThunk';
 
@@ -16,21 +17,18 @@ const dataSlice = createSlice({
       state.channels.push(action.payload);
     },
     switchChannel: (state, action) => {
-      const proxyState = state;
       const { channelId } = action.payload;
-      proxyState.currentChannelId = channelId;
+      state.currentChannelId = channelId;
     },
     renameChannel: (state, action) => {
-      const proxyState = state;
       const { id, name } = action.payload;
-      proxyState.channels.find((channel) => channel.id === id).name = name;
+      state.channels.find((channel) => channel.id === id).name = name;
     },
     removeChannel: (state, action) => {
-      const proxyState = state;
       const { id: removedChannelId } = action.payload;
-      proxyState.channels = state.channels
+      state.channels = state.channels
         .filter(({ id }) => id !== removedChannelId);
-      proxyState.currentChannelId = +state.currentChannelId === +removedChannelId
+      state.currentChannelId = +state.currentChannelId === +removedChannelId
         ? defaultChannelId
         : state.currentChannelId;
     },
@@ -38,10 +36,9 @@ const dataSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchDataThunk.fulfilled, (state, action) => {
-        const proxyState = state;
         const { channels, currentChannelId } = action.payload;
-        proxyState.channels = channels;
-        proxyState.currentChannelId = currentChannelId;
+        state.channels = channels;
+        state.currentChannelId = currentChannelId;
       });
   },
 });

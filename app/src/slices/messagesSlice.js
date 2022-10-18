@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 import fetchDataThunk from './fetchDataThunk';
 
@@ -13,18 +14,16 @@ const dataSlice = createSlice({
       state.messages.push(action.payload);
     },
     removeMessagesByChannelId: (state, action) => {
-      const proxyState = state;
       const { id: removedChannelId } = action.payload;
-      proxyState.messages = state.messages
+      state.messages = state.messages
         .filter(({ channelId }) => +channelId !== +removedChannelId);
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchDataThunk.fulfilled, (state, action) => {
-        const proxyState = state;
         const { messages } = action.payload;
-        proxyState.messages = messages;
+        state.messages = messages;
       });
   },
 });
