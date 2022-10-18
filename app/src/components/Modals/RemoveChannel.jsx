@@ -1,37 +1,25 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
 import {
   Button, Form, Modal, ModalTitle,
 } from 'react-bootstrap';
-import { useAuth } from '../../context/AuthProvider';
+import { useSocket } from '../../context/SocketProvider';
 
-function RemoveChannel({ info: { id, name }, onHide }) {
+function RemoveChannel({ info, onHide }) {
   const { t } = useTranslation();
 
-  const { socket } = useAuth();
+  const { emitRemoveChannel } = useSocket();
 
   const onRemove = (event) => {
     event.preventDefault();
-    const toastId = toast.loading(t('modalChannelRemover.toast.loading'));
+    emitRemoveChannel(info);
     onHide();
-    socket.emit('removeChannel', { id }, ({ status }) => {
-      if (status === 'ok') {
-        toast.update(toastId, {
-          render: t('modalChannelRemover.toast.success', { name }), type: 'success', isLoading: false, autoClose: 3000,
-        });
-      } else {
-        toast.update(toastId, {
-          render: t('modalChannelRemover.toast.error', { name }), type: 'error', isLoading: false, autoClose: 3000,
-        });
-      }
-    });
   };
 
   return (
     <Modal show onHide={onHide}>
       <Modal.Header closeButton>
-        <ModalTitle>{t('modalChannelRemover.title', { name })}</ModalTitle>
+        <ModalTitle>{t('modalChannelRemover.title', { name: info.name })}</ModalTitle>
       </Modal.Header>
       <Form onSubmit={onRemove}>
         <Modal.Footer>

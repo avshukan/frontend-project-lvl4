@@ -1,7 +1,5 @@
-import axios from 'axios';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import fetchDataThunk from './fetchDataThunk';
-import routes from '../routes/routes';
 
 const defaultChannelId = 1;
 

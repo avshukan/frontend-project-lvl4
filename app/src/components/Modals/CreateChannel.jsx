@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
 import {
   Button, FormLabel, Modal, ModalTitle,
 } from 'react-bootstrap';
@@ -9,17 +8,17 @@ import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
 import { object, string } from 'yup';
-import { useAuth } from '../../context/AuthProvider';
-import { switchChannel } from '../../slices/channelsSlice';
+import { useSocket } from '../../context/SocketProvider';
 
 function CreateChannel({ onHide }) {
-  const dispatch = useDispatch();
-
-  const deniedChannelsNames = useSelector((state) => state.channels.channels.map(({ name }) => name));
+  const deniedChannelsNames = useSelector((state) => state
+    .channels
+    .channels
+    .map(({ name }) => name));
 
   const { t } = useTranslation();
 
-  const { socket } = useAuth();
+  const { emitNewChannel } = useSocket();
 
   const ref = useRef(null);
 
@@ -27,15 +26,8 @@ function CreateChannel({ onHide }) {
 
   const handleClose = () => setShowModal(false);
 
-  const onSubmit = (values) => {
-    socket.emit('newChannel', values, ({ status, data: { id } }) => {
-      if (status === 'ok') {
-        toast.info(t('channelAdder.toast.success', { name: values.name }), { autoClose: 3000 });
-        dispatch(switchChannel({ channelId: id }));
-      } else {
-        toast.error(t('channelAdder.toast.error', { name: values.name }), { autoClose: 3000 });
-      }
-    });
+  const onSubmit = (newChannel) => {
+    emitNewChannel(newChannel);
     onHide();
   };
 

@@ -5,16 +5,14 @@ import { useRollbar } from '@rollbar/react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { io } from 'socket.io-client';
+import { useSocket } from './SocketProvider';
 import fetchDataThunk from '../slices/fetchDataThunk';
-import { addChannel, removeChannel, renameChannel } from '../slices/channelsSlice';
-import { addMessage, removeMessagesByChannelId } from '../slices/messagesSlice';
-
-const socket = io({ autoConnect: false });
 
 const AuthContext = createContext({});
 
 function AuthProvider({ children }) {
+  const { socket } = useSocket();
+
   const rollbar = useRollbar();
 
   const dispatch = useDispatch();
@@ -46,21 +44,20 @@ function AuthProvider({ children }) {
   }, [dispatch, rollbar, t]);
 
   const logIn = useCallback((username, token) => {
-    const user = { username, token };
-    localStorage.setItem('user', JSON.stringify(user));
-    setUser(user);
+    localStorage.setItem('user', JSON.stringify({ username, token }));
+    setUser({ username, token });
     socket.connect();
     uploadData(token);
-  }, [uploadData]);
+  }, [socket, uploadData]);
 
   const logOut = useCallback(() => {
     localStorage.removeItem('user');
     setUser({});
     socket.disconnect();
-  }, []);
+  }, [socket]);
 
   useEffect(() => {
-    let storage = {}
+    let storage = {};
     try {
       storage = JSON.parse(localStorage.getItem('user')) ?? {};
     } catch {
@@ -72,23 +69,10 @@ function AuthProvider({ children }) {
       setUser({ username, token });
       socket.connect();
     }
-  }, [dispatch, uploadData]);
-
-
-  useEffect(() => {
-    socket.on('newChannel', (payload) => dispatch(addChannel(payload)));
-    socket.on('renameChannel', (payload) => dispatch(renameChannel(payload)));
-    socket.on('removeChannel', (payload) => {
-      dispatch(removeChannel(payload));
-      dispatch(removeMessagesByChannelId(payload));
-    });
-    socket.on('newMessage', (payload) => dispatch(addMessage(payload)));
-  }, [dispatch]);
-
-
+  }, [dispatch, uploadData, socket]);
 
   const value = useMemo(() => ({
-    socket, isLogged, logIn, logOut, username: user.username,
+    isLogged, logIn, logOut, username: user.username,
   }), [isLogged, logIn, logOut, user]);
 
   return (
