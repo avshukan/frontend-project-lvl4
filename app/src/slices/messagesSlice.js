@@ -13,9 +13,9 @@ const dataSlice = createSlice({
       state.messages.push(action.payload);
     },
     removeMessagesByChannelId: (state, action) => {
-      const proxyState = state;
+      // const proxyState = state;
       const { id: removedChannelId } = action.payload;
-      proxyState.messages = state.messages
+      state.messages = state.messages
         .filter(({ channelId }) => +channelId !== +removedChannelId);
     },
   },
