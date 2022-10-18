@@ -10,15 +10,13 @@ const dataSlice = createSlice({
   initialState,
   reducers: {
     hideModal: (state) => {
-      const proxyState = state;
-      proxyState.type = null;
-      proxyState.info = null;
+      state.type = null;
+      state.info = null;
     },
     showModal: (state, action) => {
-      const proxyState = state;
       const { type, info } = action.payload;
-      proxyState.type = type;
-      proxyState.info = info;
+      state.type = type;
+      state.info = info;
     },
   },
 });
