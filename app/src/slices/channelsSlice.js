@@ -16,8 +16,9 @@ const dataSlice = createSlice({
       state.channels.push(action.payload);
     },
     switchChannel: (state, action) => {
+      const proxyState = state;
       const { channelId } = action.payload;
-      state.currentChannelId = channelId;
+      proxyState.currentChannelId = channelId;
     },
     renameChannel: (state, action) => {
       const proxyState = state;
