@@ -62,7 +62,7 @@ function AuthProvider({ children }) {
   useEffect(() => {
     let storage = {}
     try {
-      storage = JSON.parse(localStorage.getItem('user'));
+      storage = JSON.parse(localStorage.getItem('user')) ?? {};
     } catch {
       storage = {};
     }
