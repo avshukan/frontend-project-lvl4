@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthProvider';
 
 function MainPage() {
-  const { currentChannelId } = useSelector((state) => state.data);
+  const { currentChannelId } = useSelector((state) => state.channels);
 
   const { t } = useTranslation();
 

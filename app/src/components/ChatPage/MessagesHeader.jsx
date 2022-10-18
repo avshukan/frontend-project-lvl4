@@ -3,7 +3,9 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 function MessagesHeader() {
-  const { channels, messages, currentChannelId } = useSelector((state) => state.data);
+  const { channels, currentChannelId } = useSelector((state) => state.channels);
+
+  const { messages } = useSelector((state) => state.messages);
 
   const { t } = useTranslation();
 

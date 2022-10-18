@@ -12,7 +12,9 @@ import { object, string } from 'yup';
 import { useAuth } from '../../context/AuthProvider';
 
 function RenameChannel({ info: { id, name }, onHide }) {
-  const deniedChannelsNames = useSelector((state) => state.data.channels
+  const deniedChannelsNames = useSelector((state) => state
+    .channels
+    .channels
     .map(({ name: channelName }) => channelName));
 
   const { t } = useTranslation();

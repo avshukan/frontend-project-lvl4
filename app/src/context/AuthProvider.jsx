@@ -6,9 +6,9 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { io } from 'socket.io-client';
-import {
-  addChannel, addMessage, fetchData, removeChannel, renameChannel,
-} from '../slices/dataSlice';
+import fetchDataThunk from '../slices/fetchDataThunk';
+import { addChannel, removeChannel, renameChannel } from '../slices/channelsSlice';
+import { addMessage, removeMessagesByChannelId } from '../slices/messagesSlice';
 
 const socket = io({ autoConnect: false });
 
@@ -21,17 +21,16 @@ function AuthProvider({ children }) {
 
   const { t } = useTranslation();
 
-  const [username, setUsername] = useState('');
+  const [user, setUser] = useState({});
 
   const isLogged = useCallback(() => {
-    const token = localStorage.getItem('token');
-    const user = localStorage.getItem('user');
-    return !!(token && user);
-  }, []);
+    const { username, token } = user;
+    return !!username && !!token;
+  }, [user]);
 
   const uploadData = useCallback((token) => {
     const toastId = toast.loading(t('authProvider.toast.pending'));
-    dispatch(fetchData(token))
+    dispatch(fetchDataThunk(token))
       .unwrap()
       .then(() => {
         toast.update(toastId, {
@@ -46,38 +45,51 @@ function AuthProvider({ children }) {
       });
   }, [dispatch, rollbar, t]);
 
-  const logIn = useCallback((user, token) => {
-    localStorage.setItem('user', user);
-    localStorage.setItem('token', token);
-    setUsername(user);
+  const logIn = useCallback((username, token) => {
+    const user = { username, token };
+    localStorage.setItem('user', JSON.stringify(user));
+    setUser(user);
     socket.connect();
     uploadData(token);
   }, [uploadData]);
 
   const logOut = useCallback(() => {
-    localStorage.removeItem('token');
     localStorage.removeItem('user');
-    setUsername('');
+    setUser({});
     socket.disconnect();
   }, []);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const user = localStorage.getItem('user');
-    if (token) {
+    let storage = {}
+    try {
+      storage = JSON.parse(localStorage.getItem('user'));
+    } catch {
+      storage = {};
+    }
+    const { username, token } = storage;
+    if (username && token) {
       uploadData(token);
-      setUsername(user);
+      setUser({ username, token });
       socket.connect();
     }
-    socket.on('newChannel', (payload) => dispatch(addChannel(payload)));
-    socket.on('renameChannel', (payload) => dispatch(renameChannel(payload)));
-    socket.on('removeChannel', (payload) => dispatch(removeChannel(payload)));
-    socket.on('newMessage', (payload) => dispatch(addMessage(payload)));
   }, [dispatch, uploadData]);
 
+
+  useEffect(() => {
+    socket.on('newChannel', (payload) => dispatch(addChannel(payload)));
+    socket.on('renameChannel', (payload) => dispatch(renameChannel(payload)));
+    socket.on('removeChannel', (payload) => {
+      dispatch(removeChannel(payload));
+      dispatch(removeMessagesByChannelId(payload));
+    });
+    socket.on('newMessage', (payload) => dispatch(addMessage(payload)));
+  }, [dispatch]);
+
+
+
   const value = useMemo(() => ({
-    socket, isLogged, logIn, logOut, username,
-  }), [isLogged, logIn, logOut, username]);
+    socket, isLogged, logIn, logOut, username: user.username,
+  }), [isLogged, logIn, logOut, user]);
 
   return (
     <AuthContext.Provider value={value}>

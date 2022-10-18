@@ -1,24 +1,17 @@
 import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import fetchDataThunk from './fetchDataThunk';
 import routes from '../routes/routes';
-
-export const fetchData = createAsyncThunk(
-  'data/fetchData',
-  async (accessToken) => axios
-    .get(routes.dataPath(), { headers: { Authorization: `Bearer ${accessToken}` } })
-    .then(({ data }) => data),
-);
 
 const defaultChannelId = 1;
 
 const initialState = {
   channels: [],
-  messages: [],
   currentChannelId: defaultChannelId,
 };
 
 const dataSlice = createSlice({
-  name: 'data',
+  name: 'channels',
   initialState,
   reducers: {
     addChannel: (state, action) => {
@@ -39,23 +32,17 @@ const dataSlice = createSlice({
       const { id: removedChannelId } = action.payload;
       proxyState.channels = state.channels
         .filter(({ id }) => id !== removedChannelId);
-      proxyState.messages = state.messages
-        .filter(({ channelId }) => +channelId !== +removedChannelId);
       proxyState.currentChannelId = +state.currentChannelId === +removedChannelId
         ? defaultChannelId
         : state.currentChannelId;
     },
-    addMessage: (state, action) => {
-      state.messages.push(action.payload);
-    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchData.fulfilled, (state, action) => {
+      .addCase(fetchDataThunk.fulfilled, (state, action) => {
         const proxyState = state;
-        const { channels, messages, currentChannelId } = action.payload;
+        const { channels, currentChannelId } = action.payload;
         proxyState.channels = channels;
-        proxyState.messages = messages;
         proxyState.currentChannelId = currentChannelId;
       });
   },
@@ -66,7 +53,6 @@ export const {
   switchChannel,
   renameChannel,
   removeChannel,
-  addMessage,
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

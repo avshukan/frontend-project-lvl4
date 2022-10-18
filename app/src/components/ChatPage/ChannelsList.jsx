@@ -4,13 +4,13 @@ import {
   Button, ButtonGroup, Dropdown, Nav,
 } from 'react-bootstrap';
 import filter from 'leo-profanity';
-import { switchChannel } from '../../slices/dataSlice';
+import { switchChannel } from '../../slices/channelsSlice';
 import ChannelMenu from './ChannelMenu';
 
 function ChannelsList() {
   const dispatch = useDispatch();
 
-  const { channels, currentChannelId } = useSelector((state) => state.data);
+  const { channels, currentChannelId } = useSelector((state) => state.channels);
 
   const onSwitch = (id) => () => dispatch(switchChannel({ channelId: +id }));
 

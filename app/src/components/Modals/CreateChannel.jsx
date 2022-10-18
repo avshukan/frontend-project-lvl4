@@ -10,12 +10,12 @@ import {
 } from 'formik';
 import { object, string } from 'yup';
 import { useAuth } from '../../context/AuthProvider';
-import { switchChannel } from '../../slices/dataSlice';
+import { switchChannel } from '../../slices/channelsSlice';
 
 function CreateChannel({ onHide }) {
   const dispatch = useDispatch();
 
-  const deniedChannelsNames = useSelector((state) => state.data.channels.map(({ name }) => name));
+  const deniedChannelsNames = useSelector((state) => state.channels.channels.map(({ name }) => name));
 
   const { t } = useTranslation();
 

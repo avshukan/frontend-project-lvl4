@@ -4,9 +4,9 @@ import filter from 'leo-profanity';
 
 function MessagesList() {
   const channelMessages = useSelector((state) => state
-    .data
     .messages
-    .filter(({ channelId }) => channelId === state.data.currentChannelId));
+    .messages
+    .filter(({ channelId }) => channelId === state.channels.currentChannelId));
 
   return (
     <div id="messages-box" className="chat-messages overflow-auto px-5" style={{ maxHeight: '100%' }}>
