@@ -47,3 +47,11 @@
 #basic-navbar-nav [type="button"] {
   margin: auto 1.5rem;
 }
+
+.app-dropdown-toggle::after {
+  position: relative;
+  display: inline;
+  margin: 0;
+  left: calc(50% - 0.3em);
+  top: 50%;
+}

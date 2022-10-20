@@ -13,7 +13,7 @@ function ChannelMenu({ id, name, variant }) {
 
   return (
     <>
-      <Dropdown.Toggle active variant={variant} style={{ width: '30px', flexGrow: 0 }}>
+      <Dropdown.Toggle active variant={variant} className="app-dropdown-toggle" style={{ width: 30, flexGrow: 0 }}>
         <span className="visually-hidden">{t('channelMenu.title')}</span>
       </Dropdown.Toggle>
       <Dropdown.Menu>
