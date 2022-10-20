@@ -7,7 +7,7 @@ import { useAuth } from '../../context/AuthProvider';
 function MainPage() {
   const { currentChannelId } = useSelector((state) => state.channels);
 
-  const { socket } = useApi();
+  const { apiCreateMessage } = useApi();
 
   const { t } = useTranslation();
 
@@ -25,7 +25,7 @@ function MainPage() {
     event.preventDefault();
     if (textMessage) {
       const newMessage = { body: textMessage, channelId: currentChannelId, username };
-      socket.emit('newMessage', newMessage);
+      apiCreateMessage(newMessage);
       setTextMessage('');
     }
     ref.current.focus();

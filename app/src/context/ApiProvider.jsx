@@ -62,13 +62,17 @@ function ApiProvider({ children }) {
     });
   };
 
-  const emitNewChannel = emitActionChannel(actions.create);
+  const apiConnect = () => socket.connect();
 
-  const emitRenameChannel = emitActionChannel(actions.rename);
+  const apiDisconnect = () => socket.disconnect();
 
-  const emitRemoveChannel = emitActionChannel(actions.remove);
+  const apiNewChannel = emitActionChannel(actions.create);
 
-  const emitCreateMessage = (data) => socket.emit('newMessage', data);
+  const apiRenameChannel = emitActionChannel(actions.rename);
+
+  const apiRemoveChannel = emitActionChannel(actions.remove);
+
+  const apiCreateMessage = (data) => socket.emit('newMessage', data);
 
   useEffect(() => {
     socket.on('newChannel', (payload) => dispatch(addChannel(payload)));
@@ -81,8 +85,8 @@ function ApiProvider({ children }) {
   }, [dispatch]);
 
   const value = useMemo(() => ({
-    socket, emitNewChannel, emitRenameChannel, emitRemoveChannel, emitCreateMessage,
-  }), [emitNewChannel, emitRenameChannel, emitRemoveChannel]);
+    apiConnect, apiDisconnect, apiNewChannel, apiRenameChannel, apiRemoveChannel, apiCreateMessage,
+  }), [apiNewChannel, apiRenameChannel, apiRemoveChannel]);
 
   return (
     <ApiContext.Provider value={value}>

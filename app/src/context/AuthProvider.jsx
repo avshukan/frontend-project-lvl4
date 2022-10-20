@@ -23,7 +23,7 @@ const getUserFromLocalStorage = () => {
 };
 
 function AuthProvider({ children }) {
-  const { socket } = useApi();
+  const { apiConnect, apiDisconnect } = useApi();
 
   const rollbar = useRollbar();
 
@@ -58,24 +58,24 @@ function AuthProvider({ children }) {
   const logIn = useCallback((username, token) => {
     localStorage.setItem('user', JSON.stringify({ username, token }));
     setUser({ username, token });
-    socket.connect();
+    apiConnect();
     uploadData(token);
-  }, [socket, uploadData]);
+  }, [uploadData, apiConnect]);
 
   const logOut = useCallback(() => {
     localStorage.removeItem('user');
     setUser({});
-    socket.disconnect();
-  }, [socket]);
+    apiDisconnect();
+  }, [apiDisconnect]);
 
   useEffect(() => {
     const { username, token } = getUserFromLocalStorage();
     if (username && token) {
       uploadData(token);
       setUser({ username, token });
-      socket.connect();
+      apiConnect();
     }
-  }, [dispatch, uploadData, socket]);
+  }, [dispatch, uploadData, apiConnect]);
 
   const value = useMemo(() => ({
     isLogged, logIn, logOut, username: user.username,
