@@ -5,7 +5,7 @@ import { useRollbar } from '@rollbar/react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { useSocket } from './SocketProvider';
+import { useApi } from './ApiProvider';
 import fetchDataThunk from '../slices/fetchDataThunk';
 
 const AuthContext = createContext({});
@@ -23,7 +23,7 @@ const getUserFromLocalStorage = () => {
 };
 
 function AuthProvider({ children }) {
-  const { socket } = useSocket();
+  const { socket } = useApi();
 
   const rollbar = useRollbar();
 

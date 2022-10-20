@@ -3,12 +3,12 @@ import { useTranslation } from 'react-i18next';
 import {
   Button, Form, Modal, ModalTitle,
 } from 'react-bootstrap';
-import { useSocket } from '../../context/SocketProvider';
+import { useApi } from '../../context/ApiProvider';
 
 function RemoveChannel({ info, onHide }) {
   const { t } = useTranslation();
 
-  const { emitRemoveChannel } = useSocket();
+  const { emitRemoveChannel } = useApi();
 
   const onRemove = (event) => {
     event.preventDefault();

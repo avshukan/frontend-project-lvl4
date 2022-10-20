@@ -12,9 +12,9 @@ import { addMessage, removeMessagesByChannelId } from '../slices/messagesSlice';
 
 const socket = io({ autoConnect: false });
 
-const SocketContext = createContext({});
+const ApiContext = createContext({});
 
-function SocketProvider({ children }) {
+function ApiProvider({ children }) {
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
@@ -85,12 +85,12 @@ function SocketProvider({ children }) {
   }), [emitNewChannel, emitRenameChannel, emitRemoveChannel]);
 
   return (
-    <SocketContext.Provider value={value}>
+    <ApiContext.Provider value={value}>
       {children}
-    </SocketContext.Provider>
+    </ApiContext.Provider>
   );
 }
 
-export const useSocket = () => useContext(SocketContext);
+export const useApi = () => useContext(ApiContext);
 
-export default SocketProvider;
+export default ApiProvider;

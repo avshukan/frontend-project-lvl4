@@ -8,7 +8,7 @@ import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
 import { object, string } from 'yup';
-import { useSocket } from '../../context/SocketProvider';
+import { useApi } from '../../context/ApiProvider';
 
 function CreateChannel({ onHide }) {
   const deniedChannelsNames = useSelector((state) => state
@@ -18,7 +18,7 @@ function CreateChannel({ onHide }) {
 
   const { t } = useTranslation();
 
-  const { emitNewChannel } = useSocket();
+  const { emitNewChannel } = useApi();
 
   const ref = useRef(null);
 

@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { useSocket } from '../../context/SocketProvider';
+import { useApi } from '../../context/ApiProvider';
 import { useAuth } from '../../context/AuthProvider';
 
 function MainPage() {
   const { currentChannelId } = useSelector((state) => state.channels);
 
-  const { socket } = useSocket();
+  const { socket } = useApi();
 
   const { t } = useTranslation();
 

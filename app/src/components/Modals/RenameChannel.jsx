@@ -8,7 +8,7 @@ import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
 import { object, string } from 'yup';
-import { useSocket } from '../../context/SocketProvider';
+import { useApi } from '../../context/ApiProvider';
 
 function RenameChannel({ info: { id, name }, onHide }) {
   const deniedChannelsNames = useSelector((state) => state
@@ -16,7 +16,7 @@ function RenameChannel({ info: { id, name }, onHide }) {
     .channels
     .map(({ name: channelName }) => channelName));
 
-  const { emitRenameChannel } = useSocket();
+  const { emitRenameChannel } = useApi();
 
   const { t } = useTranslation();
 
