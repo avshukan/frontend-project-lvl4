@@ -9,7 +9,7 @@ function MessagesList() {
     .filter(({ channelId }) => channelId === state.channels.currentChannelId));
 
   return (
-    <div id="messages-box" className="chat-messages overflow-auto px-5" style={{ maxHeight: '100%' }}>
+    <div className="overflow-auto px-5">
       {channelMessages.map(({ id, username, body }) => (
         <div key={id} className="text-break mb-2">
           <b>{username}</b>

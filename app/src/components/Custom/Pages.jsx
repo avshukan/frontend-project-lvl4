@@ -12,7 +12,7 @@ import SignupPage from '../SignupPage/SignupPage';
 
 function Pages() {
   return (
-    <Container className="flex-grow-1 p-0">
+    <Container className="h-100 overflow-hidden p-0">
       <Routes>
         <Route
           path={queryString.signupPath()}
