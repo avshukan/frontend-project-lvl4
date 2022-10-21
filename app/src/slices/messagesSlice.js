@@ -16,7 +16,7 @@ const dataSlice = createSlice({
     removeMessagesByChannelId: (state, action) => {
       const { id: removedChannelId } = action.payload;
       state.messages = state.messages
-        .filter(({ channelId }) => +channelId !== +removedChannelId);
+        .filter(({ channelId }) => channelId !== removedChannelId);
     },
   },
   extraReducers: (builder) => {
