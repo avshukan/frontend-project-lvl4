@@ -24,7 +24,7 @@ function Pages() {
         />
         <Route
           path={queryString.aboutPath()}
-          element={<PrivateRoute><AboutPage /></PrivateRoute>}
+          element={<AboutPage />}
         />
         <Route
           path={queryString.chatPath()}
@@ -32,7 +32,7 @@ function Pages() {
         />
         <Route
           path={queryString.errorPath()}
-          element={<PrivateRoute><Error404Page /></PrivateRoute>}
+          element={<Error404Page />}
         />
       </Routes>
     </Container>
