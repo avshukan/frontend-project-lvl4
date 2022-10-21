@@ -11,7 +11,7 @@ function MainPage() {
 
   const { t } = useTranslation();
 
-  const { username } = useAuth();
+  const { user: { username } } = useAuth();
 
   const [textMessage, setTextMessage] = useState('');
 

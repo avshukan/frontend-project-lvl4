@@ -1,12 +1,7 @@
 import React, {
   createContext, useCallback, useContext, useEffect, useMemo, useState,
 } from 'react';
-import { useRollbar } from '@rollbar/react';
-import { useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
 import { useApi } from './ApiProvider';
-import fetchDataThunk from '../slices/fetchDataThunk';
 
 const AuthContext = createContext({});
 
@@ -25,42 +20,18 @@ const getUserFromLocalStorage = () => {
 function AuthProvider({ children }) {
   const { apiConnect, apiDisconnect } = useApi();
 
-  const rollbar = useRollbar();
-
-  const dispatch = useDispatch();
-
-  const { t } = useTranslation();
-
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(getUserFromLocalStorage());
 
   const isLogged = useCallback(() => {
     const { username, token } = user;
     return !!username && !!token;
   }, [user]);
 
-  const uploadData = useCallback((token) => {
-    const toastId = toast.loading(t('authProvider.toast.pending'));
-    dispatch(fetchDataThunk(token))
-      .unwrap()
-      .then(() => {
-        toast.update(toastId, {
-          render: t('authProvider.toast.success'), type: 'success', isLoading: false, autoClose: 1000,
-        });
-      })
-      .catch((error) => {
-        rollbar.error('Error fetching data', error, { token });
-        toast.update(toastId, {
-          render: t('authProvider.toast.error'), type: 'error', isLoading: false, autoClose: 3000,
-        });
-      });
-  }, [dispatch, rollbar, t]);
-
   const logIn = useCallback((username, token) => {
     localStorage.setItem('user', JSON.stringify({ username, token }));
     setUser({ username, token });
     apiConnect();
-    uploadData(token);
-  }, [uploadData, apiConnect]);
+  }, [apiConnect]);
 
   const logOut = useCallback(() => {
     localStorage.removeItem('user');
@@ -69,16 +40,14 @@ function AuthProvider({ children }) {
   }, [apiDisconnect]);
 
   useEffect(() => {
-    const { username, token } = getUserFromLocalStorage();
+    const { username, token } = user;
     if (username && token) {
-      uploadData(token);
-      setUser({ username, token });
       apiConnect();
     }
-  }, [dispatch, uploadData, apiConnect]);
+  }, [user, apiConnect]);
 
   const value = useMemo(() => ({
-    isLogged, logIn, logOut, username: user.username,
+    isLogged, logIn, logOut, user,
   }), [isLogged, logIn, logOut, user]);
 
   return (
