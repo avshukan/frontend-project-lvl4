@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useRollbar } from '@rollbar/react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -21,6 +21,8 @@ function ChatPage() {
 
   const { user } = useAuth();
 
+  const [canAddMessage, setCanAddMessage] = useState(false);
+
   const uploadData = useCallback(() => {
     const { token } = user;
     const toastId = toast.loading(t('authProvider.toast.pending'));
@@ -30,6 +32,7 @@ function ChatPage() {
         toast.update(toastId, {
           render: t('authProvider.toast.success'), type: 'success', isLoading: false, autoClose: 1000,
         });
+        setCanAddMessage(true);
       })
       .catch((error) => {
         rollbar.error('Error fetching data', error, { token });
@@ -54,7 +57,7 @@ function ChatPage() {
           <div className="d-flex flex-column h-100">
             <MessagesHeader />
             <MessagesList />
-            <MessagesAdder />
+            <MessagesAdder canAddMessage={canAddMessage} />
           </div>
         </Col>
       </Row>
