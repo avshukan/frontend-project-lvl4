@@ -5,12 +5,11 @@ import ApiProvider from './ApiProvider';
 import I18nProvider from './I18nProvider';
 import AuthProvider from './AuthProvider';
 
-function Providers({ children, backend }) {
+function Providers({ children, api }) {
   return (
     <RollbarProvider>
-      {console.log('backend', backend)}
       <ReduxProvider>
-        <ApiProvider>
+        <ApiProvider api={api}>
           <I18nProvider>
             <AuthProvider>
               {children}

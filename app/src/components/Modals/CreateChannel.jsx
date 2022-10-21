@@ -18,7 +18,7 @@ function CreateChannel({ onHide }) {
 
   const { t } = useTranslation();
 
-  const { emitNewChannel } = useApi();
+  const { apiCreateChannel } = useApi();
 
   const ref = useRef(null);
 
@@ -27,7 +27,7 @@ function CreateChannel({ onHide }) {
   const handleClose = () => setShowModal(false);
 
   const onSubmit = (newChannel) => {
-    emitNewChannel(newChannel);
+    apiCreateChannel(newChannel);
     onHide();
   };
 

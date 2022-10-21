@@ -16,14 +16,14 @@ function RenameChannel({ info: { id, name }, onHide }) {
     .channels
     .map(({ name: channelName }) => channelName));
 
-  const { emitRenameChannel } = useApi();
+  const { apiRenameChannel } = useApi();
 
   const { t } = useTranslation();
 
   const ref = useRef(null);
 
   const onRename = (values, actions) => {
-    emitRenameChannel({ id, name: values.newname });
+    apiRenameChannel({ id, name: values.newname });
     onHide();
     actions.setSubmitting(false);
   };

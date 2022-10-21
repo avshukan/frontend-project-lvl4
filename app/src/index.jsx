@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import backendApi from './backendApi';
 import Providers from './context';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+const api = backendApi();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
-  <Providers backend={{ x: '123' }}>
+  <Providers api={api}>
     <App />
   </Providers>
   // </React.StrictMode>

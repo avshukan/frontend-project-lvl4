@@ -8,11 +8,11 @@ import { useApi } from '../../context/ApiProvider';
 function RemoveChannel({ info, onHide }) {
   const { t } = useTranslation();
 
-  const { emitRemoveChannel } = useApi();
+  const { apiRemoveChannel } = useApi();
 
   const onRemove = (event) => {
     event.preventDefault();
-    emitRemoveChannel(info);
+    apiRemoveChannel(info);
     onHide();
   };
 
