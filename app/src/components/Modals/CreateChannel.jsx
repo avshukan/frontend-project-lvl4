@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import {
   Button, FormLabel, Modal, ModalTitle,
@@ -9,12 +8,10 @@ import {
 } from 'formik';
 import { object, string } from 'yup';
 import { useApi } from '../../context/ApiProvider';
+import { useChannels } from '../../slices';
 
 function CreateChannel({ onHide }) {
-  const deniedChannelsNames = useSelector((state) => state
-    .channels
-    .channels
-    .map(({ name }) => name));
+  const deniedChannelsNames = useChannels().map(({ name }) => name);
 
   const { t } = useTranslation();
 

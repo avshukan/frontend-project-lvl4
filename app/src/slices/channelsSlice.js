@@ -28,9 +28,9 @@ const dataSlice = createSlice({
       const { id: removedChannelId } = action.payload;
       state.channels = state.channels
         .filter(({ id }) => id !== removedChannelId);
-      state.currentChannelId = state.currentChannelId === removedChannelId
-        ? defaultChannelId
-        : state.currentChannelId;
+      if (state.currentChannelId === removedChannelId) {
+        state.currentChannelId = defaultChannelId;
+      }
     },
   },
   extraReducers: (builder) => {

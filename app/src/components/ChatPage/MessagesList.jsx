@@ -1,12 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import filter from 'leo-profanity';
+import { useCurrentChannelMessages } from '../../slices';
 
 function MessagesList() {
-  const channelMessages = useSelector((state) => state
-    .messages
-    .messages
-    .filter(({ channelId }) => channelId === state.channels.currentChannelId));
+  const channelMessages = useCurrentChannelMessages();
 
   return (
     <div className="overflow-auto px-5">

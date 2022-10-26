@@ -1,9 +1,10 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import CreateChannel from './CreateChannel';
 import RemoveChannel from './RemoveChannel';
 import RenameChannel from './RenameChannel';
 import { hideModal } from '../../slices/modalsSlice';
+import { useModal } from '../../slices';
 
 const modals = {
   create: CreateChannel,
@@ -14,7 +15,7 @@ const modals = {
 function Modals() {
   const dispatch = useDispatch();
 
-  const { type, info } = useSelector((state) => state.modals);
+  const { type, info } = useModal();
 
   const Modal = modals[type];
 
