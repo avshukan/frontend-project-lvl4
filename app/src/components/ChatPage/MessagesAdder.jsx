@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import filter from 'leo-profanity';
 import { useApi } from '../../context/ApiProvider';
 import { useAuth } from '../../context/AuthProvider';
 import { useCurrentChannelId } from '../../slices';
@@ -24,7 +25,7 @@ function MainPage({ canAddMessage }) {
   const onSubmit = (event) => {
     event.preventDefault();
     if (textMessage) {
-      const newMessage = { body: textMessage, channelId: currentChannelId, username };
+      const newMessage = { body: filter.clean(textMessage), channelId: currentChannelId, username };
       apiCreateMessage(newMessage);
       setTextMessage('');
     }

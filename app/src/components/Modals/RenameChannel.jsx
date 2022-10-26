@@ -7,6 +7,7 @@ import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
 import { object, string } from 'yup';
+import filter from 'leo-profanity';
 import { useApi } from '../../context/ApiProvider';
 import { useChannels } from '../../slices';
 
@@ -36,6 +37,14 @@ function RenameChannel({ info: { id, name }, onHide }) {
         initialValues={{ newname: name }}
         validationSchema={object({
           newname: string()
+            .test({
+              test: (text, ctx) => {
+                if (text !== filter.clean(text)) {
+                  return ctx.createError({ message: 'modalChannelRenamer.validation.profanityFilter' });
+                }
+                return true;
+              },
+            })
             .trim()
             .required(t('modalChannelRenamer.validation.required'))
             .min(3, 'modalChannelRenamer.validation.wrongLength')

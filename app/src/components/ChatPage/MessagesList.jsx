@@ -1,5 +1,4 @@
 import React from 'react';
-import filter from 'leo-profanity';
 import { useCurrentChannelMessages } from '../../slices';
 
 function MessagesList() {
@@ -10,9 +9,7 @@ function MessagesList() {
       {channelMessages.map(({ id, username, body }) => (
         <div key={id} className="text-break mb-2">
           <b>{username}</b>
-          :
-          {' '}
-          {filter.clean(body)}
+          {`: ${body}`}
         </div>
       ))}
     </div>
