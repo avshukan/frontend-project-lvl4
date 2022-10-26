@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Button, Form, Modal, ModalTitle,
@@ -10,11 +10,15 @@ function RemoveChannel({ info, onHide }) {
 
   const { apiRemoveChannel } = useApi();
 
+  const ref = useRef();
+
   const onRemove = (event) => {
     event.preventDefault();
     apiRemoveChannel(info);
     onHide();
   };
+
+  useEffect(() => ref.current?.focus(), []);
 
   return (
     <Modal show onHide={onHide}>
@@ -24,7 +28,7 @@ function RemoveChannel({ info, onHide }) {
       <Form onSubmit={onRemove}>
         <Modal.Footer>
           <Button variant="secondary" onClick={onHide}>{t('modalChannelRemover.cancel')}</Button>
-          <Button variant="danger" type="submit">{t('modalChannelRemover.remove')}</Button>
+          <Button ref={ref} variant="danger" type="submit">{t('modalChannelRemover.remove')}</Button>
         </Modal.Footer>
       </Form>
     </Modal>
