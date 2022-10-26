@@ -15,7 +15,7 @@ function ChannelsList() {
 
   const currentChannelId = useCurrentChannelId();
 
-  const onSwitch = (id) => () => dispatch(switchChannel({ channelId: +id }));
+  const onSwitch = (id) => () => dispatch(switchChannel({ channelId: id }));
 
   const getChannelVariant = (id) => (currentChannelId === id ? 'primary' : 'light');
 

@@ -81,7 +81,7 @@ function SignupPage() {
 
   const hasFeedbackError = () => Object
     .values(feedbackError)
-    .reduce((acc, value) => acc || !!value, false);
+    .reduce((acc, value) => acc || value, false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -123,7 +123,7 @@ function SignupPage() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={data.username}
-                isInvalid={!!feedbackError.username}
+                isInvalid={feedbackError.username}
               />
               {feedbackError.username && <div className="invalid-feedback active show">{t(feedbackError.username)}</div>}
             </Form.Group>
@@ -139,7 +139,7 @@ function SignupPage() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={data.password}
-                isInvalid={!!feedbackError.password}
+                isInvalid={feedbackError.password}
               />
               {feedbackError.password && <div className="invalid-feedback active show">{t(feedbackError.password)}</div>}
             </Form.Group>
@@ -155,7 +155,7 @@ function SignupPage() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={data.passwordConfirmation}
-                isInvalid={!!feedbackError.passwordConfirmation}
+                isInvalid={feedbackError.passwordConfirmation}
               />
               {feedbackError.passwordConfirmation && <div id="a" className="invalid-feedback active show">{t(feedbackError.passwordConfirmation)}</div>}
             </Form.Group>

@@ -24,7 +24,7 @@ function AuthProvider({ children }) {
 
   const isLogged = useCallback(() => {
     const { username, token } = user;
-    return !!username && !!token;
+    return Boolean(username) && Boolean(token);
   }, [user]);
 
   const logIn = useCallback((username, token) => {

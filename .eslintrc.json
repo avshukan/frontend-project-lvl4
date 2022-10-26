@@ -39,6 +39,7 @@
                     "state"
                 ]
             }
-        ]
+        ],
+        "no-implicit-coercion": "error"
     }
 }
