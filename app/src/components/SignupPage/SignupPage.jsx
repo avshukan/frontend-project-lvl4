@@ -6,10 +6,10 @@ import {
   Button, Card, Container, Form,
 } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import * as yup from 'yup';
 import { useAuth } from '../../context/AuthProvider';
 import routes from '../../routes/routes';
 import queryString from '../../routes/queryString';
+import validateSignup from './validateSignup';
 
 function SignupPage() {
   const rollbar = useRollbar();
@@ -32,56 +32,32 @@ function SignupPage() {
 
   const ref = useRef();
 
-  const validateUsername = (value) => yup
-    .string()
-    .required('signupPage.errors.username.required')
-    .min(3, 'signupPage.errors.username.wrongLength')
-    .max(20, 'signupPage.errors.username.wrongLength')
-    .validate(value)
-    .then(() => setFeedbackError({ ...feedbackError, username: '' }))
-    .catch((error) => setFeedbackError({ ...feedbackError, username: error.message }));
-
-  const validatePasswords = (values) => yup
-    .object({
-      password: yup.string()
-        .required('signupPage.errors.password.required')
-        .min(6, 'signupPage.errors.password.wrongLength'),
-      passwordConfirmation: yup.string()
-        .oneOf([yup.ref('password'), null], 'signupPage.errors.passwordConfirmation.notMatch'),
-    })
-    .validate(values, { abortEarly: false })
-    .then(() => setFeedbackError({ ...feedbackError, password: '', passwordConfirmation: '' }))
-    .catch((error) => {
-      const newFeedbackError = error.inner.reduce((acc, { path, message }) => ({
-        ...acc,
-        [path]: message,
-      }), {});
-      setFeedbackError({
-        ...feedbackError, password: '', passwordConfirmation: '', ...newFeedbackError,
-      });
-    });
-
-  const validate = (id, value) => (id === 'username'
-    ? validateUsername(value)
-    : validatePasswords({ ...data, [id]: value }));
+  const hasFeedbackError = () => Object
+    .values(feedbackError)
+    .reduce((acc, value) => acc || value, false);
 
   const handleChange = (event) => {
     event.preventDefault();
     const { target: { id, value } } = event;
     setSignupError('');
     setData((oldData) => ({ ...oldData, [id]: value }));
-    validate(id, value);
+    const values = id === 'username' ? value : ({ ...data, [id]: value });
+    validateSignup(id, values, (errors) => {
+      console.log('feedbackError', feedbackError);
+      console.log('errors', errors);
+      setFeedbackError({ ...feedbackError, ...errors });
+    });
   };
 
   const handleBlur = (event) => {
     event.preventDefault();
     const { target: { id } } = event;
-    validate(id, data[id]);
+    validateSignup(id, data[id], (errors) => {
+      console.log('feedbackError', feedbackError);
+      console.log('errors', errors);
+      setFeedbackError({ ...feedbackError, ...errors });
+    });
   };
-
-  const hasFeedbackError = () => Object
-    .values(feedbackError)
-    .reduce((acc, value) => acc || value, false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -101,9 +77,7 @@ function SignupPage() {
       });
   };
 
-  useEffect(() => {
-    ref.current.focus();
-  }, []);
+  useEffect(() => ref.current.focus(), []);
 
   return (
     <Container className="h-100 w-100 d-flex align-content-center justify-content-center">
