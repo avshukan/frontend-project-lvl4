@@ -42,21 +42,14 @@ function SignupPage() {
     setSignupError('');
     setData((oldData) => ({ ...oldData, [id]: value }));
     const values = id === 'username' ? value : ({ ...data, [id]: value });
-    validateSignup(id, values, (errors) => {
-      console.log('feedbackError', feedbackError);
-      console.log('errors', errors);
-      setFeedbackError({ ...feedbackError, ...errors });
-    });
+    validateSignup(id, values, (errors) => setFeedbackError({ ...feedbackError, ...errors }));
   };
 
   const handleBlur = (event) => {
     event.preventDefault();
     const { target: { id } } = event;
-    validateSignup(id, data[id], (errors) => {
-      console.log('feedbackError', feedbackError);
-      console.log('errors', errors);
-      setFeedbackError({ ...feedbackError, ...errors });
-    });
+    const values = id === 'username' ? data[id] : ({ ...data, [id]: data[id] });
+    validateSignup(id, values, (errors) => setFeedbackError({ ...feedbackError, ...errors }));
   };
 
   const handleSubmit = async (event) => {
