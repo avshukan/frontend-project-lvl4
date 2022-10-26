@@ -30,21 +30,21 @@ function AuthProvider({ children }) {
   const logIn = useCallback((username, token) => {
     localStorage.setItem('user', JSON.stringify({ username, token }));
     setUser({ username, token });
-    apiConnect();
-  }, [apiConnect]);
+  }, []);
 
   const logOut = useCallback(() => {
     localStorage.removeItem('user');
     setUser({});
-    apiDisconnect();
-  }, [apiDisconnect]);
+  }, []);
 
   useEffect(() => {
     const { username, token } = user;
     if (username && token) {
       apiConnect();
+    } else {
+      apiDisconnect();
     }
-  }, [user, apiConnect]);
+  }, [user, apiConnect, apiDisconnect]);
 
   const value = useMemo(() => ({
     isLogged, logIn, logOut, user,
