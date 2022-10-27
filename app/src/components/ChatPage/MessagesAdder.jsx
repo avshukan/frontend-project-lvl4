@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { useApi } from '../../context/ApiProvider';
 import { useAuth } from '../../context/AuthProvider';
-import { useCurrentChannelId } from '../../slices';
+import { currentChannelIdSelector } from '../../slices';
 
 function MainPage({ canAddMessage }) {
   const { apiCreateMessage } = useApi();
 
-  const currentChannelId = useCurrentChannelId();
+  const currentChannelId = useSelector(currentChannelIdSelector);
 
   const { t } = useTranslation();
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import {
   Button, FormLabel, Modal, ModalTitle,
@@ -9,10 +10,11 @@ import {
 import { object, string } from 'yup';
 import filter from 'leo-profanity';
 import { useApi } from '../../context/ApiProvider';
-import { useChannels } from '../../slices';
+import { channelsSelector } from '../../slices';
 
 function RenameChannel({ info: { id, name }, onHide }) {
-  const deniedChannelsNames = useChannels().map(({ name: channelName }) => channelName);
+  const deniedChannelsNames = useSelector(channelsSelector)
+    .map(({ name: channelName }) => channelName);
 
   const { apiRenameChannel } = useApi();
 

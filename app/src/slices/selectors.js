@@ -1,14 +1,12 @@
-import { useSelector } from 'react-redux';
+export const currentChannelIdSelector = (state) => state.channels.currentChannelId;
 
-export const useCurrentChannelId = () => useSelector((state) => state.channels.currentChannelId);
+export const channelsSelector = (state) => state.channels.channels;
 
-export const useChannels = () => useSelector((state) => state.channels.channels);
+export const messagesSelector = (state) => state.messages.messages;
 
-export const useMessages = () => useSelector((state) => state.messages.messages);
+export const modalSelector = (state) => state.modals;
 
-export const useModal = () => useSelector((state) => state.modals);
-
-export const useCurrentChannelMessages = () => useSelector((state) => state
+export const currentChannelMessagesSelector = (state) => state
   .messages
   .messages
-  .filter(({ channelId }) => channelId === state.channels.currentChannelId));
+  .filter(({ channelId }) => channelId === state.channels.currentChannelId);

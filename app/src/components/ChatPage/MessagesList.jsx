@@ -1,8 +1,9 @@
 import React, { useRef, useEffect } from 'react';
-import { useCurrentChannelMessages } from '../../slices';
+import { useSelector } from 'react-redux';
+import { currentChannelMessagesSelector } from '../../slices';
 
 function MessagesList() {
-  const channelMessages = useCurrentChannelMessages();
+  const channelMessages = useSelector(currentChannelMessagesSelector);
 
   const ref = useRef();
 

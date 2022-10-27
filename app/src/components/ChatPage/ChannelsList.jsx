@@ -1,19 +1,19 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Button, ButtonGroup, Dropdown, Nav,
 } from 'react-bootstrap';
 import filter from 'leo-profanity';
 import { switchChannel } from '../../slices/channelsSlice';
 import ChannelMenu from './ChannelMenu';
-import { useChannels, useCurrentChannelId } from '../../slices';
+import { channelsSelector, currentChannelIdSelector } from '../../slices';
 
 function ChannelsList() {
   const dispatch = useDispatch();
 
-  const channels = useChannels();
+  const channels = useSelector(channelsSelector);
 
-  const currentChannelId = useCurrentChannelId();
+  const currentChannelId = useSelector(currentChannelIdSelector);
 
   const onSwitch = (id) => () => dispatch(switchChannel({ channelId: id }));
 
